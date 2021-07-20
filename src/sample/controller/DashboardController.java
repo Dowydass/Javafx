@@ -269,16 +269,16 @@ public class DashboardController extends Main implements Initializable {
                             productCatalog = event.getRowValue();
                             productCatalog.setPriceNet(event.getOldValue());
                             table.refresh();
-                            showPopupWindow("Blogai įvesta produkto kaina", "Skaičius turi būti 1 ir daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
+                            showPopupWindow("Blogai įvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
                             System.out.println("REGEX VALIDATION DENIED");
                         }
                         else if (event.getNewValue() == null) {
                             productCatalog = event.getRowValue();
                             productCatalog.setPriceNet(event.getOldValue());
-                            showPopupWindow("Neįvesta produkto kaina", "Skaičius turi būti 1 ir daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
+                            showPopupWindow("Neįvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
                             System.out.println("PRICENET IS EMPTY");
                             table.refresh();
-                        } else if (Validation.isValidPriceDouble(event.getNewValue())) {
+                        } else if (Validation.isValidPrice(String.valueOf(event.getNewValue()))) {
                             productCatalog = event.getRowValue();
                             productCatalog.setPriceNet(event.getNewValue());
                             ProductCatalogDAO.updatePrice(event.getNewValue(), productCatalog.getId());
@@ -288,7 +288,7 @@ public class DashboardController extends Main implements Initializable {
                             productCatalog = event.getRowValue();
                             productCatalog.setPriceNet(event.getOldValue());
                             table.refresh();
-                            showPopupWindow("Blogai įvesta produkto kaina", "Skaičius turi būti 1 ir daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
+                            showPopupWindow("Blogai įvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
                             System.out.println("REGEX VALIDATION DENIED");
                         }
                     }

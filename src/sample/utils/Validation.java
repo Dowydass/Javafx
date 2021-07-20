@@ -78,13 +78,6 @@ public class Validation {
         Matcher matcher = pattern.matcher(price);
         return matcher.find();
     }
-    public static final String PRODUCT_FORM_PRICE_PATTERN_DOUBLE = "^[0-9]{1,253}(\\.?[0-9]{1,2})$";
-    public static boolean isValidPriceDouble(double price){
-        String priceInCharSequence = String.valueOf(price);
-        Pattern pattern = Pattern.compile(PRODUCT_FORM_PRICE_PATTERN_DOUBLE);
-        Matcher matcher = pattern.matcher(priceInCharSequence);
-        return matcher.find();
-    }
 
     public static final String PRODUCT_FORM_STOCK_PATTERN = "^[0-9]{1,11}$";
     public static boolean isValidStock(String stock){

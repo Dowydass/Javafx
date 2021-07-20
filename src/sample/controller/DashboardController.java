@@ -2,7 +2,9 @@ package sample.controller;
 
 
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,6 +34,7 @@ import javafx.stage.*;
 import javafx.stage.Popup;
 import javafx.util.Callback;
 import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.FormatStringConverter;
 import sample.JPA.*;
 import sample.JPA.user.User;
 import sample.JPA.user.UserDAO;
@@ -233,15 +236,46 @@ public class DashboardController extends Main implements Initializable {
         priceNet.setCellValueFactory(new PropertyValueFactory<>("priceNet"));
         if (isAdmin) {
             try {
-                priceNet.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+                priceNet.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter() {
+                    @Override
+                    public Double fromString(String value) {
+                        double nulis = 0.00;
+                        if (value == null) {
+                            return nulis;
+                        }
+
+                        value = value.trim();
+
+                        if (value.length() < 1) {
+                            return nulis;
+                        }
+                        // If the specified value is null or zero-length, return null
+                        if (Validation.isValidPrice(String.valueOf(value))) {
+                            return Double.parseDouble(value);
+                        } else {
+                            return Double.valueOf(nulis);
+                        }
+                    }
+                }));
+
                 priceNet.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ProductCatalog, Double>>() {
+
+
                     @Override
                     public void handle(TableColumn.CellEditEvent<ProductCatalog, Double> event) {
+
                         ProductCatalog productCatalog;
-                        if (event.getNewValue() == null) {
+                        if (event.getNewValue() == 0.00) {
                             productCatalog = event.getRowValue();
                             productCatalog.setPriceNet(event.getOldValue());
-                            showPopupWindow("Neįvesta produkto kaina", "Skaičius gali būti nuo 1 ir toliau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
+                            table.refresh();
+                            showPopupWindow("Blogai įvesta produkto kaina", "Skaičius turi būti 1 ir daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
+                            System.out.println("REGEX VALIDATION DENIED");
+                        }
+                        else if (event.getNewValue() == null) {
+                            productCatalog = event.getRowValue();
+                            productCatalog.setPriceNet(event.getOldValue());
+                            showPopupWindow("Neįvesta produkto kaina", "Skaičius turi būti 1 ir daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
                             System.out.println("PRICENET IS EMPTY");
                             table.refresh();
                         } else if (Validation.isValidPriceDouble(event.getNewValue())) {
@@ -254,7 +288,7 @@ public class DashboardController extends Main implements Initializable {
                             productCatalog = event.getRowValue();
                             productCatalog.setPriceNet(event.getOldValue());
                             table.refresh();
-                            showPopupWindow("Blogai įvesta produkto kaina", "Skaičius gali būti nuo 1 ir toliau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
+                            showPopupWindow("Blogai įvesta produkto kaina", "Skaičius turi būti 1 ir daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
                             System.out.println("REGEX VALIDATION DENIED");
                         }
                     }

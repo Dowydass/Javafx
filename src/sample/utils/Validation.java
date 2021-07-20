@@ -102,21 +102,21 @@ public class Validation {
 
     /* Naujo produkto kūrimo lango Validacija : Start */
 
-    public static final String PRODUCT_FORM_AUKSTIS_PATTERN = "^[0-9]{1,11}$";
+    public static final String PRODUCT_FORM_AUKSTIS_PATTERN = "^[0-9]{1,10}$";
     public static boolean isValidAukstis(String aukstis) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_AUKSTIS_PATTERN);
         Matcher matcher = pattern.matcher(aukstis);
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_PLOTIS_PATTERN = "^[0-9]{1,11}$";
+    public static final String PRODUCT_FORM_PLOTIS_PATTERN = "^[0-9]{1,10}$";
     public static boolean isValidPlotis(String plotis) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_PLOTIS_PATTERN);
         Matcher matcher = pattern.matcher(plotis);
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_GYLIS_PATTERN = "^[0-9]{1,11}$";
+    public static final String PRODUCT_FORM_GYLIS_PATTERN = "^[0-9]{1,10}$";
     public static boolean isValidGylis(String gylis) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_GYLIS_PATTERN);
         Matcher matcher = pattern.matcher(gylis);
@@ -144,14 +144,14 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_MODULIU_SKAICIUS_PATTERN = "^[0-9]{1,11}$";
+    public static final String PRODUCT_FORM_MODULIU_SKAICIUS_PATTERN = "^[0-9]{1,10}$";
     public static boolean isValidModuliuSkaicius(String moduliuSkaicius) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_MODULIU_SKAICIUS_PATTERN);
         Matcher matcher = pattern.matcher(moduliuSkaicius);
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_VARDINE_SROVE_PATTERN = "^[0-9]{1,11}(?=.*A).*$";
+    public static final String PRODUCT_FORM_VARDINE_SROVE_PATTERN = "^[0-9]{1,10}(?=.*A).*$";
     public static boolean isValidVardineSrove(String vardineSrove) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_VARDINE_SROVE_PATTERN);
         Matcher matcher = pattern.matcher(vardineSrove);
@@ -235,7 +235,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_DARBINE_TEMPERATURA_PATTERN = "^[0-9a-zA-Z -°]{1,11}(?=.*C).*$";
+    public static final String PRODUCT_FORM_DARBINE_TEMPERATURA_PATTERN = "^[0-9a-zA-Z -°]{1,10}(?=.*C).*$";
     public static boolean isValidDarbineTemperatura(String darbineTemperatura) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_DARBINE_TEMPERATURA_PATTERN);
         Matcher matcher = pattern.matcher(darbineTemperatura);

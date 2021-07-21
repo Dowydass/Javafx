@@ -1351,6 +1351,7 @@ public class DashboardController extends Main implements Initializable {
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource(Constants.OPEN_STOCKS_DIRECTORY_PATH)));
             Stage stocksRate = new Stage();
             Scene scene = new Scene(root);
+            stocksRate.initModality(Modality.APPLICATION_MODAL);
             stocksRate.setTitle("Vario kursas");
             stocksRate.setResizable(false);
             stocksRate.setOnCloseRequest(e -> StocksRateController.onClose());

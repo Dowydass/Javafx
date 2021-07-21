@@ -74,6 +74,7 @@ public class ProductFormController extends Main implements Initializable {
     public static VBox vbox;
     public static ScrollPane letsScroll;
 
+
     public void createProduct(ActionEvent actionEvent) {
         Categories item = categoryComboBox.getSelectionModel().getSelectedItem();
         if (catalog_no_textField.getText().isEmpty() && symbol_textField.getText().isEmpty() &&
@@ -225,6 +226,10 @@ public class ProductFormController extends Main implements Initializable {
         letsScroll.setVisible(false);
         letsScroll.setContent(vbox);
         main_anchor_panel.getChildren().add(letsScroll);
+
+        form_info_label.setWrapText(true);
+        form_info_label.setMaxWidth(300);
+
 
     }
 

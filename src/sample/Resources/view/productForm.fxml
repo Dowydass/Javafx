@@ -53,7 +53,7 @@
 
         <Label fx:id="form_info_label" alignment="CENTER" contentDisplay="CENTER" layoutX="98.0" layoutY="236.0" prefHeight="54.0" prefWidth="300.0" textAlignment="CENTER" textFill="RED" wrapText="true">
             <font>
-                <Font name="Segoe UI Light" size="13.0" />
+                <Font name="Segoe UI Light" size="12.0" />
             </font></Label>
     </children>
 

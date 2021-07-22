@@ -137,7 +137,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_APSAUGOS_LAIPSNIS_PATTERN = "^[a-zA-Z ĄąČčĘęĖėĮįŠšŲųŪūŽž]{3,255}$";
+    public static final String PRODUCT_FORM_APSAUGOS_LAIPSNIS_PATTERN = "^[a-zA-Z0-9 ĄąČčĘęĖėĮįŠšŲųŪūŽž]{3,255}$";
     public static boolean isValidApsaugosLaipsnis(String apsaugosLaipsnis) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_APSAUGOS_LAIPSNIS_PATTERN);
         Matcher matcher = pattern.matcher(apsaugosLaipsnis);

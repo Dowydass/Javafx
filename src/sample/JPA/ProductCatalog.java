@@ -63,8 +63,6 @@ public class ProductCatalog {
     private String sviesos_spalvos_temperatura;
     @Column(name = "laidininkas")
     private String laidininkas;
-    @Column(name = "izoliacija2")
-    private String izoliacija2;
     @Column(name = "darbine_temperatura")
     private String darbine_temperatura;
     @Column(name = "Max_darbine_temperatura")
@@ -79,10 +77,10 @@ public class ProductCatalog {
     private String isjungimo_charakteristika;
     @Column(name = "mechaninis_atsparumas")
     private String mechaninis_atsparumas;
-    @Column(name = "skerspjuvis")
-    private String skerspjuvis;
-    @Column(name = "skerspjuvis2")
-    private String skerspjuvis2;
+    @Column(name = "skerspjuvis_Al")
+    private String skerspjuvis_Al;
+    @Column(name = "skerspjuvis_Cu")
+    private String skerspjuvis_Cu;
     @Column(name = "nuotekio_srove")
     private String nuotekio_srove;
     @Column(name = "dydis")
@@ -105,7 +103,7 @@ public class ProductCatalog {
         this.date = date;
     }
 
-    public ProductCatalog(String catalogNo, String symbol, double priceNet, int stock, int groupId, double aukstis, double plotis, double gylis, double skersmuo, double ilgis, String apsaugos_laipsnis, double moduliu_skaicius, String vardine_srove, String vardine_itampa, String mechaninis_atsparumas_IK, String spalva, String korpuso_medziaga, String izoliacija, double svoris, String galia, double sviesos_srautas, String sviesos_spalvos_temperatura, String laidininkas, String izoliacija2, String darbine_temperatura, String max_darbine_temperatura, String apvalkalas, String cpr_klase, String isjungimo_geba, String isjungimo_charakteristika, String mechaninis_atsparumas, String skerspjuvis, String skerspjuvis2, String nuotekio_srove, String dydis, String plotas, String image_url, Date date) {
+    public ProductCatalog(String catalogNo, String symbol, double priceNet, int stock, int groupId, double aukstis, double plotis, double gylis, double skersmuo, double ilgis, String apsaugos_laipsnis, double moduliu_skaicius, String vardine_srove, String vardine_itampa, String mechaninis_atsparumas_IK, String spalva, String korpuso_medziaga, String izoliacija, double svoris, String galia, double sviesos_srautas, String sviesos_spalvos_temperatura, String laidininkas, String darbine_temperatura, String max_darbine_temperatura, String apvalkalas, String cpr_klase, String isjungimo_geba, String isjungimo_charakteristika, String mechaninis_atsparumas, String skerspjuvis_Al, String skerspjuvis_Cu, String nuotekio_srove, String dydis, String plotas, String image_url, Date date) {
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
@@ -129,7 +127,6 @@ public class ProductCatalog {
         this.sviesos_srautas = sviesos_srautas;
         this.sviesos_spalvos_temperatura = sviesos_spalvos_temperatura;
         this.laidininkas = laidininkas;
-        this.izoliacija2 = izoliacija2;
         this.darbine_temperatura = darbine_temperatura;
         this.max_darbine_temperatura = max_darbine_temperatura;
         this.apvalkalas = apvalkalas;
@@ -137,8 +134,8 @@ public class ProductCatalog {
         this.isjungimo_geba = isjungimo_geba;
         this.isjungimo_charakteristika = isjungimo_charakteristika;
         this.mechaninis_atsparumas = mechaninis_atsparumas;
-        this.skerspjuvis = skerspjuvis;
-        this.skerspjuvis2 = skerspjuvis2;
+        this.skerspjuvis_Al = skerspjuvis_Al;
+        this.skerspjuvis_Cu = skerspjuvis_Cu;
         this.nuotekio_srove = nuotekio_srove;
         this.dydis = dydis;
         this.plotas = plotas;
@@ -247,13 +244,6 @@ public class ProductCatalog {
         this.laidininkas = laidininkas;
     }
 
-    public String getIzoliacija2() {
-        return izoliacija2;
-    }
-
-    public void setIzoliacija2(String izoliacija2) {
-        this.izoliacija2 = izoliacija2;
-    }
 
     public String getMax_darbine_temperatura() {
         return max_darbine_temperatura;
@@ -303,20 +293,20 @@ public class ProductCatalog {
         this.mechaninis_atsparumas = mechaninis_atsparumas;
     }
 
-    public String getSkerspjuvis() {
-        return skerspjuvis;
+    public String getSkerspjuvis_Al() {
+        return skerspjuvis_Al;
     }
 
-    public void setSkerspjuvis(String skerspjuvis) {
-        this.skerspjuvis = skerspjuvis;
+    public void setSkerspjuvis_Al(String skerspjuvis_Al) {
+        this.skerspjuvis_Al = skerspjuvis_Al;
     }
 
-    public String getSkerspjuvis2() {
-        return skerspjuvis2;
+    public String getSkerspjuvis_Cu() {
+        return skerspjuvis_Cu;
     }
 
-    public void setSkerspjuvis2(String skerspjuvis2) {
-        this.skerspjuvis2 = skerspjuvis2;
+    public void setSkerspjuvis_Cu(String skerspjuvis_Cu) {
+        this.skerspjuvis_Cu = skerspjuvis_Cu;
     }
 
     public String getNuotekio_srove() {

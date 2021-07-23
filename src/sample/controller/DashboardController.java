@@ -521,10 +521,10 @@ public class DashboardController extends Main implements Initializable {
                 parameter.isAukstis() == parameter2.isAukstis() && parameter.isApsaugos_laipsnis() == parameter2.isApsaugos_laipsnis() && parameter.isApvalkalas() == parameter2.isApvalkalas() &&
                 parameter.isCPR_klase() == parameter2.isCPR_klase() && parameter.isDydis() == parameter2.isDydis() && parameter.isIlgis() == parameter2.isIlgis() &&
                 parameter.isIsjungimo_charakteristika() == parameter2.isIsjungimo_charakteristika() && parameter.isIsjungimo_geba() == parameter2.isIsjungimo_geba() &&
-                parameter.isIzoliacija() == parameter2.isIzoliacija() && parameter.isIzoliacija2() == parameter2.isIzoliacija2() && parameter.isKorpuso_medziaga() == parameter2.isKorpuso_medziaga() &&
+                parameter.isIzoliacija() == parameter2.isIzoliacija() && parameter.isKorpuso_medziaga() == parameter2.isKorpuso_medziaga() &&
                 parameter.isLaidininkas() == parameter2.isLaidininkas() && parameter.isMax_darbine_temperatura() == parameter2.isMax_darbine_temperatura() && parameter.isMechaninis_atsparumas() == parameter2.isMechaninis_atsparumas() &&
                 parameter.isMechaninis_atsparumas_IK() == parameter2.isMechaninis_atsparumas_IK() && parameter.isModuliu_skaicius() == parameter2.isModuliu_skaicius() && parameter.isNuotekio_srove() == parameter2.isNuotekio_srove() &&
-                parameter.isPlotas() == parameter2.isPlotas() && parameter.isSkersmuo() == parameter2.isSkersmuo() && parameter.isSkerspjuvis() == parameter2.isSkerspjuvis() && parameter.isSkerspjuvis2() == parameter2.isSkerspjuvis2() &&
+                parameter.isPlotas() == parameter2.isPlotas() && parameter.isSkersmuo() == parameter2.isSkersmuo() && parameter.isSkerspjuvis_Al() == parameter2.isSkerspjuvis_Al() && parameter.isSkerspjuvis_Cu() == parameter2.isSkerspjuvis_Cu() &&
                 parameter.isSviesos_spalvos_temperatura() == parameter2.isSviesos_spalvos_temperatura() && parameter.isSvoris() == parameter2.isSvoris() && parameter.isVardine_srove() == parameter2.isVardine_srove();
     }
 
@@ -586,8 +586,6 @@ public class DashboardController extends Main implements Initializable {
         String laidininkas = product.getLaidininkas();
         categoryParameters.setLaidininkas(laidininkas != null);
 
-        String izoliacija2 = product.getIzoliacija2();
-        categoryParameters.setIzoliacija2(izoliacija2 != null);
 
         String darbine_temperatura = product.getDarbine_temperatura();
         categoryParameters.setDarbine_temperatura(darbine_temperatura != null);
@@ -610,11 +608,11 @@ public class DashboardController extends Main implements Initializable {
         String mechaninis_atsparumas = product.getMechaninis_atsparumas();
         categoryParameters.setMechaninis_atsparumas(mechaninis_atsparumas != null);
 
-        String skerspjuvis = product.getSkerspjuvis();
-        categoryParameters.setSkerspjuvis(skerspjuvis != null);
+        String skerspjuvis_Al = product.getSkerspjuvis_Al();
+        categoryParameters.setSkerspjuvis_Al(skerspjuvis_Al != null);
 
-        String skerspjuvis2 = product.getSkerspjuvis2();
-        categoryParameters.setSkerspjuvis2(skerspjuvis2 != null);
+        String skerspjuvis_Cu = product.getSkerspjuvis_Cu();
+        categoryParameters.setSkerspjuvis_Cu(skerspjuvis_Cu != null);
 
         String nuotekio_srove = product.getNuotekio_srove();
         categoryParameters.setNuotekio_srove(nuotekio_srove != null);
@@ -1049,19 +1047,6 @@ public class DashboardController extends Main implements Initializable {
                     desciptionLabelVBox.getChildren().add(isolationDescription);
                     propertyLabelVBox.getChildren().add(isolationProperty);
                 }
-                if (irasas.getIzoliacija2() != null && !irasas.getIzoliacija2().isEmpty()) {
-                    Label isolation2Description = new Label();
-                    Label isolation2Proeprty = new Label();
-                    isolation2Proeprty.setStyle("-fx-font-weight: bold;");
-                    isolation2Description.setLayoutX(20);
-                    isolation2Description.setLayoutY(getRightPanelLabelY());
-                    isolation2Proeprty.setLayoutX(60);
-                    isolation2Proeprty.setLayoutY(getRightPanelLabelY());
-                    isolation2Description.setText("Izoliacija: ");
-                    isolation2Proeprty.setText(String.valueOf(irasas.getIzoliacija2()));
-                    desciptionLabelVBox.getChildren().add(isolation2Description);
-                    propertyLabelVBox.getChildren().add(isolation2Proeprty);
-                }
                 if (irasas.getDarbine_temperatura() != null) {
                     Label workingTemperatureDescription = new Label();
                     Label workingTemperatureProperty = new Label();
@@ -1153,7 +1138,7 @@ public class DashboardController extends Main implements Initializable {
                     desciptionLabelVBox.getChildren().add(mechanicalResistanceDescription);
                     propertyLabelVBox.getChildren().add(mechanicalResistanceProperty);
                 }
-                if (irasas.getSkerspjuvis() != null && !irasas.getSkerspjuvis().isEmpty()) {
+                if (irasas.getSkerspjuvis_Al() != null && !irasas.getSkerspjuvis_Al().isEmpty()) {
                     Label crosscutDescription = new Label();
                     Label crosscutProperty = new Label();
                     crosscutProperty.setStyle("-fx-font-weight: bold;");
@@ -1161,12 +1146,12 @@ public class DashboardController extends Main implements Initializable {
                     crosscutDescription.setLayoutY(getRightPanelLabelY());
                     crosscutProperty.setLayoutX(60);
                     crosscutProperty.setLayoutY(getRightPanelLabelY());
-                    crosscutDescription.setText("Skerspjūvis: ");
-                    crosscutProperty.setText(String.valueOf(irasas.getSkerspjuvis()));
+                    crosscutDescription.setText("Skerspjūvis Al: ");
+                    crosscutProperty.setText(String.valueOf(irasas.getSkerspjuvis_Al()));
                     desciptionLabelVBox.getChildren().add(crosscutDescription);
                     propertyLabelVBox.getChildren().add(crosscutProperty);
                 }
-                if (irasas.getSkerspjuvis2() != null && !irasas.getSkerspjuvis2().isEmpty()) {
+                if (irasas.getSkerspjuvis_Cu() != null && !irasas.getSkerspjuvis_Cu().isEmpty()) {
                     Label crosscutDescription2 = new Label();
                     Label crosscutProperty2 = new Label();
                     crosscutProperty2.setStyle("-fx-font-weight: bold;");
@@ -1174,8 +1159,8 @@ public class DashboardController extends Main implements Initializable {
                     crosscutDescription2.setLayoutY(getRightPanelLabelY());
                     crosscutProperty2.setLayoutX(60);
                     crosscutProperty2.setLayoutY(getRightPanelLabelY());
-                    crosscutDescription2.setText("Skerspjūvis: ");
-                    crosscutProperty2.setText(String.valueOf(irasas.getSkerspjuvis2()));
+                    crosscutDescription2.setText("Skerspjūvis Cu: ");
+                    crosscutProperty2.setText(String.valueOf(irasas.getSkerspjuvis_Cu()));
                     desciptionLabelVBox.getChildren().add(crosscutDescription2);
                     propertyLabelVBox.getChildren().add(crosscutProperty2);
                 }

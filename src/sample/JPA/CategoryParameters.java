@@ -50,8 +50,6 @@ public class CategoryParameters {
     private boolean sviesos_spalvos_temperatura;
     @Column(name = "laidininkas")
     private boolean laidininkas;
-    @Column(name = "izoliacija2")
-    private boolean izoliacija2;
     @Column(name = "darbine_temperatura")
     private boolean darbine_temperatura;
     @Column(name = "Max_darbine_temperatura")
@@ -66,10 +64,10 @@ public class CategoryParameters {
     private boolean isjungimo_charakteristika;
     @Column(name = "mechaninis_atsparumas")
     private boolean mechaninis_atsparumas;
-    @Column(name = "skerspjuvis")
-    private boolean skerspjuvis;
-    @Column(name = "skerspjuvis2")
-    private boolean skerspjuvis2;
+    @Column(name = "skerspjuvis_Al")
+    private boolean skerspjuvis_Al;
+    @Column(name = "skerspjuvis_Cu")
+    private boolean skerspjuvis_Cu;
     @Column(name = "nuotekio_srove")
     private boolean nuotekio_srove;
     @Column(name = "dydis")
@@ -81,7 +79,7 @@ public class CategoryParameters {
     public CategoryParameters() {
     }
 
-    public CategoryParameters(boolean aukstis, boolean plotis, boolean gylis, boolean skersmuo, boolean ilgis, boolean apsaugos_laipsnis, boolean moduliu_skaicius, boolean vardine_srove, boolean vardine_itampa, boolean mechaninis_atsparumas_IK, boolean spalva, boolean korpuso_medziaga, boolean izoliacija, boolean svoris, boolean galia, boolean sviesos_srautas, boolean sviesos_spalvos_temperatura, boolean laidininkas, boolean izoliacija2, boolean darbine_temperatura, boolean max_darbine_temperatura, boolean apvalkalas, boolean CPR_klase, boolean isjungimo_geba, boolean isjungimo_charakteristika, boolean mechaninis_atsparumas, boolean skerspjuvis, boolean skerspjuvis2, boolean nuotekio_srove, boolean dydis, boolean plotas) {
+    public CategoryParameters(boolean aukstis, boolean plotis, boolean gylis, boolean skersmuo, boolean ilgis, boolean apsaugos_laipsnis, boolean moduliu_skaicius, boolean vardine_srove, boolean vardine_itampa, boolean mechaninis_atsparumas_IK, boolean spalva, boolean korpuso_medziaga, boolean izoliacija, boolean svoris, boolean galia, boolean sviesos_srautas, boolean sviesos_spalvos_temperatura, boolean laidininkas, boolean darbine_temperatura, boolean max_darbine_temperatura, boolean apvalkalas, boolean CPR_klase, boolean isjungimo_geba, boolean isjungimo_charakteristika, boolean mechaninis_atsparumas, boolean skerspjuvis_Al, boolean skerspjuvis_Cu, boolean nuotekio_srove, boolean dydis, boolean plotas) {
         this.aukstis = aukstis;
         this.plotis = plotis;
         this.gylis = gylis;
@@ -100,7 +98,6 @@ public class CategoryParameters {
         this.sviesos_srautas = sviesos_srautas;
         this.sviesos_spalvos_temperatura = sviesos_spalvos_temperatura;
         this.laidininkas = laidininkas;
-        this.izoliacija2 = izoliacija2;
         this.darbine_temperatura = darbine_temperatura;
         this.max_darbine_temperatura = max_darbine_temperatura;
         this.apvalkalas = apvalkalas;
@@ -108,8 +105,8 @@ public class CategoryParameters {
         this.isjungimo_geba = isjungimo_geba;
         this.isjungimo_charakteristika = isjungimo_charakteristika;
         this.mechaninis_atsparumas = mechaninis_atsparumas;
-        this.skerspjuvis = skerspjuvis;
-        this.skerspjuvis2 = skerspjuvis2;
+        this.skerspjuvis_Al = skerspjuvis_Al;
+        this.skerspjuvis_Cu = skerspjuvis_Cu;
         this.nuotekio_srove = nuotekio_srove;
         this.dydis = dydis;
         this.plotas = plotas;
@@ -191,10 +188,6 @@ public class CategoryParameters {
         return laidininkas;
     }
 
-    public boolean isIzoliacija2() {
-        return izoliacija2;
-    }
-
     public boolean isDarbine_temperatura() {
         return darbine_temperatura;
     }
@@ -221,14 +214,6 @@ public class CategoryParameters {
 
     public boolean isMechaninis_atsparumas() {
         return mechaninis_atsparumas;
-    }
-
-    public boolean isSkerspjuvis() {
-        return skerspjuvis;
-    }
-
-    public boolean isSkerspjuvis2() {
-        return skerspjuvis2;
     }
 
     public boolean isNuotekio_srove() {
@@ -315,10 +300,6 @@ public class CategoryParameters {
         this.laidininkas = laidininkas;
     }
 
-    public void setIzoliacija2(boolean izoliacija2) {
-        this.izoliacija2 = izoliacija2;
-    }
-
     public void setDarbine_temperatura(boolean darbine_temperatura) {
         this.darbine_temperatura = darbine_temperatura;
     }
@@ -347,12 +328,20 @@ public class CategoryParameters {
         this.mechaninis_atsparumas = mechaninis_atsparumas;
     }
 
-    public void setSkerspjuvis(boolean skerspjuvis) {
-        this.skerspjuvis = skerspjuvis;
+    public boolean isSkerspjuvis_Al() {
+        return skerspjuvis_Al;
     }
 
-    public void setSkerspjuvis2(boolean skerspjuvis2) {
-        this.skerspjuvis2 = skerspjuvis2;
+    public void setSkerspjuvis_Al(boolean skerspjuvis_Al) {
+        this.skerspjuvis_Al = skerspjuvis_Al;
+    }
+
+    public boolean isSkerspjuvis_Cu() {
+        return skerspjuvis_Cu;
+    }
+
+    public void setSkerspjuvis_Cu(boolean skerspjuvis_Cu) {
+        this.skerspjuvis_Cu = skerspjuvis_Cu;
     }
 
     public void setNuotekio_srove(boolean nuotekio_srove) {

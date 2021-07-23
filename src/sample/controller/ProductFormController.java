@@ -54,7 +54,6 @@ public class ProductFormController extends Main implements Initializable {
     TextField sviesos_srautas_field = new TextField();
     TextField sviesos_spalvos_temperatura_field = new TextField();
     TextField laidininkas_field = new TextField();
-    TextField izoliacija2_field = new TextField();
     TextField darbine_temperatura_field = new TextField();
     TextField max_darbine_temperatura_field = new TextField();
     TextField apvalkalas_field = new TextField();
@@ -62,8 +61,8 @@ public class ProductFormController extends Main implements Initializable {
     TextField isjungimo_geba_field = new TextField();
     TextField isjungimo_charakteristika_field = new TextField();
     TextField mechaninis_atsparumas_field = new TextField();
-    TextField skerspjuvis_field = new TextField();
-    TextField skerspjuvis2_field = new TextField();
+    TextField skerspjuvis_Al_field = new TextField();
+    TextField skerspjuvis_Cu_field = new TextField();
     TextField nuotekio_srove_field = new TextField();
     TextField dydis_field = new TextField();
     TextField plotas_field = new TextField();
@@ -150,10 +149,7 @@ public class ProductFormController extends Main implements Initializable {
         } else if (categoryParameters.isLaidininkas() && !Validation.isValidLaidininkas(laidininkas_field.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_LAIDININKAS);
-        } else if (categoryParameters.isIzoliacija2() && !Validation.isValidIzoliacija2(izoliacija2_field.getText())) {
-            WarnStyle();
-            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_IZOLIACIJA2);
-        } else if (categoryParameters.isDarbine_temperatura() && !Validation.isValidDarbineTemperatura(darbine_temperatura_field.getText())) {
+        }  else if (categoryParameters.isDarbine_temperatura() && !Validation.isValidDarbineTemperatura(darbine_temperatura_field.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_DARBINE_TEMPERATURA);
         } else if (categoryParameters.isMax_darbine_temperatura() && !Validation.isValidMaxDarbineTemperatura(max_darbine_temperatura_field.getText())) {
@@ -174,10 +170,10 @@ public class ProductFormController extends Main implements Initializable {
         }  else if (categoryParameters.isMechaninis_atsparumas() && !Validation.isValidMechaninisAtsparumas(mechaninis_atsparumas_field.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_MECHANINIS_ATSPARUMAS);
-        } else if (categoryParameters.isSkerspjuvis() && !Validation.isValidSkerspjuvis(skerspjuvis_field.getText())) {
+        } else if (categoryParameters.isSkerspjuvis_Al() && !Validation.isValidSkerspjuvis(skerspjuvis_Al_field.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SKERSPJUVIS);
-        } else if (categoryParameters.isSkerspjuvis2() && !Validation.isValidSkerspjuvis2(skerspjuvis2_field.getText())) {
+        } else if (categoryParameters.isSkerspjuvis_Cu() && !Validation.isValidSkerspjuvis2(skerspjuvis_Cu_field.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SKERSPJUVIS2);
         }  else if (categoryParameters.isNuotekio_srove() && !Validation.isValidNuotekuSrove(nuotekio_srove_field.getText())) {
@@ -254,11 +250,11 @@ public class ProductFormController extends Main implements Initializable {
                 nullCheckerForText(mechaninis_atsparumas_IK_field.getText()), nullCheckerForText(spalva_field.getText()), nullCheckerForText(korpuso_medziaga_field.getText()),
                 nullCheckerForText(izoliacija_field.getText()), Double.parseDouble(nullCheckerForNumbers(svoris_field.getText())),
                 nullCheckerForText(galia_field.getText()), Double.parseDouble(nullCheckerForNumbers(sviesos_srautas_field.getText())),
-                nullCheckerForText(sviesos_spalvos_temperatura_field.getText()), nullCheckerForText(laidininkas_field.getText()), nullCheckerForText(izoliacija2_field.getText()),
+                nullCheckerForText(sviesos_spalvos_temperatura_field.getText()), nullCheckerForText(laidininkas_field.getText()),
                 nullCheckerForText(darbine_temperatura_field.getText()), nullCheckerForText(max_darbine_temperatura_field.getText()),
                 nullCheckerForText(apvalkalas_field.getText()), nullCheckerForText(cpr_klase_field.getText()), nullCheckerForText(isjungimo_geba_field.getText()),
-                nullCheckerForText(isjungimo_charakteristika_field.getText()), nullCheckerForText(mechaninis_atsparumas_field.getText()), nullCheckerForText(skerspjuvis_field.getText()),
-                nullCheckerForText(skerspjuvis2_field.getText()), nullCheckerForText(nuotekio_srove_field.getText()), nullCheckerForText(dydis_field.getText()),
+                nullCheckerForText(isjungimo_charakteristika_field.getText()), nullCheckerForText(mechaninis_atsparumas_field.getText()), nullCheckerForText(skerspjuvis_Al_field.getText()),
+                nullCheckerForText(skerspjuvis_Cu_field.getText()), nullCheckerForText(nuotekio_srove_field.getText()), nullCheckerForText(dydis_field.getText()),
                 nullCheckerForText(plotas_field.getText()),
                 null, null);
         ProductCatalogDAO.insert(product);
@@ -624,20 +620,6 @@ public class ProductFormController extends Main implements Initializable {
             vBox1.getChildren().add(label);
             vBox2.getChildren().add(laidininkas_field);
         }
-        if (categoryParameters.isIzoliacija2()) {
-            Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
-            label.setFont(new Font("Segoe UI Light", SIZE));
-            label.setText("Izoliacija:");
-
-            vbox.setSpacing(10);
-            izoliacija2_field.setLayoutX(60);
-            izoliacija2_field.setPrefWidth(250);
-            izoliacija2_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(izoliacija2_field);
-        }
         if (categoryParameters.isDarbine_temperatura()) {
             Label label = new Label();
             label.setLayoutX(20);
@@ -736,33 +718,33 @@ public class ProductFormController extends Main implements Initializable {
             vBox1.getChildren().add(label);
             vBox2.getChildren().add(mechaninis_atsparumas_field);
         }
-        if (categoryParameters.isSkerspjuvis()) {
+        if (categoryParameters.isSkerspjuvis_Al()) {
             Label label = new Label();
             label.setLayoutX(20);
             label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
-            label.setText("Skerspjūvis:");
+            label.setText("Skerspjūvis Al:");
 
             vbox.setSpacing(10);
-            skerspjuvis_field.setLayoutX(60);
-            skerspjuvis_field.setPrefWidth(250);
-            skerspjuvis_field.setLayoutY(getformBoxY());
+            skerspjuvis_Al_field.setLayoutX(60);
+            skerspjuvis_Al_field.setPrefWidth(250);
+            skerspjuvis_Al_field.setLayoutY(getformBoxY());
             vBox1.getChildren().add(label);
-            vBox2.getChildren().add(skerspjuvis_field);
+            vBox2.getChildren().add(skerspjuvis_Al_field);
         }
-        if (categoryParameters.isSkerspjuvis2()) {
+        if (categoryParameters.isSkerspjuvis_Cu()) {
             Label label = new Label();
             label.setLayoutX(20);
             label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
-            label.setText("Skerspjūvis:");
+            label.setText("Skerspjūvis Cu:");
 
             vbox.setSpacing(10);
-            skerspjuvis2_field.setLayoutX(60);
-            skerspjuvis2_field.setPrefWidth(250);
-            skerspjuvis2_field.setLayoutY(getformBoxY());
+            skerspjuvis_Cu_field.setLayoutX(60);
+            skerspjuvis_Cu_field.setPrefWidth(250);
+            skerspjuvis_Cu_field.setLayoutY(getformBoxY());
             vBox1.getChildren().add(label);
-            vBox2.getChildren().add(skerspjuvis2_field);
+            vBox2.getChildren().add(skerspjuvis_Cu_field);
         }
         if (categoryParameters.isNuotekio_srove()) {
             Label label = new Label();

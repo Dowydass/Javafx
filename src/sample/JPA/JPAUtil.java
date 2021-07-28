@@ -10,10 +10,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Paint;
+import javafx.stage.Modality;
 import javafx.stage.Popup;
+import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.apache.xmlbeans.impl.jam.JParameter;
 import sample.controller.LoginController;
 import sample.utils.Constants;
+import sun.security.util.DisabledAlgorithmConstraints;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -56,6 +60,9 @@ public class JPAUtil {
 
         Window parent = scene.getWindow();
         javafx.stage.Popup popup = new Popup();
+
+        Stage justForClose = (Stage) parent;
+        justForClose.hide();
 
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
@@ -110,7 +117,13 @@ public class JPAUtil {
         okButton.setAlignment(Pos.CENTER);
         okButton.setOnAction(event -> {
             popup.hide();
+            Platform.exit();
         });
+
+
+
+
+
 
         hBox31.getChildren().add(okButton);
         hBox3.getChildren().add(hBox31);

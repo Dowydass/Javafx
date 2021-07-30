@@ -404,7 +404,7 @@ public class DashboardController extends Main implements Initializable {
                         boolean isNewProduct = true;
 
                         for (ProductCatalog dbProduct : dbProducts) {
-                            if (dbProduct.getPriceNet() == (excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
+                            if (dbProduct.getPriceNet() != (excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
                                 isNewProduct = false;
                                 ProductCatalogDAO.updatePrice(excelProduct.getPriceNet(), dbProduct.getId());
                                 countAffectedProducts++;

@@ -275,7 +275,7 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void showPopupWindow(String title, String information, String titleBackroundColor, String titleTextColor, Scene scene) {
+    public void showPopupWindow(String title, String information, String titleBackgroundColor, String titleTextColor, Scene scene) {
 
         Window parent = scene.getWindow();
         javafx.stage.Popup popup = new Popup();
@@ -290,7 +290,7 @@ public class LoginController implements Initializable {
 
 
         HBox hBox1 = new HBox();
-        hBox1.setStyle("-fx-background-color: " + titleBackroundColor + ";");
+        hBox1.setStyle("-fx-background-color: " + titleBackgroundColor + ";");
         hBox1.setAlignment(Pos.CENTER);
         hBox1.setMinSize(450, 29);
 

@@ -75,37 +75,11 @@ public class DashboardController extends Main implements Initializable {
     @FXML
     public AnchorPane right_panel_anchor_pane;
     @FXML
-    public Label catalog_no;
-    @FXML
-    public Label item_name;
-    @FXML
-    public Label base_price;
-    @FXML
-    public Label discount_in_percent;
-    @FXML
-    public Label price_with_discount;
-    @FXML
-    public Label delivery_time_in_days_from;
-    @FXML
-    public Label delivery_time_in_days_to;
-    @FXML
-    public Label item_package;
-    @FXML
-    public Label min_order_amount;
-    @FXML
-    public Label discount_group;
-    @FXML
-    public Label product_family;
-    @FXML
-    public Label ean_code;
-    @FXML
     public ProgressIndicator loadProgress;
     @FXML
     public MenuItem user_list;
     @FXML
     public MenuItem user_about;
-    @FXML
-    private MenuBar menu_bar;
     @FXML
     private Menu file_menu_bar;
     @FXML
@@ -1241,8 +1215,6 @@ public class DashboardController extends Main implements Initializable {
         informationPanelHBox.getChildren().add(imageVBox);
         informationPanelHBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7;");
         right_panel_main_vbox.getChildren().add(informationPanelHBox);
-
-
     }
 
     private void currentSessionUserData() {

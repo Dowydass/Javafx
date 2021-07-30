@@ -280,6 +280,8 @@ public class LoginController implements Initializable {
         Window parent = scene.getWindow();
         javafx.stage.Popup popup = new Popup();
 
+
+
         Stage stage = (Stage) username_button.getScene().getWindow();
 
         VBox root = new VBox();

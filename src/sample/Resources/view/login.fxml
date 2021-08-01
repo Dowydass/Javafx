@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.LoginController">
+<GridPane alignment="center" hgap="10" vgap="10" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.LoginController">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
@@ -43,7 +43,7 @@
                <cursor>
                   <Cursor fx:constant="TEXT" />
                </cursor></PasswordField>
-            <Label fx:id="login_info_label" alignment="CENTER" layoutX="8.0" layoutY="197.0" prefHeight="25.0" prefWidth="484.0" textFill="RED" wrapText="true">
+            <Label fx:id="login_info_label" alignment="CENTER" layoutX="8.0" layoutY="195.0" prefHeight="25.0" prefWidth="484.0" textFill="RED" wrapText="true">
                <font>
                   <Font name="Arial" size="15.0" />
                </font></Label>
@@ -52,7 +52,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor></CheckBox>
             <ProgressIndicator fx:id="load_progress_indicator" layoutX="230.0" layoutY="230.0" prefHeight="35.0" prefWidth="35.0" progress="0.0" visible="false" />
-            <Button fx:id="username_button" layoutX="176.0" layoutY="235.0" mnemonicParsing="false" onAction="#login" prefHeight="37.0" prefWidth="142.0" text="Prisijungti">
+            <Button fx:id="username_button" alignment="CENTER" layoutX="176.0" layoutY="224.0" mnemonicParsing="false" onAction="#login" prefHeight="37.0" prefWidth="142.0" text="Prisijungti">
                <font>
                   <Font name="Microsoft JhengHei Light" size="16.0" />
                </font>
@@ -60,7 +60,12 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor></Button>
             <Label fx:id="version_label" alignment="TOP_RIGHT" layoutX="408.0" layoutY="13.0" prefHeight="25.0" prefWidth="78.0" text="Versija: ?" textFill="#b9b9b9" />
-            <Hyperlink fx:id="register_button" alignment="CENTER" contentDisplay="CENTER" layoutX="175.0" layoutY="271.0" onAction="#register" prefHeight="17.0" prefWidth="142.0" text="Naujas vartotojas?" underline="true" />
+            <Hyperlink fx:id="register_button" alignment="CENTER" contentDisplay="CENTER" layoutX="176.0" layoutY="260.0" onAction="#register" prefHeight="17.0" prefWidth="142.0" text="Naujas vartotojas?" underline="true" />
+            <Label alignment="CENTER" layoutX="176.0" layoutY="284.0" prefHeight="17.0" prefWidth="142.0" text="© Visos teisės saugomos" textFill="#363636d1">
+               <font>
+                  <Font name="Calibri Light" size="12.0" />
+               </font>
+            </Label>
          </children>
          <opaqueInsets>
             <Insets />

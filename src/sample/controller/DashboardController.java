@@ -1350,7 +1350,7 @@ public class DashboardController extends Main implements Initializable {
     }
 
     public void aboutInfo() {
-        showPopupWindow("Informacija", "UAB „ECO SPRENDIMAI“\nSusisiekti galite:\n- Tel.: +370 600 00000\n- El. paštu: info@ecosprendimai.lt\nProgramos versija: " + Constants.PROGRAM_VERSION, "#0a58ca", "#FFFFFF");
+        showPopupWindow("Informacija", "UAB „ECO SPRENDIMAI“\nSusisiekti galite:\n- Tel.: 869981772\n- El. paštu: julius@ecosprendimai.lt\nProgramos versija: " + Constants.PROGRAM_VERSION, "#0a58ca", "#FFFFFF");
     }
 
     public void windowClose() { //Uzdaro prisijungimo langa
@@ -1463,7 +1463,7 @@ public class DashboardController extends Main implements Initializable {
         hBox31.setAlignment(Pos.CENTER);
         hBox31.setMinSize(140, 28);
         Button okButton = new Button();
-        okButton.setText("Gerai" + "\n");
+        okButton.setText("Atnaujinti ryšį" + "\n");
         okButton.setStyle("-fx-font-size: 14; -fx-background-radius: 0; -fx-background-color: #0078D7, linear-gradient(#E1e1e1, #E1E1E1);");
         okButton.setMinSize(82, 28);
         okButton.setAlignment(Pos.CENTER);

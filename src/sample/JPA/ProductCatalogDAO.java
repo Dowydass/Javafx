@@ -36,7 +36,26 @@ public class ProductCatalogDAO {
             System.out.println("ProductCatalogDAO.insert() HibernateException");
         }
 
+    }
 
+    public static void replace(ProductCatalog productCatalog) {
+        System.out.println("replace(" + productCatalog + " )" );
+        EntityManager entityManager;
+        EntityTransaction entityTransaction;
+
+        try {
+            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            entityManager.merge(productCatalog);
+            entityManager.flush();
+            entityManager.getTransaction().commit();
+            entityManager.close();
+        } catch (JDBCConnectionException e) {
+            System.out.println("ProductCatalogDAO.insert() JDBCConnectionException");
+        } catch (HibernateException e) {
+            System.out.println("ProductCatalogDAO.insert() HibernateException");
+        }
 
     }
 

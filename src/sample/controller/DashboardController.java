@@ -245,8 +245,7 @@ public class DashboardController extends Main implements Initializable {
                             table.refresh();
                             showPopupWindow("Blogai įvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
                             System.out.println("REGEX VALIDATION DENIED");
-                        }
-                        else if (event.getNewValue() == null) {
+                        } else if (event.getNewValue() == null) {
                             productCatalog = event.getRowValue();
                             productCatalog.setPriceNet(event.getOldValue());
                             showPopupWindow("Neįvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
@@ -392,55 +391,224 @@ public class DashboardController extends Main implements Initializable {
                     e.printStackTrace();
                 }
 
-                int countAffectedProducts = 0;
-                int countExcelProducts = 0;
-                int countNewProducts = 0;
-                int countDBProducts = 0;
-
                 assert excelProducts != null;
-                try {
-                    for (ProductCatalog excelProduct : excelProducts) {
-                        countExcelProducts++;
-                        boolean isNewProduct = true;
 
-                        for (ProductCatalog dbProduct : dbProducts) {
-                            if (dbProduct.getPriceNet() != (excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
-                                isNewProduct = false;
-                                ProductCatalogDAO.updatePrice(excelProduct.getPriceNet(), dbProduct.getId());
-                                countAffectedProducts++;
-                            } else if (dbProduct.getPriceNet() == (excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
-                                isNewProduct = false;
-                                countDBProducts = dbProducts.size() - countAffectedProducts;
+                boolean isProductNew = false;
+                int countEveryProductInExcel = 0;
+                int countEveryProductUpdated = 0;
+                int countEveryNewProduct = 0;
+                boolean isProductChanged;
+
+
+                try {
+                    countEveryProductInExcel = excelProducts.size();
+
+                    for (ProductCatalog excelProduct : excelProducts) {
+                        if (!dbProducts.isEmpty()) {
+                            for (ProductCatalog dbProduct : dbProducts) {
+                                isProductChanged = false;
+                                if (!excelProduct.getCatalogNo().equals(dbProduct.getCatalogNo())) {
+                                    isProductNew = true;
+                                } else {
+                                    isProductNew = false;
+                                    excelProduct.setId(dbProduct.getId());
+                                    if (dbProduct.getCatalogNo() != null && excelProduct.getCatalogNo() != null) {
+                                        if (!dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getSymbol() != null && excelProduct.getSymbol() != null) {
+                                        if (!dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getPriceNet() != excelProduct.getPriceNet()) {
+                                        isProductChanged = true;
+                                    }
+                                    if (dbProduct.getStock() != excelProduct.getStock()) {
+                                        isProductChanged = true;
+                                    }
+                                    if (dbProduct.getGroupId() != excelProduct.getGroupId()) {
+                                        isProductChanged = true;
+                                    }
+                                    if (dbProduct.getAukstis() != excelProduct.getAukstis()) {
+                                        isProductChanged = true;
+                                    }
+                                    if (dbProduct.getPlotis() != excelProduct.getPlotis()) {
+                                        isProductChanged = true;
+                                    }
+                                    if (dbProduct.getGylis() != excelProduct.getGylis()) {
+                                        isProductChanged = true;
+                                    }
+                                    if (dbProduct.getSkersmuo() != excelProduct.getSkersmuo()) {
+                                        isProductChanged = true;
+                                    }
+                                    if (dbProduct.getIlgis() != excelProduct.getIlgis()) {
+                                        isProductChanged = true;
+                                    }
+                                    if (dbProduct.getApsaugos_laipsnis() != null && excelProduct.getApsaugos_laipsnis() != null) {
+                                        if (!dbProduct.getApsaugos_laipsnis().equals(excelProduct.getApsaugos_laipsnis())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getModuliu_skaicius() != excelProduct.getModuliu_skaicius()) {
+                                        isProductChanged = true;
+                                    }
+                                    if (dbProduct.getVardine_srove() != null && excelProduct.getVardine_srove() != null) {
+                                        if (!dbProduct.getVardine_srove().equals(excelProduct.getVardine_srove())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getVardine_itampa() != null && excelProduct.getVardine_itampa() != null) {
+                                        if (!dbProduct.getVardine_itampa().equals(excelProduct.getVardine_itampa())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getMechaninis_atsparumas_IK() != null && excelProduct.getMechaninis_atsparumas_IK() != null) {
+                                        if (!dbProduct.getMechaninis_atsparumas_IK().equals(excelProduct.getMechaninis_atsparumas_IK())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getSpalva() != null && excelProduct.getSpalva() != null) {
+                                        if (!dbProduct.getSpalva().equals(excelProduct.getSpalva())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getKorpuso_medziaga() != null && excelProduct.getKorpuso_medziaga() != null) {
+                                        if (!dbProduct.getKorpuso_medziaga().equals(excelProduct.getKorpuso_medziaga())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getIzoliacija() != null && excelProduct.getIzoliacija() != null) {
+                                        if (!dbProduct.getIzoliacija().equals(excelProduct.getKorpuso_medziaga())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getSvoris() != excelProduct.getSvoris()) {
+                                        isProductChanged = true;
+                                    }
+                                    if (dbProduct.getGalia() != null && excelProduct.getGalia() != null) {
+                                        if (!dbProduct.getIzoliacija().equals(excelProduct.getIzoliacija())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getSviesos_srautas() != excelProduct.getSviesos_srautas()) {
+                                        isProductChanged = true;
+                                    }
+                                    if (dbProduct.getSviesos_spalvos_temperatura() != null && excelProduct.getSviesos_spalvos_temperatura() != null) {
+                                        if (!dbProduct.getSviesos_spalvos_temperatura().equals(excelProduct.getSviesos_spalvos_temperatura())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getLaidininkas() != null && excelProduct.getLaidininkas() != null) {
+                                        if (!dbProduct.getLaidininkas().equals(excelProduct.getLaidininkas())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getDarbine_temperatura() != null && excelProduct.getDarbine_temperatura() != null) {
+                                        if (!dbProduct.getDarbine_temperatura().equals(excelProduct.getDarbine_temperatura())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getMax_darbine_temperatura() != null && excelProduct.getMax_darbine_temperatura() != null) {
+                                        if (!dbProduct.getMax_darbine_temperatura().equals(excelProduct.getMax_darbine_temperatura())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getApvalkalas() != null && excelProduct.getApvalkalas() != null) {
+                                        if (!dbProduct.getApvalkalas().equals(excelProduct.getApvalkalas())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getCpr_klase() != null && excelProduct.getCpr_klase() != null) {
+                                        if (!dbProduct.getCpr_klase().equals(excelProduct.getCpr_klase())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getIsjungimo_geba() != null && excelProduct.getIsjungimo_geba() != null) {
+                                        if (!dbProduct.getIsjungimo_geba().equals(excelProduct.getIsjungimo_geba())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getIsjungimo_charakteristika() != null && excelProduct.getIsjungimo_charakteristika() != null) {
+                                        if (!dbProduct.getIsjungimo_charakteristika().equals(excelProduct.getIsjungimo_charakteristika())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getMechaninis_atsparumas() != null && excelProduct.getMechaninis_atsparumas() != null) {
+                                        if (!dbProduct.getMechaninis_atsparumas().equals(excelProduct.getMechaninis_atsparumas())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getSkerspjuvis_Al() != null && excelProduct.getSkerspjuvis_Al() != null) {
+                                        if (!dbProduct.getSkerspjuvis_Al().equals(excelProduct.getSkerspjuvis_Al())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getSkerspjuvis_Cu() != null && excelProduct.getSkerspjuvis_Cu() != null) {
+                                        if (!dbProduct.getSkerspjuvis_Cu().equals(excelProduct.getSkerspjuvis_Cu())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getNuotekio_srove() != null && excelProduct.getNuotekio_srove() != null) {
+                                        if (!dbProduct.getNuotekio_srove().equals(excelProduct.getNuotekio_srove())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getDydis() != null && excelProduct.getDydis() != null) {
+                                        if (!dbProduct.getDydis().equals(excelProduct.getDydis())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getPlotas() != null && excelProduct.getPlotas() != null) {
+                                        if (!dbProduct.getPlotas().equals(excelProduct.getPlotas())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+                                    if (dbProduct.getImage_url() != null && excelProduct.getImage_url() != null) {
+                                        if (!dbProduct.getImage_url().equals(excelProduct.getImage_url())) {
+                                            isProductChanged = true;
+                                        }
+                                    }
+
+                                      if (isProductChanged)  {
+                                        ProductCatalogDAO.replace(excelProduct);
+                                        countEveryProductUpdated++;
+                                    }
+                                    break;
+
+                                }
                             }
-                        }
-                        if (isNewProduct) {
-                            countNewProducts++;
+                        } else {
                             ProductCatalogDAO.insert(excelProduct);
-                            allCategoryParameters = CategoryParametersDAO.displayAllCategoryParameters();
-                            insertCategoryParameter(createCategoryParameter(excelProduct), allCategoryParameters, excelProduct);
+                            countEveryNewProduct++;
+                        }
+                        if (isProductNew) {
+                            ProductCatalogDAO.insert(excelProduct);
+                            countEveryNewProduct++;
                         }
                     }
-
                 } catch (NullPointerException e) {
                     System.out.println("openFile(" + e + " )");
                 } catch (RuntimeException e) {
                     System.out.println("openFile(" + e + " )");
                 }
-                if (countDBProducts != 0) {
-                    String successToPopup = "Pakeista produktų: " + countAffectedProducts + "\nFaile aptikta produktų: " + countExcelProducts + "\nPridėti nauji produktai: " + countNewProducts + "\nDuomenų bazėje nepaveikti produktai: " + countDBProducts + "\n";
+
+                if (countEveryProductUpdated != 0 || countEveryNewProduct != 0) {
+                    String successToPopup = "\nFaile rasta produktų: " + countEveryProductInExcel + "\nPakeista produktų: " + countEveryProductUpdated + "\nPridėti nauji produktai: " + countEveryNewProduct + "\n";
 
                     Platform.runLater(() -> {
                         showPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF");
                         loadProgress.setVisible(false);
 
                     });
-                } else if (countAffectedProducts == 0 && countExcelProducts == 0 && countNewProducts == 0 && countDBProducts == 0) {
+                } else if (countEveryProductUpdated == 0 && countEveryNewProduct == 0 && countEveryProductInExcel == 0) {
                     Platform.runLater(() -> {
                         JPAUtil.showPopupWindow("Klaida!", "- Nuskaityti nepavyko \n- Pasirinktas failas netinkamas : " + file.getName(), "#b02a37", "#FFFFFF", getScene());
                         loadProgress.setVisible(false);
                     });
                 } else {
-                    String successToPopup = "Pakeista produktų: " + countAffectedProducts + "\nFaile aptikta produktų: " + countExcelProducts + "\nPridėti nauji produktai: " + countNewProducts + "\nDuomenų bazėje nepaveikti produktai: " + countDBProducts + "\n";
+                    String successToPopup = "\nFaile rasta produktų: " + countEveryProductInExcel + "\nPakeista produktų: " + countEveryProductUpdated + "\nPridėti nauji produktai: " + countEveryNewProduct + "\n";
 
                     Platform.runLater(() -> {
                         showPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF");
@@ -459,6 +627,7 @@ public class DashboardController extends Main implements Initializable {
         uploadExcelLogicalThread.start();
 
     }
+
     //Ikelia categoryParameter objektą į duombazę patikrinus ar tokio objekto nėra duombazėje.
     public void insertCategoryParameter(CategoryParameters categoryParameter, List<CategoryParameters> allCategoryParameters, ProductCatalog product) {
         if (allCategoryParameters.size() == 0) {
@@ -471,7 +640,7 @@ public class DashboardController extends Main implements Initializable {
                 if (compareCategoryParameters(allCategoryParameter, categoryParameter)) {
                     newParameter = false;
                     Categories category = CategoriesDAO.displayParentCategoryById(product.getGroupId());
-                    if (allCategoryParameter.getId() != category.getCategory_parameter_id()){
+                    if (allCategoryParameter.getId() != category.getCategory_parameter_id()) {
                         CategoriesDAO.updateCategoryParameterById(allCategoryParameter.getId(), product.getGroupId());
                     }
                 } else {

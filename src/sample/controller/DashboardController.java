@@ -2,9 +2,7 @@ package sample.controller;
 
 
 import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,7 +32,6 @@ import javafx.stage.*;
 import javafx.stage.Popup;
 import javafx.util.Callback;
 import javafx.util.converter.DoubleStringConverter;
-import javafx.util.converter.FormatStringConverter;
 import sample.JPA.*;
 import sample.JPA.user.User;
 import sample.JPA.user.UserDAO;
@@ -45,15 +42,9 @@ import sample.utils.Validation;
 
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static sample.JPA.JPAUtil.getScene;
 
@@ -393,201 +384,41 @@ public class DashboardController extends Main implements Initializable {
 
                 assert excelProducts != null;
 
-                boolean isProductNew = false;
+
                 int countEveryProductInExcel = 0;
                 int countEveryProductUpdated = 0;
                 int countEveryNewProduct = 0;
                 boolean isProductChanged;
-
+                boolean isProductNew;
 
                 try {
                     countEveryProductInExcel = excelProducts.size();
 
                     for (ProductCatalog excelProduct : excelProducts) {
+                        isProductNew = true;
+                        isProductChanged = false;
                         if (!dbProducts.isEmpty()) {
                             for (ProductCatalog dbProduct : dbProducts) {
-                                isProductChanged = false;
-                                if (!excelProduct.getCatalogNo().equals(dbProduct.getCatalogNo())) {
-                                    isProductNew = true;
-                                } else {
+                                if (excelProduct.getCatalogNo().equals(dbProduct.getCatalogNo())) {
                                     isProductNew = false;
                                     excelProduct.setId(dbProduct.getId());
-                                    if (dbProduct.getCatalogNo() != null && excelProduct.getCatalogNo() != null) {
-                                        if (!dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getSymbol() != null && excelProduct.getSymbol() != null) {
-                                        if (!dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getPriceNet() != excelProduct.getPriceNet()) {
-                                        isProductChanged = true;
-                                    }
-                                    if (dbProduct.getStock() != excelProduct.getStock()) {
-                                        isProductChanged = true;
-                                    }
-                                    if (dbProduct.getGroupId() != excelProduct.getGroupId()) {
-                                        isProductChanged = true;
-                                    }
-                                    if (dbProduct.getAukstis() != excelProduct.getAukstis()) {
-                                        isProductChanged = true;
-                                    }
-                                    if (dbProduct.getPlotis() != excelProduct.getPlotis()) {
-                                        isProductChanged = true;
-                                    }
-                                    if (dbProduct.getGylis() != excelProduct.getGylis()) {
-                                        isProductChanged = true;
-                                    }
-                                    if (dbProduct.getSkersmuo() != excelProduct.getSkersmuo()) {
-                                        isProductChanged = true;
-                                    }
-                                    if (dbProduct.getIlgis() != excelProduct.getIlgis()) {
-                                        isProductChanged = true;
-                                    }
-                                    if (dbProduct.getApsaugos_laipsnis() != null && excelProduct.getApsaugos_laipsnis() != null) {
-                                        if (!dbProduct.getApsaugos_laipsnis().equals(excelProduct.getApsaugos_laipsnis())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getModuliu_skaicius() != excelProduct.getModuliu_skaicius()) {
-                                        isProductChanged = true;
-                                    }
-                                    if (dbProduct.getVardine_srove() != null && excelProduct.getVardine_srove() != null) {
-                                        if (!dbProduct.getVardine_srove().equals(excelProduct.getVardine_srove())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getVardine_itampa() != null && excelProduct.getVardine_itampa() != null) {
-                                        if (!dbProduct.getVardine_itampa().equals(excelProduct.getVardine_itampa())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getMechaninis_atsparumas_IK() != null && excelProduct.getMechaninis_atsparumas_IK() != null) {
-                                        if (!dbProduct.getMechaninis_atsparumas_IK().equals(excelProduct.getMechaninis_atsparumas_IK())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getSpalva() != null && excelProduct.getSpalva() != null) {
-                                        if (!dbProduct.getSpalva().equals(excelProduct.getSpalva())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getKorpuso_medziaga() != null && excelProduct.getKorpuso_medziaga() != null) {
-                                        if (!dbProduct.getKorpuso_medziaga().equals(excelProduct.getKorpuso_medziaga())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getIzoliacija() != null && excelProduct.getIzoliacija() != null) {
-                                        if (!dbProduct.getIzoliacija().equals(excelProduct.getKorpuso_medziaga())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getSvoris() != excelProduct.getSvoris()) {
-                                        isProductChanged = true;
-                                    }
-                                    if (dbProduct.getGalia() != null && excelProduct.getGalia() != null) {
-                                        if (!dbProduct.getIzoliacija().equals(excelProduct.getIzoliacija())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getSviesos_srautas() != excelProduct.getSviesos_srautas()) {
-                                        isProductChanged = true;
-                                    }
-                                    if (dbProduct.getSviesos_spalvos_temperatura() != null && excelProduct.getSviesos_spalvos_temperatura() != null) {
-                                        if (!dbProduct.getSviesos_spalvos_temperatura().equals(excelProduct.getSviesos_spalvos_temperatura())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getLaidininkas() != null && excelProduct.getLaidininkas() != null) {
-                                        if (!dbProduct.getLaidininkas().equals(excelProduct.getLaidininkas())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getDarbine_temperatura() != null && excelProduct.getDarbine_temperatura() != null) {
-                                        if (!dbProduct.getDarbine_temperatura().equals(excelProduct.getDarbine_temperatura())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getMax_darbine_temperatura() != null && excelProduct.getMax_darbine_temperatura() != null) {
-                                        if (!dbProduct.getMax_darbine_temperatura().equals(excelProduct.getMax_darbine_temperatura())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getApvalkalas() != null && excelProduct.getApvalkalas() != null) {
-                                        if (!dbProduct.getApvalkalas().equals(excelProduct.getApvalkalas())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getCpr_klase() != null && excelProduct.getCpr_klase() != null) {
-                                        if (!dbProduct.getCpr_klase().equals(excelProduct.getCpr_klase())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getIsjungimo_geba() != null && excelProduct.getIsjungimo_geba() != null) {
-                                        if (!dbProduct.getIsjungimo_geba().equals(excelProduct.getIsjungimo_geba())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getIsjungimo_charakteristika() != null && excelProduct.getIsjungimo_charakteristika() != null) {
-                                        if (!dbProduct.getIsjungimo_charakteristika().equals(excelProduct.getIsjungimo_charakteristika())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getMechaninis_atsparumas() != null && excelProduct.getMechaninis_atsparumas() != null) {
-                                        if (!dbProduct.getMechaninis_atsparumas().equals(excelProduct.getMechaninis_atsparumas())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getSkerspjuvis_Al() != null && excelProduct.getSkerspjuvis_Al() != null) {
-                                        if (!dbProduct.getSkerspjuvis_Al().equals(excelProduct.getSkerspjuvis_Al())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getSkerspjuvis_Cu() != null && excelProduct.getSkerspjuvis_Cu() != null) {
-                                        if (!dbProduct.getSkerspjuvis_Cu().equals(excelProduct.getSkerspjuvis_Cu())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getNuotekio_srove() != null && excelProduct.getNuotekio_srove() != null) {
-                                        if (!dbProduct.getNuotekio_srove().equals(excelProduct.getNuotekio_srove())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getDydis() != null && excelProduct.getDydis() != null) {
-                                        if (!dbProduct.getDydis().equals(excelProduct.getDydis())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getPlotas() != null && excelProduct.getPlotas() != null) {
-                                        if (!dbProduct.getPlotas().equals(excelProduct.getPlotas())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-                                    if (dbProduct.getImage_url() != null && excelProduct.getImage_url() != null) {
-                                        if (!dbProduct.getImage_url().equals(excelProduct.getImage_url())) {
-                                            isProductChanged = true;
-                                        }
-                                    }
-
-                                      if (isProductChanged)  {
-                                        ProductCatalogDAO.replace(excelProduct);
+                                    isProductChanged = doSameProductsHaveDifferences(excelProduct, dbProduct);
+                                    if (isProductChanged) {
                                         countEveryProductUpdated++;
+                                        ProductCatalogDAO.replace(excelProduct);
                                     }
                                     break;
-
                                 }
                             }
-                        } else {
-                            ProductCatalogDAO.insert(excelProduct);
-                            countEveryNewProduct++;
                         }
                         if (isProductNew) {
+                            allCategoryParameters = CategoryParametersDAO.displayAllCategoryParameters();
                             ProductCatalogDAO.insert(excelProduct);
+                            insertCategoryParameter(createCategoryParameter(excelProduct), allCategoryParameters, excelProduct);
                             countEveryNewProduct++;
                         }
                     }
+
                 } catch (NullPointerException e) {
                     System.out.println("openFile(" + e + " )");
                 } catch (RuntimeException e) {
@@ -616,7 +447,9 @@ public class DashboardController extends Main implements Initializable {
 
                     });
                 }
-                Platform.runLater(() -> {
+                Platform.runLater(() ->
+
+                {
                     loadProgress.setVisible(false);
                     reloadProductTableView();
                 });
@@ -626,6 +459,13 @@ public class DashboardController extends Main implements Initializable {
         uploadExcelLogicalThread.setDaemon(true);
         uploadExcelLogicalThread.start();
 
+    }
+
+    public boolean doSameProductsHaveDifferences(ProductCatalog excelProduct, ProductCatalog dbProduct) {
+        if ( dbProduct.toString().equals(excelProduct.toString()) ) {
+            return false;
+        }
+        return true;
     }
 
     //Ikelia categoryParameter objektą į duombazę patikrinus ar tokio objekto nėra duombazėje.
@@ -1632,7 +1472,7 @@ public class DashboardController extends Main implements Initializable {
         hBox31.setAlignment(Pos.CENTER);
         hBox31.setMinSize(140, 28);
         Button okButton = new Button();
-        okButton.setText("Atnaujinti ryšį" + "\n");
+        okButton.setText("Gerai" + "\n");
         okButton.setStyle("-fx-font-size: 14; -fx-background-radius: 0; -fx-background-color: #0078D7, linear-gradient(#E1e1e1, #E1E1E1);");
         okButton.setMinSize(82, 28);
         okButton.setAlignment(Pos.CENTER);

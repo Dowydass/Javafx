@@ -1,5 +1,9 @@
 package sample.JPA;
 
+import javafx.scene.Scene;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.service.spi.ServiceException;
 import sample.utils.Constants;
@@ -83,20 +87,25 @@ public class CategoriesDAO {
             categories = query.setParameter(1, id).getResultList();
             entityManager.getTransaction().commit();
             entityManager.close();
+
         } catch (IllegalStateException e) {
+
             JPAUtil.showPopupWindow("Nepavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Klaidos kodas:" + e + "\n- Programos versija: " + Constants.PROGRAM_VERSION, "#b02a37", "#FFFFFF", getScene());
         } catch (JDBCConnectionException e) {
+
             JPAUtil.showPopupWindow("Nepavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Klaidos kodas: " + e + "\n- Programos versija: " + Constants.PROGRAM_VERSION, "#b02a37", "#FFFFFF", getScene());
         } catch (ServiceException e) {
+
             JPAUtil.showPopupWindow("Nepavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Klaidos kodas: " + e + "\n- Programos versija: " + Constants.PROGRAM_VERSION, "#b02a37", "#FFFFFF", getScene());
         } catch (PersistenceException e) {
+
             JPAUtil.showPopupWindow("Nepavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Klaidos kodas: " + e + "\n- Programos versija: " + Constants.PROGRAM_VERSION, "#b02a37", "#FFFFFF", getScene());
         }
         return categories;
     }
 
 
-    public static List<Categories> displayAllCategories(){
+    public static List<Categories> displayAllCategories() {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
@@ -111,7 +120,7 @@ public class CategoriesDAO {
     }
 
 
-    public static List<Categories> selectCategoriesForListView(){
+    public static List<Categories> selectCategoriesForListView() {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
@@ -125,7 +134,7 @@ public class CategoriesDAO {
         return categories;
     }
 
-    public static List<Categories> selectCategoriesForComboBox(){
+    public static List<Categories> selectCategoriesForComboBox() {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
@@ -139,7 +148,7 @@ public class CategoriesDAO {
         return categories;
     }
 
-    public static void updateCategoryLefts(int lft){
+    public static void updateCategoryLefts(int lft) {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
@@ -154,8 +163,7 @@ public class CategoriesDAO {
     }
 
 
-
-    public static void updateCategoryParameterById(int categoryParameter, int id){
+    public static void updateCategoryParameterById(int categoryParameter, int id) {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
@@ -170,7 +178,7 @@ public class CategoriesDAO {
         entityManager.close();
     }
 
-    public static void updateCategoryRights(int lft){
+    public static void updateCategoryRights(int lft) {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
@@ -184,7 +192,7 @@ public class CategoriesDAO {
         entityManager.close();
     }
 
-    public static Categories displayParentCategoryById(int id){
+    public static Categories displayParentCategoryById(int id) {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();

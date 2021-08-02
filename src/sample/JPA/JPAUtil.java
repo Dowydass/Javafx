@@ -2,26 +2,34 @@ package sample.JPA;
 
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.stage.Modality;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
+import javafx.stage.*;
 import javafx.stage.Popup;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import org.apache.xmlbeans.impl.jam.JParameter;
 import sample.controller.LoginController;
 import sample.utils.Constants;
 import sun.security.util.DisabledAlgorithmConstraints;
+import javafx.scene.text.Text;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.swing.*;
 import java.lang.management.PlatformManagedObject;
+import java.util.Optional;
 
 public class JPAUtil {
     private static final String PERSISTENCE_UNIT_NAME = "PERSISTENCE";
@@ -51,6 +59,7 @@ public class JPAUtil {
     public static void setScene(Scene scene) {
         loginScene = scene;
     }
+
     public static Scene getScene() {
         return loginScene;
     }
@@ -58,12 +67,37 @@ public class JPAUtil {
 
     public static void showPopupWindow(String title, String information, String titleBackroundColor, String titleTextColor, Scene scene) {
 
-        Window parent = scene.getWindow();
-        javafx.stage.Popup popup = new Popup();
 
-        Stage justForClose = (Stage) parent;
-        justForClose.hide();
+        //   Window parent = scene.getWindow();
+        //  javafx.stage.Popup popup = new Popup();
 
+
+        Alert dialog = new Alert(Alert.AlertType.ERROR);
+        dialog.setHeaderText(null);
+        dialog.setContentText(information);
+        dialog.setTitle(title);
+        //FIXME: Remove after release 8u40
+
+        dialog.getDialogPane().setPrefSize(630, 150);
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+
+
+
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent e) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
+        ButtonType buttonTypeOne = new ButtonType("Atnaujinti ryšį");
+        dialog.getButtonTypes().setAll(buttonTypeOne);
+
+        Optional<ButtonType> result = dialog.showAndWait();
+        if (result.get() == buttonTypeOne) {
+            Platform.exit();
+        }
+/*
         VBox root = new VBox();
         root.setAlignment(Pos.CENTER);
         root.setStyle("-fx-border-width: 1; -fx-border-color: #000000; -fx-effect: dropshadow(two-pass-box, #000000, 10, 0.0, 1.0, 1.0);");
@@ -111,7 +145,7 @@ public class JPAUtil {
         hBox31.setAlignment(Pos.CENTER);
         hBox31.setMinSize(140, 28);
         Button okButton = new Button();
-        okButton.setText("Gerai" + "\n");
+        okButton.setText("Atnaujinti ryšį" + "\n");
         okButton.setStyle("-fx-font-size: 14; -fx-background-radius: 0; -fx-background-color: #0078D7, linear-gradient(#E1e1e1, #E1E1E1);");
         okButton.setMinSize(82, 28);
         okButton.setAlignment(Pos.CENTER);
@@ -119,11 +153,6 @@ public class JPAUtil {
             popup.hide();
             Platform.exit();
         });
-
-
-
-
-
 
         hBox31.getChildren().add(okButton);
         hBox3.getChildren().add(hBox31);
@@ -135,7 +164,15 @@ public class JPAUtil {
         popup.getContent().addAll(root);
         popup.show(parent);
 
+
+ */
     }
+
+    public static void exit() {
+        Platform.exit();
+        System.exit(0);
+    }
+
     public static void showPopupWindowAndClose(String title, String information, String titleBackroundColor, String titleTextColor, Scene scene) {
 
         Window parent = scene.getWindow();
@@ -206,6 +243,7 @@ public class JPAUtil {
 
         popup.getContent().addAll(root);
         popup.show(parent);
+
 
     }
 }

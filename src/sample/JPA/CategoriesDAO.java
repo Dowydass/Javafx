@@ -1,6 +1,9 @@
 package sample.JPA;
 
-
+import javafx.scene.Scene;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.service.spi.ServiceException;
 import sample.utils.Constants;
@@ -38,7 +41,6 @@ public class CategoriesDAO {
 
         return categories;
     }
-
 
 
     public static void deleteById(int id) {

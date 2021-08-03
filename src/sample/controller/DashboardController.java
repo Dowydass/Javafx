@@ -404,13 +404,13 @@ public class DashboardController extends Main implements Initializable {
                         boolean isNewProduct = true;
 
                         for (ProductCatalog dbProduct : dbProducts) {
-                            if (dbProduct.getPriceNet() != (excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && !dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
+                            if (dbProduct.getPriceNet() != (excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
                                 isNewProduct = false;
                                 ProductCatalogDAO.updatePrice(excelProduct.getPriceNet(), dbProduct.getId());
-                                ProductCatalogDAO.updateSymbol(excelProduct.getSymbol(), dbProduct.getId());
                                 countAffectedProducts++;
                             } else if (dbProduct.getPriceNet() == (excelProduct.getPriceNet()) && dbProduct.getCatalogNo().equals(excelProduct.getCatalogNo()) && dbProduct.getGroupId() == excelProduct.getGroupId() && dbProduct.getSymbol().equals(excelProduct.getSymbol())) {
                                 isNewProduct = false;
+                                countDBProducts = dbProducts.size() - countAffectedProducts;
                             }
                         }
                         if (isNewProduct) {
@@ -427,7 +427,7 @@ public class DashboardController extends Main implements Initializable {
                     System.out.println("openFile(" + e + " )");
                 }
                 if (countDBProducts != 0) {
-                    String successToPopup = "Faile aptikta produktų: " + countExcelProducts + "\nPridėti nauji produktai: " + countNewProducts +"\nPakeista produktų: " + countAffectedProducts +  "\n";
+                    String successToPopup = "Pakeista produktų: " + countAffectedProducts + "\nFaile aptikta produktų: " + countExcelProducts + "\nPridėti nauji produktai: " + countNewProducts + "\nDuomenų bazėje nepaveikti produktai: " + countDBProducts + "\n";
 
                     Platform.runLater(() -> {
                         showPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF");
@@ -436,11 +436,11 @@ public class DashboardController extends Main implements Initializable {
                     });
                 } else if (countAffectedProducts == 0 && countExcelProducts == 0 && countNewProducts == 0 && countDBProducts == 0) {
                     Platform.runLater(() -> {
-                        showPopupWindow("Klaida!", "- Nuskaityti nepavyko \n- Pasirinktas failas netinkamas : " + file.getName(), "#b02a37", "#FFFFFF");
+                        JPAUtil.showPopupWindow("Klaida!", "- Nuskaityti nepavyko \n- Pasirinktas failas netinkamas : " + file.getName(), "#b02a37", "#FFFFFF", getScene());
                         loadProgress.setVisible(false);
                     });
                 } else {
-                    String successToPopup = "Faile aptikta produktų: " + countExcelProducts + "\nPridėti nauji produktai: " + countNewProducts +"\nPakeista produktų: " + countAffectedProducts +  "\n";
+                    String successToPopup = "Pakeista produktų: " + countAffectedProducts + "\nFaile aptikta produktų: " + countExcelProducts + "\nPridėti nauji produktai: " + countNewProducts + "\nDuomenų bazėje nepaveikti produktai: " + countDBProducts + "\n";
 
                     Platform.runLater(() -> {
                         showPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF");

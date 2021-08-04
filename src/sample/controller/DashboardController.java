@@ -177,8 +177,8 @@ public class DashboardController extends Main implements Initializable {
                     if (event.getNewValue().isEmpty()) {
                         productCatalog = event.getRowValue();
                         productCatalog.setSymbol(event.getOldValue());
-                        showPopupWindow("Neįvestas produkto pavadinimas", "Redaguojant produkto pavadinimą\n" +
-                                "privalote įvesti reikšmę.", "#b02a37", "#FFFFFF");
+                        showErrorPopupWindow("Neįvestas produkto pavadinimas", "Redaguojant produkto pavadinimą\n" +
+                                "privalote įvesti reikšmę.", "#b02a37", "#FFFFFF", 350, 120);
                         System.out.println("SYMBOL IS EMPTY");
                     } else if (Validation.isValidSymbol(event.getNewValue())) {
                         productCatalog = event.getRowValue();
@@ -190,7 +190,7 @@ public class DashboardController extends Main implements Initializable {
                         productCatalog = event.getRowValue();
                         productCatalog.setSymbol(event.getOldValue());
                         table.refresh();
-                        showPopupWindow("Blogai įvestas produkto pavadinimas", "Netinkami simboliai: „!@#$*~<>?“\nEilutę privalo sudaryti nuo 2 iki 75 simbolių, \nlietuviški simboliai priimami", "#b02a37", "#FFFFFF");
+                        showErrorPopupWindow("Blogai įvestas produkto pavadinimas", "Netinkami simboliai: „!@#$*~<>?“\nEilutę privalo sudaryti nuo 2 iki 75 simbolių, \nlietuviški simboliai priimami", "#b02a37", "#FFFFFF", 350, 150);
                         System.out.println("REGEX VALIDATION DENIED");
                     }
                 }
@@ -234,12 +234,12 @@ public class DashboardController extends Main implements Initializable {
                             productCatalog = event.getRowValue();
                             productCatalog.setPriceNet(event.getOldValue());
                             table.refresh();
-                            showPopupWindow("Blogai įvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
+                            showErrorPopupWindow("Blogai įvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF", 350, 150);
                             System.out.println("REGEX VALIDATION DENIED");
                         } else if (event.getNewValue() == null) {
                             productCatalog = event.getRowValue();
                             productCatalog.setPriceNet(event.getOldValue());
-                            showPopupWindow("Neįvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
+                            showErrorPopupWindow("Neįvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF", 350, 150);
                             System.out.println("PRICENET IS EMPTY");
                             table.refresh();
                         } else if (Validation.isValidPrice(String.valueOf(event.getNewValue()))) {
@@ -252,7 +252,7 @@ public class DashboardController extends Main implements Initializable {
                             productCatalog = event.getRowValue();
                             productCatalog.setPriceNet(event.getOldValue());
                             table.refresh();
-                            showPopupWindow("Blogai įvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF");
+                            showErrorPopupWindow("Blogai įvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF", 350, 150);
                             System.out.println("REGEX VALIDATION DENIED");
                         }
                     }
@@ -430,23 +430,23 @@ public class DashboardController extends Main implements Initializable {
                 }
 
                 if (countEveryProductUpdated != 0 || countEveryNewProduct != 0) {
-                    String successToPopup = "\nFaile rasta produktų: " + countEveryProductInExcel + "\nPakeista produktų: " + countEveryProductUpdated + "\nPridėti nauji produktai: " + countEveryNewProduct + "\n";
+                    String successToPopup = "Faile rasta produktų: " + countEveryProductInExcel + "\nPakeista produktų: " + countEveryProductUpdated + "\nPridėti nauji produktai: " + countEveryNewProduct + "\n";
 
                     Platform.runLater(() -> {
-                        showPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF");
+                        showInformationPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF", 300, 130);
                         loadProgress.setVisible(false);
 
                     });
                 } else if (countEveryProductUpdated == 0 && countEveryNewProduct == 0 && countEveryProductInExcel == 0) {
                     Platform.runLater(() -> {
-                        JPAUtil.showPopupWindow("Klaida!", "Failas nebuvo nuskaitytas dėl blogo lentelių formato, \npatikrinkite ar dokumente nepalikote klaidų. \n\nFailo pavadinimas: " + file.getName(), "#b02a37", "#FFFFFF", getScene(), 400, 150);
+                        JPAUtil.showWarningPopupWindow("Klaida!", "Failas nebuvo nuskaitytas dėl blogo lentelių formato, \npatikrinkite ar dokumente nepalikote klaidų. \n\nFailo pavadinimas: " + file.getName(), "#b02a37", "#FFFFFF", getScene(), 400, 150);
                         loadProgress.setVisible(false);
                     });
                 } else {
-                    String successToPopup = "\nFaile rasta produktų: " + countEveryProductInExcel + "\nPakeista produktų: " + countEveryProductUpdated + "\nPridėti nauji produktai: " + countEveryNewProduct + "\n";
+                    String successToPopup = "Faile rasta produktų: " + countEveryProductInExcel + "\nPakeista produktų: " + countEveryProductUpdated + "\nPridėti nauji produktai: " + countEveryNewProduct + "\n";
 
                     Platform.runLater(() -> {
-                        showPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF");
+                        showInformationPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF", 300, 130);
                         loadProgress.setVisible(false);
 
                     });
@@ -1363,7 +1363,7 @@ public class DashboardController extends Main implements Initializable {
     }
 
     public void aboutInfo() {
-        showPopupWindow("Informacija", "UAB „ECO SPRENDIMAI“\nSusisiekti galite:\n- Tel.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El. paštu: " + Constants.CONTACT_EMAIL + "\nProgramos versija: " + Constants.PROGRAM_VERSION, "#0a58ca", "#FFFFFF");
+        showInformationPopupWindow("Informacija", "UAB „ECO SPRENDIMAI“\nSusisiekti galite:\n- Tel.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El. paštu: " + Constants.CONTACT_EMAIL + "\nProgramos versija: " + Constants.PROGRAM_VERSION, "#0a58ca", "#FFFFFF", 400, 150);
     }
 
     public void windowClose() { //Uzdaro prisijungimo langa
@@ -1400,10 +1400,7 @@ public class DashboardController extends Main implements Initializable {
             @Override
             protected TabPane call() throws Exception {
                 TabPane tabPane = new TabPane();
-//                final int count = 1000 - 1;
-//                for (int i = 1; i <= count; i++) {
-//                    Thread.sleep(100000);
-//                }
+
                 return tabPane;
             }
         };
@@ -1424,73 +1421,127 @@ public class DashboardController extends Main implements Initializable {
         table.setItems(observableProducts);
     }
 
-    public void showPopupWindow(String title, String information, String titleBackgroundColor, String titleTextColor) {
+//    public void showPopupWindow(String title, String information, String titleBackgroundColor, String titleTextColor) {
+//
+//        Window parent = table.getScene().getWindow();
+//        Popup popup = new Popup();
+//
+//        VBox root = new VBox();
+//        root.setAlignment(Pos.CENTER);
+//        root.setStyle("-fx-border-width: 1; -fx-border-color: #000000; -fx-effect: dropshadow(two-pass-box, #000000, 10, 0.0, 1.0, 1.0);");
+//
+//
+//        HBox hBox1 = new HBox();
+//        hBox1.setStyle("-fx-background-color: " + titleBackgroundColor + ";");
+//        hBox1.setAlignment(Pos.CENTER);
+//        hBox1.setMinSize(450, 29);
+//
+//        HBox hBox11 = new HBox();
+//        hBox11.setAlignment(Pos.CENTER_LEFT);
+//        hBox11.setMinSize(420, 28);
+//        hBox11.setPrefSize(420, 28);
+//
+//        Label labelTitle = new Label();
+//        labelTitle.setMinSize(100, 29);
+//        labelTitle.setAlignment(Pos.CENTER_LEFT);
+//        labelTitle.setText(title);
+//        labelTitle.setStyle("-fx-font-size: 14;");
+//        labelTitle.setTextFill(Paint.valueOf(titleTextColor));
+//        hBox1.getChildren().add(hBox11);
+//        hBox11.getChildren().add(labelTitle);
+//
+//        HBox hBox2 = new HBox();
+//        HBox hBox21 = new HBox();
+//        hBox21.setMinSize(370, 160);
+//
+//        hBox2.setStyle("-fx-background-color: #FFFFFF;");
+//        hBox2.setAlignment(Pos.CENTER);
+//        hBox2.setMinSize(350, 120);
+//        Label stringInformation = new Label();
+//        stringInformation.setMinSize(300, 100);
+//        stringInformation.setStyle("-fx-font-size: 14;");
+//        stringInformation.setAlignment(Pos.CENTER_LEFT);
+//        stringInformation.setText(information);
+//        hBox2.getChildren().add(stringInformation);
+//
+//        HBox hBox3 = new HBox();
+//        hBox3.setStyle("-fx-background-color: #F0F0F0;");
+//        hBox3.setAlignment(Pos.CENTER_RIGHT);
+//        hBox3.setMinSize(170, 65);
+//        HBox hBox31 = new HBox();
+//        hBox31.setStyle("-fx-background-color: #F0F0F0;");
+//        hBox31.setAlignment(Pos.CENTER);
+//        hBox31.setMinSize(140, 28);
+//        Button okButton = new Button();
+//        okButton.setText("Gerai" + "\n");
+//        okButton.setStyle("-fx-font-size: 14; -fx-background-radius: 0; -fx-background-color: #0078D7, linear-gradient(#E1e1e1, #E1E1E1);");
+//        okButton.setMinSize(82, 28);
+//        okButton.setAlignment(Pos.CENTER);
+//        okButton.setOnAction(event -> popup.hide());
+//
+//        hBox31.getChildren().add(okButton);
+//        hBox3.getChildren().add(hBox31);
+//
+//        root.getChildren().add(hBox1);
+//        root.getChildren().add(hBox2);
+//        root.getChildren().add(hBox3);
+//
+//        popup.getContent().addAll(root);
+//        popup.show(parent);
+//    }
+    public static void showInformationPopupWindow(String title, String information, String titleBackroundColor, String titleTextColor, int width, int height) {
 
-        Window parent = table.getScene().getWindow();
-        Popup popup = new Popup();
+        Alert dialog = new Alert(Alert.AlertType.INFORMATION);
+        dialog.setHeaderText(null);
+        dialog.setContentText(information);
+        dialog.setTitle(title);
+        //FIXME: Remove after release 8u40
 
-        VBox root = new VBox();
-        root.setAlignment(Pos.CENTER);
-        root.setStyle("-fx-border-width: 1; -fx-border-color: #000000; -fx-effect: dropshadow(two-pass-box, #000000, 10, 0.0, 1.0, 1.0);");
+        dialog.getDialogPane().setPrefSize(width, height);
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
 
 
-        HBox hBox1 = new HBox();
-        hBox1.setStyle("-fx-background-color: " + titleBackgroundColor + ";");
-        hBox1.setAlignment(Pos.CENTER);
-        hBox1.setMinSize(450, 29);
 
-        HBox hBox11 = new HBox();
-        hBox11.setAlignment(Pos.CENTER_LEFT);
-        hBox11.setMinSize(420, 28);
-        hBox11.setPrefSize(420, 28);
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent e) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
+        ButtonType buttonTypeOne = new ButtonType("Atnaujinti ryšį");
+        dialog.getButtonTypes().setAll(buttonTypeOne);
 
-        Label labelTitle = new Label();
-        labelTitle.setMinSize(100, 29);
-        labelTitle.setAlignment(Pos.CENTER_LEFT);
-        labelTitle.setText(title);
-        labelTitle.setStyle("-fx-font-size: 14;");
-        labelTitle.setTextFill(Paint.valueOf(titleTextColor));
-        hBox1.getChildren().add(hBox11);
-        hBox11.getChildren().add(labelTitle);
+        Optional<ButtonType> result = dialog.showAndWait();
 
-        HBox hBox2 = new HBox();
-        HBox hBox21 = new HBox();
-        hBox21.setMinSize(370, 160);
-
-        hBox2.setStyle("-fx-background-color: #FFFFFF;");
-        hBox2.setAlignment(Pos.CENTER);
-        hBox2.setMinSize(350, 120);
-        Label stringInformation = new Label();
-        stringInformation.setMinSize(300, 100);
-        stringInformation.setStyle("-fx-font-size: 14;");
-        stringInformation.setAlignment(Pos.CENTER_LEFT);
-        stringInformation.setText(information);
-        hBox2.getChildren().add(stringInformation);
-
-        HBox hBox3 = new HBox();
-        hBox3.setStyle("-fx-background-color: #F0F0F0;");
-        hBox3.setAlignment(Pos.CENTER_RIGHT);
-        hBox3.setMinSize(170, 65);
-        HBox hBox31 = new HBox();
-        hBox31.setStyle("-fx-background-color: #F0F0F0;");
-        hBox31.setAlignment(Pos.CENTER);
-        hBox31.setMinSize(140, 28);
-        Button okButton = new Button();
-        okButton.setText("Gerai" + "\n");
-        okButton.setStyle("-fx-font-size: 14; -fx-background-radius: 0; -fx-background-color: #0078D7, linear-gradient(#E1e1e1, #E1E1E1);");
-        okButton.setMinSize(82, 28);
-        okButton.setAlignment(Pos.CENTER);
-        okButton.setOnAction(event -> popup.hide());
-
-        hBox31.getChildren().add(okButton);
-        hBox3.getChildren().add(hBox31);
-
-        root.getChildren().add(hBox1);
-        root.getChildren().add(hBox2);
-        root.getChildren().add(hBox3);
-
-        popup.getContent().addAll(root);
-        popup.show(parent);
     }
+
+    public static void showErrorPopupWindow(String title, String information, String titleBackroundColor, String titleTextColor, int width, int height) {
+
+        Alert dialog = new Alert(Alert.AlertType.ERROR);
+        dialog.setHeaderText(null);
+        dialog.setContentText(information);
+        dialog.setTitle(title);
+        //FIXME: Remove after release 8u40
+
+        dialog.getDialogPane().setPrefSize(width, height);
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+
+
+
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent e) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
+        ButtonType buttonTypeOne = new ButtonType("Atnaujinti ryšį");
+        dialog.getButtonTypes().setAll(buttonTypeOne);
+
+        Optional<ButtonType> result = dialog.showAndWait();
+
+    }
+
 }
 

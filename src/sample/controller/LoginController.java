@@ -172,7 +172,7 @@ public class LoginController implements Initializable {
                             });
                         } else {
                             Platform.runLater(() -> {
-                                JPAUtil.showPopupWindow("Informacija", "Vartotojo paskyra yra išjungta. \nPrašome kreiptis į ECOSprendimai atstovą.\n- Telefono nr.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El.paštas: " + Constants.CONTACT_EMAIL, "#0a58ca", "#FFFFFF", login_info_label.getScene(), 400, 150);
+                                JPAUtil.showErrorPopupWindowAndClose("Informacija", "Vartotojo paskyra yra išjungta. \nPrašome kreiptis į ECOSprendimai atstovą.\n- Telefono nr.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El.paštas: " + Constants.CONTACT_EMAIL, "#0a58ca", "#FFFFFF", login_info_label.getScene(), 400, 150);
                             });
                         }
 

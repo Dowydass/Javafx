@@ -87,5 +87,5 @@ public class Constants {
     public static final String PROGRAM_VERSION = "1.0";
     public static final String EMAIL_CONTACT_LINE = "Susiekite el. paštu su ECO Sprendimai atstovu: ";
     public static final String CONTACT_EMAIL = "julius@ecosprendimai.lt";
-    public static final String CONTACT_PHONE_NUMBER = "Telefonas: 869981772";
+    public static final String CONTACT_PHONE_NUMBER = "+370 699 81772";
 }

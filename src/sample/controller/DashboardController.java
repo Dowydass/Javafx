@@ -439,7 +439,7 @@ public class DashboardController extends Main implements Initializable {
                     });
                 } else if (countEveryProductUpdated == 0 && countEveryNewProduct == 0 && countEveryProductInExcel == 0) {
                     Platform.runLater(() -> {
-                        JPAUtil.showPopupWindow("Klaida!", "- Nuskaityti nepavyko \n- Pasirinktas failas netinkamas : " + file.getName(), "#b02a37", "#FFFFFF", getScene());
+                        JPAUtil.showPopupWindow("Klaida!", "Failas nebuvo nuskaitytas dėl blogo lentelių formato, \npatikrinkite ar dokumente nepalikote klaidų. \n\nFailo pavadinimas: " + file.getName(), "#b02a37", "#FFFFFF", getScene(), 400, 150);
                         loadProgress.setVisible(false);
                     });
                 } else {

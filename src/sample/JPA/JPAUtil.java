@@ -40,10 +40,10 @@ public class JPAUtil {
         if (factory == null) {
             try {
                 factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-            } catch (RuntimeException exception) {
+            } catch (RuntimeException e) {
                 System.out.println("JPAUtil RuntimeException ");
                 Platform.runLater(() -> {
-                    showPopupWindowAndClose("Nepavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Klaidos kodas: JPAUtil PersistenceException\n- Programos versija: " + Constants.PROGRAM_VERSION, "#b02a37", "#FFFFFF", getScene());
+                    showPopupWindow("Nepavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Tel. nr.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El. paštu: " + Constants.CONTACT_EMAIL +  "\n- Programos versija: " + Constants.PROGRAM_VERSION + "\n- Klaidos kodas: " + e, "#b02a37", "#FFFFFF", getScene(), 500, 200);
                 });
             }
         }
@@ -65,7 +65,7 @@ public class JPAUtil {
     }
 
 
-    public static void showPopupWindow(String title, String information, String titleBackroundColor, String titleTextColor, Scene scene) {
+    public static void showPopupWindow(String title, String information, String titleBackroundColor, String titleTextColor, Scene scene, int width, int height) {
 
 
         //   Window parent = scene.getWindow();
@@ -78,7 +78,7 @@ public class JPAUtil {
         dialog.setTitle(title);
         //FIXME: Remove after release 8u40
 
-        dialog.getDialogPane().setPrefSize(630, 150);
+        dialog.getDialogPane().setPrefSize(width, height);
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
 
 

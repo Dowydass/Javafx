@@ -382,6 +382,10 @@ public class DashboardController extends Main implements Initializable {
                     e.printStackTrace();
                 }
 
+                System.out.println("!!!!!!!");
+                System.out.println(excelProducts.size());
+                System.out.println("!!!!!!!");
+
                 assert excelProducts != null;
 
 
@@ -1359,7 +1363,7 @@ public class DashboardController extends Main implements Initializable {
     }
 
     public void aboutInfo() {
-        showPopupWindow("Informacija", "UAB „ECO SPRENDIMAI“\nSusisiekti galite:\n- Tel.: 869981772\n- El. paštu: julius@ecosprendimai.lt\nProgramos versija: " + Constants.PROGRAM_VERSION, "#0a58ca", "#FFFFFF");
+        showPopupWindow("Informacija", "UAB „ECO SPRENDIMAI“\nSusisiekti galite:\n- Tel.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El. paštu: " + Constants.CONTACT_EMAIL + "\nProgramos versija: " + Constants.PROGRAM_VERSION, "#0a58ca", "#FFFFFF");
     }
 
     public void windowClose() { //Uzdaro prisijungimo langa

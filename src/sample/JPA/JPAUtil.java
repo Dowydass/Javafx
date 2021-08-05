@@ -24,7 +24,7 @@ public class JPAUtil {
             } catch (RuntimeException e) {
                 System.out.println("JPAUtil RuntimeException ");
                 Platform.runLater(() -> {
-                    showWarningPopupWindow("Nepavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Tel. nr.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El. paštu: " + Constants.CONTACT_EMAIL +  "\n- Programos versija: " + Constants.PROGRAM_VERSION + "\n- Klaidos kodas: " + e, "#b02a37", "#FFFFFF", getScene(), 500, 200);
+                    showWarningPopupWindow("Nepavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Tel. nr.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El. paštu: " + Constants.CONTACT_EMAIL +  "\n- Programos versija: " + Constants.PROGRAM_VERSION + "\n- Klaidos kodas: " + e, 500, 200, Constants.BUTTON_NAME_OK);
                 });
             }
         }
@@ -46,13 +46,12 @@ public class JPAUtil {
     }
 
 
-    public static void showWarningPopupWindow(String title, String information, String titleBackroundColor, String titleTextColor, Scene scene, int width, int height) {
+    public static void showWarningPopupWindow(String title, String information, int width, int height, String buttonName) {
 
         Alert dialog = new Alert(Alert.AlertType.WARNING);
         dialog.setHeaderText(null);
         dialog.setContentText(information);
         dialog.setTitle(title);
-        //FIXME: Remove after release 8u40
 
         dialog.getDialogPane().setPrefSize(width, height);
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
@@ -66,7 +65,7 @@ public class JPAUtil {
                 System.exit(0);
             }
         });
-        ButtonType buttonTypeOne = new ButtonType("Atnaujinti ryšį");
+        ButtonType buttonTypeOne = new ButtonType(buttonName);
         dialog.getButtonTypes().setAll(buttonTypeOne);
 
         Optional<ButtonType> result = dialog.showAndWait();
@@ -74,27 +73,18 @@ public class JPAUtil {
     }
 
 
-    public static void showInfoPopupWindow(String title, String information, String titleBackroundColor, String titleTextColor, Scene scene, int width, int height) {
+    public static void showInfoPopupWindow(String title, String information, int width, int height, String buttonName) {
 
         Alert dialog = new Alert(Alert.AlertType.INFORMATION);
         dialog.setHeaderText(null);
         dialog.setContentText(information);
         dialog.setTitle(title);
-        //FIXME: Remove after release 8u40
 
         dialog.getDialogPane().setPrefSize(width, height);
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
 
 
-
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent e) {
-                Platform.exit();
-                System.exit(0);
-            }
-        });
-        ButtonType buttonTypeOne = new ButtonType("Atnaujinti ryšį");
+        ButtonType buttonTypeOne = new ButtonType(buttonName);
         dialog.getButtonTypes().setAll(buttonTypeOne);
 
         Optional<ButtonType> result = dialog.showAndWait();
@@ -106,13 +96,12 @@ public class JPAUtil {
         System.exit(0);
     }
 
-    public static void showErrorPopupWindowAndClose(String title, String information, String titleBackroundColor, String titleTextColor, Scene scene, int width, int height) {
+    public static void showErrorPopupWindowAndClose(String title, String information, int width, int height, String buttonName) {
 
         Alert dialog = new Alert(Alert.AlertType.ERROR);
         dialog.setHeaderText(null);
         dialog.setContentText(information);
         dialog.setTitle(title);
-        //FIXME: Remove after release 8u40
 
         dialog.getDialogPane().setPrefSize(width, height);
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
@@ -126,12 +115,13 @@ public class JPAUtil {
                 System.exit(0);
             }
         });
-        ButtonType buttonTypeOne = new ButtonType("Atnaujinti ryšį");
+        ButtonType buttonTypeOne = new ButtonType(buttonName);
         dialog.getButtonTypes().setAll(buttonTypeOne);
 
         Optional<ButtonType> result = dialog.showAndWait();
         if (result.get() == buttonTypeOne) {
             Platform.exit();
+            System.exit(0);
         }
 
 

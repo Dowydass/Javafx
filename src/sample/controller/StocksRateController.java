@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 public class StocksRateController extends Main implements Initializable {
 
 
-    public Label stock_symbol;
+
     public Label stock_currency;
     public Label stock_closed;
     public Label stock_date;
@@ -63,7 +63,6 @@ public class StocksRateController extends Main implements Initializable {
             ioException.printStackTrace();
         }
 
-        stock_symbol.setText(rateInfo.getSymbol());
         stock_currency.setText(rateInfo.getCurrency());
 
 

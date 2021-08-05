@@ -46,7 +46,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-import static sample.JPA.JPAUtil.getScene;
+
 
 public class DashboardController extends Main implements Initializable {
 
@@ -178,7 +178,7 @@ public class DashboardController extends Main implements Initializable {
                         productCatalog = event.getRowValue();
                         productCatalog.setSymbol(event.getOldValue());
                         showErrorPopupWindow("Neįvestas produkto pavadinimas", "Redaguojant produkto pavadinimą\n" +
-                                "privalote įvesti reikšmę.", "#b02a37", "#FFFFFF", 350, 120);
+                                "privalote įvesti reikšmę.", 350, 120);
                         System.out.println("SYMBOL IS EMPTY");
                     } else if (Validation.isValidSymbol(event.getNewValue())) {
                         productCatalog = event.getRowValue();
@@ -190,7 +190,7 @@ public class DashboardController extends Main implements Initializable {
                         productCatalog = event.getRowValue();
                         productCatalog.setSymbol(event.getOldValue());
                         table.refresh();
-                        showErrorPopupWindow("Blogai įvestas produkto pavadinimas", "Netinkami simboliai: „!@#$*~<>?“\nEilutę privalo sudaryti nuo 2 iki 75 simbolių, \nlietuviški simboliai priimami", "#b02a37", "#FFFFFF", 350, 150);
+                        showErrorPopupWindow("Blogai įvestas produkto pavadinimas", "Netinkami simboliai: „!@#$*~<>?“\nEilutę privalo sudaryti nuo 2 iki 75 simbolių, \nlietuviški simboliai priimami", 350, 150);
                         System.out.println("REGEX VALIDATION DENIED");
                     }
                 }
@@ -234,12 +234,12 @@ public class DashboardController extends Main implements Initializable {
                             productCatalog = event.getRowValue();
                             productCatalog.setPriceNet(event.getOldValue());
                             table.refresh();
-                            showErrorPopupWindow("Blogai įvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF", 350, 150);
+                            showErrorPopupWindow("Blogai įvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", 350, 150);
                             System.out.println("REGEX VALIDATION DENIED");
                         } else if (event.getNewValue() == null) {
                             productCatalog = event.getRowValue();
                             productCatalog.setPriceNet(event.getOldValue());
-                            showErrorPopupWindow("Neįvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF", 350, 150);
+                            showErrorPopupWindow("Neįvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", 350, 150);
                             System.out.println("PRICENET IS EMPTY");
                             table.refresh();
                         } else if (Validation.isValidPrice(String.valueOf(event.getNewValue()))) {
@@ -252,7 +252,7 @@ public class DashboardController extends Main implements Initializable {
                             productCatalog = event.getRowValue();
                             productCatalog.setPriceNet(event.getOldValue());
                             table.refresh();
-                            showErrorPopupWindow("Blogai įvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", "#b02a37", "#FFFFFF", 350, 150);
+                            showErrorPopupWindow("Blogai įvesta produkto kaina", "Skaičius turi būti 1 arba daugiau simbolių, po kablelio turėti vieną,\ndu arba neturėti skaitmenų. Pavyzdžiui:\n „30“, „7.15“, „1500.0“ ir t.t.", 350, 150);
                             System.out.println("REGEX VALIDATION DENIED");
                         }
                     }
@@ -433,20 +433,20 @@ public class DashboardController extends Main implements Initializable {
                     String successToPopup = "Faile rasta produktų: " + countEveryProductInExcel + "\nPakeista produktų: " + countEveryProductUpdated + "\nPridėti nauji produktai: " + countEveryNewProduct + "\n";
 
                     Platform.runLater(() -> {
-                        showInformationPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF", 300, 130);
+                        showInformationPopupWindow("Failas sėkmingai įkeltas", successToPopup, 300, 130);
                         loadProgress.setVisible(false);
 
                     });
                 } else if (countEveryProductUpdated == 0 && countEveryNewProduct == 0 && countEveryProductInExcel == 0) {
                     Platform.runLater(() -> {
-                        JPAUtil.showWarningPopupWindow("Klaida!", "Failas nebuvo nuskaitytas dėl blogo lentelių formato, \npatikrinkite ar dokumente nepalikote klaidų. \n\nFailo pavadinimas: " + file.getName(), "#b02a37", "#FFFFFF", getScene(), 400, 150);
+                        showErrorPopupWindow("Klaida!", "Failas nebuvo nuskaitytas dėl blogo lentelių formato, \npatikrinkite ar dokumente nepalikote klaidų. \n\nFailo pavadinimas: " + file.getName(), 400, 150);
                         loadProgress.setVisible(false);
                     });
                 } else {
                     String successToPopup = "Faile rasta produktų: " + countEveryProductInExcel + "\nPakeista produktų: " + countEveryProductUpdated + "\nPridėti nauji produktai: " + countEveryNewProduct + "\n";
 
                     Platform.runLater(() -> {
-                        showInformationPopupWindow("Failas sėkmingai įkeltas", successToPopup, "#146c43", "#FFFFFF", 300, 130);
+                        showInformationPopupWindow("Failas sėkmingai įkeltas", successToPopup, 300, 130);
                         loadProgress.setVisible(false);
 
                     });
@@ -1363,7 +1363,7 @@ public class DashboardController extends Main implements Initializable {
     }
 
     public void aboutInfo() {
-        showInformationPopupWindow("Informacija", "UAB „ECO SPRENDIMAI“\nSusisiekti galite:\n- Tel.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El. paštu: " + Constants.CONTACT_EMAIL + "\nProgramos versija: " + Constants.PROGRAM_VERSION, "#0a58ca", "#FFFFFF", 400, 150);
+        showInformationPopupWindow("Informacija", "UAB „ECO SPRENDIMAI“\nSusisiekti galite:\n- Tel.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El. paštu: " + Constants.CONTACT_EMAIL + "\nProgramos versija: " + Constants.PROGRAM_VERSION, 400, 150);
     }
 
     public void windowClose() { //Uzdaro prisijungimo langa
@@ -1489,56 +1489,33 @@ public class DashboardController extends Main implements Initializable {
 //        popup.getContent().addAll(root);
 //        popup.show(parent);
 //    }
-    public static void showInformationPopupWindow(String title, String information, String titleBackroundColor, String titleTextColor, int width, int height) {
+    public static void showInformationPopupWindow(String title, String information, int width, int height) {
 
         Alert dialog = new Alert(Alert.AlertType.INFORMATION);
         dialog.setHeaderText(null);
         dialog.setContentText(information);
         dialog.setTitle(title);
-        //FIXME: Remove after release 8u40
 
         dialog.getDialogPane().setPrefSize(width, height);
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
 
-
-
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent e) {
-                Platform.exit();
-                System.exit(0);
-            }
-        });
-        ButtonType buttonTypeOne = new ButtonType("Gerai");
+        ButtonType buttonTypeOne = new ButtonType(Constants.BUTTON_NAME_OK);
         dialog.getButtonTypes().setAll(buttonTypeOne);
 
         Optional<ButtonType> result = dialog.showAndWait();
 
     }
 
-    public static void showErrorPopupWindow(String title, String information, String titleBackroundColor, String titleTextColor, int width, int height) {
+    public static void showErrorPopupWindow(String title, String information, int width, int height) {
 
         Alert dialog = new Alert(Alert.AlertType.ERROR);
         dialog.setHeaderText(null);
         dialog.setContentText(information);
         dialog.setTitle(title);
-        //FIXME: Remove after release 8u40
-
         dialog.getDialogPane().setPrefSize(width, height);
-        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
 
-
-
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent e) {
-                Platform.exit();
-                System.exit(0);
-            }
-        });
-        ButtonType buttonTypeOne = new ButtonType("Gerai");
+        ButtonType buttonTypeOne = new ButtonType(Constants.BUTTON_NAME_OK);
         dialog.getButtonTypes().setAll(buttonTypeOne);
-
         Optional<ButtonType> result = dialog.showAndWait();
 
     }

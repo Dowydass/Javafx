@@ -1509,7 +1509,7 @@ public class DashboardController extends Main implements Initializable {
                 System.exit(0);
             }
         });
-        ButtonType buttonTypeOne = new ButtonType("Atnaujinti ryšį");
+        ButtonType buttonTypeOne = new ButtonType("Gerai");
         dialog.getButtonTypes().setAll(buttonTypeOne);
 
         Optional<ButtonType> result = dialog.showAndWait();
@@ -1536,7 +1536,7 @@ public class DashboardController extends Main implements Initializable {
                 System.exit(0);
             }
         });
-        ButtonType buttonTypeOne = new ButtonType("Atnaujinti ryšį");
+        ButtonType buttonTypeOne = new ButtonType("Gerai");
         dialog.getButtonTypes().setAll(buttonTypeOne);
 
         Optional<ButtonType> result = dialog.showAndWait();

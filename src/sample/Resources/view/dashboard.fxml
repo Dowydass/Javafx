@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefWidth="1342.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DashboardController">
+<AnchorPane prefWidth="1342.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DashboardController">
     <children>
         <TableView fx:id="table" fixedCellSize="0.0" layoutX="387.0" layoutY="56.0" onMouseClicked="#mouseEventForTableView" prefHeight="463.0" prefWidth="537.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="418.0" AnchorPane.topAnchor="56.0">
             <columns>
@@ -34,7 +34,7 @@
         <Label fx:id="current_session_user_status" layoutX="1012.0" layoutY="40.0" prefHeight="17.0" prefWidth="195.0" text="Vartotojas" textFill="#808080" AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="40.0" />
         <Label layoutX="953.0" layoutY="59.0" text="El. paštas:" AnchorPane.rightAnchor="341.0" AnchorPane.topAnchor="59.0" />
         <Button fx:id="close_button" layoutX="1236.0" layoutY="29.0" mnemonicParsing="false" onAction="#goBackToLogin" prefHeight="50.0" prefWidth="102.0" style="-fx-background-radius: 0px; -fx-background-color: #474747;" text="Atsijungti" textFill="WHITE" underline="true" AnchorPane.rightAnchor="4.0" />
-        <ProgressIndicator fx:id="loadProgress" layoutX="630.0" layoutY="240.0" progress="0.0" visible="false" />
+        <ProgressIndicator fx:id="loadProgress" layoutX="410.0" layoutY="95.0" maxHeight="70.0" maxWidth="70.0" progress="0.0" visible="false" />
         <MenuBar fx:id="menu_bar" prefHeight="25.0" prefWidth="1342.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <menus>
                 <Menu fx:id="file_menu_bar" mnemonicParsing="false" text="Failas">

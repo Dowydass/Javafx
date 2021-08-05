@@ -144,21 +144,21 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_VARDINE_SROVE_PATTERN = "^[0-9 ]{1,10}(?=.*A).*$";
+    public static final String PRODUCT_FORM_VARDINE_SROVE_PATTERN = "^[0-9 ]{1,11}(?=.*A).*$";
     public static boolean isValidVardineSrove(String vardineSrove) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_VARDINE_SROVE_PATTERN);
         Matcher matcher = pattern.matcher(vardineSrove);
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_VARDINE_ITAMPA_PATTERN = "^[0-9 ]{1,11}(?=.*V AC).*$";
+    public static final String PRODUCT_FORM_VARDINE_ITAMPA_PATTERN = "^[0-9 ]{1,13}(?=.*V AC).*$";
     public static boolean isValidVardineItampa(String vardineItampa) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_VARDINE_ITAMPA_PATTERN);
         Matcher matcher = pattern.matcher(vardineItampa);
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_MECHANINIS_ATSPARUMAS_IK_PATTERN = "^[0-9A-Za-z ]{1,10}$";
+    public static final String PRODUCT_FORM_MECHANINIS_ATSPARUMAS_IK_PATTERN = "^[0-9A-Za-z ]{3,255}$";
     public static boolean isValidMechaninisAtsparumasIK(String mechaninisAtsparumasIK) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_MECHANINIS_ATSPARUMAS_IK_PATTERN);
         Matcher matcher = pattern.matcher(mechaninisAtsparumasIK);
@@ -193,7 +193,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_GALIA_PATTERN = "^[0-9 /]{1,10}(?=.*W).*$";
+    public static final String PRODUCT_FORM_GALIA_PATTERN = "^[0-9 /]{1,11}(?=.*W).*$";
     public static boolean isValidGalia(String galia) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_GALIA_PATTERN);
         Matcher matcher = pattern.matcher(galia);
@@ -207,7 +207,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_SVIESOS_SPALVOS_TEMPERATURA_PATTERN= "[0-9 ]{1,10}(?=.*K).*$";
+    public static final String PRODUCT_FORM_SVIESOS_SPALVOS_TEMPERATURA_PATTERN= "[0-9 ]{1,11}(?=.*K).*$";
     public static boolean isValidSviesosSpalvosTemperatura(String sviesosSpalvosTemperatura) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_SVIESOS_SPALVOS_TEMPERATURA_PATTERN);
         Matcher matcher = pattern.matcher(sviesosSpalvosTemperatura);
@@ -221,14 +221,8 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_IZOLIACIJA2_PATTERN = "^[a-zA-Z ĄąČčĘęĖėĮįŠšŲųŪūŽž]{3,255}$";
-    public static boolean isValidIzoliacija2(String izoliacija2) {
-        Pattern pattern = Pattern.compile(PRODUCT_FORM_IZOLIACIJA2_PATTERN);
-        Matcher matcher = pattern.matcher(izoliacija2);
-        return matcher.find();
-    }
 
-    public static final String PRODUCT_FORM_DARBINE_TEMPERATURA_PATTERN = "^[0-9a-zA-Z -°]{1,10}(?=.*C).*$";
+    public static final String PRODUCT_FORM_DARBINE_TEMPERATURA_PATTERN = "^[0-9a-zA-Z -°]{1,12}(?=.*C).*$";
     public static boolean isValidDarbineTemperatura(String darbineTemperatura) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_DARBINE_TEMPERATURA_PATTERN);
         Matcher matcher = pattern.matcher(darbineTemperatura);
@@ -256,7 +250,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_ISJUNGIMO_GEBA_PATTERN= "^[0-9]{1,10}(?=.*kA).*$";
+    public static final String PRODUCT_FORM_ISJUNGIMO_GEBA_PATTERN= "^[0-9]{1,12}(?=.*kA).*$";
     public static boolean isValidIsjungimoGeba(String isjungimoGeba) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_ISJUNGIMO_GEBA_PATTERN);
         Matcher matcher = pattern.matcher(isjungimoGeba);
@@ -270,28 +264,28 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_MECHANINIS_ATSPARUMAS_PATTERN= "^[0-9 /]{1,10}(?=.*N).*$";
+    public static final String PRODUCT_FORM_MECHANINIS_ATSPARUMAS_PATTERN= "^[0-9 /]{1,255}(?=.*N).*$";
     public static boolean isValidMechaninisAtsparumas(String mechaninisAtsparumas) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_MECHANINIS_ATSPARUMAS_PATTERN);
         Matcher matcher = pattern.matcher(mechaninisAtsparumas);
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_SKERSPJUVIS_PATTERN= "^[0-9a-zA-Z -:,]{1,10}$";
-    public static boolean isValidSkerspjuvis(String skerspjuvis) {
-        Pattern pattern = Pattern.compile(PRODUCT_FORM_SKERSPJUVIS_PATTERN);
+    public static final String PRODUCT_FORM_SKERSPJUVIS_AL_PATTERN= "^[0-9a-zA-Z -:,]{3,255}$";
+    public static boolean isValidSkerspjuvisAl(String skerspjuvis) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_SKERSPJUVIS_AL_PATTERN);
         Matcher matcher = pattern.matcher(skerspjuvis);
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_SKERSPJUVIS2_PATTERN= "^[0-9a-zA-Z -:,]{1,10}$";
-    public static boolean isValidSkerspjuvis2(String skerspjuvis2) {
-        Pattern pattern = Pattern.compile(PRODUCT_FORM_SKERSPJUVIS2_PATTERN);
+    public static final String PRODUCT_FORM_SKERSPJUVIS_CU_PATTERN= "^[0-9a-zA-Z -:,]{3,255}$";
+    public static boolean isValidSkerspjuvisCu(String skerspjuvis2) {
+        Pattern pattern = Pattern.compile(PRODUCT_FORM_SKERSPJUVIS_CU_PATTERN);
         Matcher matcher = pattern.matcher(skerspjuvis2);
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_NUOTEKU_SROVE_PATTERN= "^[0-9 ]{1,10}(?=.*mA).*$";
+    public static final String PRODUCT_FORM_NUOTEKU_SROVE_PATTERN= "^[0-9 ]{1,12}(?=.*mA).*$";
     public static boolean isValidNuotekuSrove(String nuotekuSrove) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_NUOTEKU_SROVE_PATTERN);
         Matcher matcher = pattern.matcher(nuotekuSrove);

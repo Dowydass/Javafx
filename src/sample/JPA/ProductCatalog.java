@@ -27,23 +27,23 @@ public class ProductCatalog {
     private int groupId;
     //@ManyToOne(targetEntity = Categories.class, fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     //@JoinColumn(name = "group_id", referencedColumnName = "id")
-    @Column(name = "aukstis")
+    @Column(name = "aukstis", length = 10)
     private double aukstis;
-    @Column(name = "plotis")
+    @Column(name = "plotis", length = 10)
     private double plotis;
-    @Column(name = "gylis")
+    @Column(name = "gylis", length = 10)
     private double gylis;
-    @Column(name = "skersmuo")
+    @Column(name = "skersmuo", length = 10)
     private double skersmuo;
-    @Column(name = "ilgis")
+    @Column(name = "ilgis", length = 10)
     private double ilgis;
     @Column(name = "apsaugos_laipsnis")
     private String apsaugos_laipsnis;
-    @Column(name = "moduliu_skaicius")
+    @Column(name = "moduliu_skaicius", length = 10)
     private double moduliu_skaicius;
-    @Column(name = "vardine_srove")
+    @Column(name = "vardine_srove", length = 11)
     private String vardine_srove;
-    @Column(name = "vardine_itampa")
+    @Column(name = "vardine_itampa", length = 13)
     private String vardine_itampa;
     @Column(name = "mechaninis_atsparumas_IK")
     private String mechaninis_atsparumas_IK;
@@ -53,25 +53,25 @@ public class ProductCatalog {
     private String korpuso_medziaga;
     @Column(name = "izoliacija")
     private String izoliacija;
-    @Column(name = "svoris")
+    @Column(name = "svoris", length = 10)
     private double svoris;
-    @Column(name = "galia")
+    @Column(name = "galia", length = 11)
     private String galia;
-    @Column(name = "sviesos_srautas")
+    @Column(name = "sviesos_srautas", length = 10)
     private double sviesos_srautas;
-    @Column(name = "sviesos_spalvos_temperatura")
+    @Column(name = "sviesos_spalvos_temperatura", length = 11)
     private String sviesos_spalvos_temperatura;
-    @Column(name = "laidininkas")
+    @Column(name = "laidininkas", length = 10)
     private String laidininkas;
-    @Column(name = "darbine_temperatura")
+    @Column(name = "darbine_temperatura", length = 12)
     private String darbine_temperatura;
-    @Column(name = "Max_darbine_temperatura")
+    @Column(name = "Max_darbine_temperatura", length = 10)
     private String max_darbine_temperatura;
     @Column(name = "apvalkalas")
     private String apvalkalas;
     @Column(name = "CPR_klase")
     private String cpr_klase;
-    @Column(name = "isjungimo_geba")
+    @Column(name = "isjungimo_geba", length = 12)
     private String isjungimo_geba;
     @Column(name = "isjungimo_charakteristika")
     private String isjungimo_charakteristika;
@@ -81,11 +81,11 @@ public class ProductCatalog {
     private String skerspjuvis_Al;
     @Column(name = "skerspjuvis_Cu")
     private String skerspjuvis_Cu;
-    @Column(name = "nuotekio_srove")
+    @Column(name = "nuotekio_srove", length = 12)
     private String nuotekio_srove;
-    @Column(name = "dydis")
+    @Column(name = "dydis", length = 10)
     private String dydis;
-    @Column(name = "plotas")
+    @Column(name = "plotas", length = 10)
     private String plotas;
     @Column(name = "image_url", length = 1024)
     private String image_url;

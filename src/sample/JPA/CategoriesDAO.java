@@ -87,7 +87,8 @@ public class CategoriesDAO {
         } catch (IllegalStateException e) {
             JPAUtil.showInfoPopupWindow("Nepavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Tel. nr.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El. paštu: " + Constants.CONTACT_EMAIL +  "\n- Programos versija: " + Constants.PROGRAM_VERSION + "\n- Klaidos kodas: " + e, 500, 200, Constants.BUTTON_NAME_RENEW);
         } catch (JDBCConnectionException e) {
-            JPAUtil.showInfoPopupWindow("Nepavyko užmegzti ryšio", "Buvote neaktyvus, todėl atsijungta nuo duomenų bazės .",300, 120, Constants.BUTTON_NAME_RENEW);
+//            JPAUtil.showInfoPopupWindow("Nepavyko užmegzti ryšio", "Buvote neaktyvus, todėl atsijungta nuo duomenų bazės .",300, 120, Constants.BUTTON_NAME_RENEW);
+            System.out.println("JDBCConnectionException");
         }
         return categories;
     }

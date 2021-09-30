@@ -47,7 +47,6 @@ import java.net.URL;
 import java.util.*;
 
 
-
 public class DashboardController extends Main implements Initializable {
 
     public Button close_button;
@@ -131,20 +130,18 @@ public class DashboardController extends Main implements Initializable {
 
         table.setEditable(true);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        // pakeisti lietuviskai kategorijos numeri, produkto pavadinimas, kaina, kiekis.
+        // pakeisti lietuviskai kategorijos numeri, produkto pavadinimas, kaina.
         TableColumn number = new TableColumn("#");
         TableColumn<ProductCatalog, Integer> catalogNo = new TableColumn<>("Katalogo nr.");
         TableColumn<ProductCatalog, String> symbol = new TableColumn<>("Produkto pavadinimas");
         TableColumn<ProductCatalog, Double> priceNet = new TableColumn<>("Kaina");
-        TableColumn<ProductCatalog, Integer> stock = new TableColumn<>("Kiekis");
 
-        table.getColumns().addAll(number, catalogNo, symbol, priceNet, stock);
+        table.getColumns().addAll(number, catalogNo, symbol, priceNet);
 
         number.minWidthProperty().bind(table.widthProperty().multiply(0.05));
         catalogNo.minWidthProperty().bind(table.widthProperty().multiply(0.17));
         symbol.minWidthProperty().bind(table.widthProperty().multiply(0.52));
         priceNet.minWidthProperty().bind(table.widthProperty().multiply(0.09));
-        stock.minWidthProperty().bind(table.widthProperty().multiply(0.09));
 
         number.setCellValueFactory((Callback<TableColumn.CellDataFeatures<ProductCatalog, ProductCatalog>, ObservableValue<ProductCatalog>>) p -> new ReadOnlyObjectWrapper(p.getValue()));
 
@@ -264,14 +261,12 @@ public class DashboardController extends Main implements Initializable {
         }
 
 
-        stock.setCellValueFactory(new PropertyValueFactory<>("stock"));
 
 
         number.setResizable(true);
         catalogNo.setResizable(true);
         symbol.setResizable(true);
         priceNet.setResizable(true);
-        stock.setResizable(true);
 
         tableViewSearchField.setPromptText("Įveskite produkto pavadinimą filtravimui...");
     }
@@ -373,7 +368,6 @@ public class DashboardController extends Main implements Initializable {
             @Override
             public void run() {
                 List<ProductCatalog> excelProducts = null;
-                List<ProductCatalog> dbProducts = ProductCatalogDAO.displayAllItems();
                 List<CategoryParameters> allCategoryParameters;
 
                 try {
@@ -381,11 +375,7 @@ public class DashboardController extends Main implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-                System.out.println("!!!!!!!");
-                System.out.println(excelProducts.size());
-                System.out.println("!!!!!!!");
-
+                System.out.println("Products found in data sheet: " + excelProducts.size());
                 assert excelProducts != null;
 
 
@@ -399,30 +389,20 @@ public class DashboardController extends Main implements Initializable {
                     countEveryProductInExcel = excelProducts.size();
 
                     for (ProductCatalog excelProduct : excelProducts) {
-                        isProductNew = true;
-                        isProductChanged = false;
-                        if (!dbProducts.isEmpty()) {
-                            for (ProductCatalog dbProduct : dbProducts) {
-                                if (excelProduct.getCatalogNo().equals(dbProduct.getCatalogNo())) {
-                                    isProductNew = false;
-                                    excelProduct.setId(dbProduct.getId());
-                                    isProductChanged = doSameProductsHaveDifferences(excelProduct, dbProduct);
-                                    if (isProductChanged) {
-                                        countEveryProductUpdated++;
-                                        ProductCatalogDAO.replace(excelProduct);
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                        if (isProductNew) {
-                            allCategoryParameters = CategoryParametersDAO.displayAllCategoryParameters();
-                            ProductCatalogDAO.insert(excelProduct);
-                            insertCategoryParameter(createCategoryParameter(excelProduct), allCategoryParameters, excelProduct);
-                            countEveryNewProduct++;
-                        }
-                    }
+                       List<ProductCatalog> dbProducts = ProductCatalogDAO.searchByCatalogNo(excelProduct.getCatalogNo());
+                       if (!dbProducts.isEmpty()) {
+                           ProductCatalog dbProduct = dbProducts.get(0);
+                           if (doSameProductsHaveDifferences(dbProduct, excelProduct)) {
+                               excelProduct.setId(dbProduct.getId());
+                               ProductCatalogDAO.replace(excelProduct);
+                               countEveryProductUpdated++;
+                           }
+                       } else {
+                           ProductCatalogDAO.insert(excelProduct);
+                           countEveryNewProduct++;
+                       }
 
+                    }
                 } catch (NullPointerException e) {
                     System.out.println("openFile(" + e + " )");
                 } catch (RuntimeException e) {
@@ -466,7 +446,7 @@ public class DashboardController extends Main implements Initializable {
     }
 
     public boolean doSameProductsHaveDifferences(ProductCatalog excelProduct, ProductCatalog dbProduct) {
-        if ( dbProduct.toString().equals(excelProduct.toString()) ) {
+        if (dbProduct.toStringCompare().equals(excelProduct.toStringCompare()) ) {
             return false;
         }
         return true;
@@ -772,19 +752,6 @@ public class DashboardController extends Main implements Initializable {
                 priceNetProperty.setText(irasas.getPriceNet() + "€");
                 desciptionLabelVBox.getChildren().add(priceNetDescription);
                 propertyLabelVBox.getChildren().add(priceNetProperty);
-
-                Label stockDescription = new Label();
-                Label stockProperty = new Label();
-                stockProperty.setStyle("-fx-font-weight: bold;");
-                stockDescription.setLayoutX(20);
-                stockDescription.setLayoutY(getRightPanelLabelY());
-                stockProperty.setLayoutX(60);
-                stockProperty.setLayoutY(getRightPanelLabelY());
-                stockDescription.setText("Likutis: ");
-                stockProperty.setText(String.valueOf(irasas.getStock()));
-                desciptionLabelVBox.getChildren().add(stockDescription);
-                propertyLabelVBox.getChildren().add(stockProperty);
-
 
                 if (irasas.getAukstis() != 0) {
                     Label heightDescription = new Label();

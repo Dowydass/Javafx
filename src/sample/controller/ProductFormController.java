@@ -30,7 +30,8 @@ public class ProductFormController extends Main implements Initializable {
     public TextField catalog_no_textField;
     public TextField symbol_textField;
     public TextField price_textField;
-    public TextField stock_textField;
+    public TextField nuotraukos_adresas_field;
+
     public Label form_info_label;
     public ComboBox<Categories> categoryComboBox;
     public CategoryParameters categoryParameters;
@@ -77,7 +78,7 @@ public class ProductFormController extends Main implements Initializable {
     public void createProduct(ActionEvent actionEvent) {
         Categories item = categoryComboBox.getSelectionModel().getSelectedItem();
         if (catalog_no_textField.getText().isEmpty() && symbol_textField.getText().isEmpty() &&
-                price_textField.getText().isEmpty() && stock_textField.getText().isEmpty() && (item == null)) {
+                price_textField.getText().isEmpty() && nuotraukos_adresas_field.getText().isEmpty() && (item == null)) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_FILLED);
         } else if (!Validation.isValidCatalogNo(catalog_no_textField.getText())) {
@@ -89,9 +90,9 @@ public class ProductFormController extends Main implements Initializable {
         } else if (!Validation.isValidPrice(price_textField.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_PRICE);
-        } else if (!Validation.isValidStock(stock_textField.getText())) {
+        } else if (!Validation.isValidImageUrl(nuotraukos_adresas_field.getText()) && !nuotraukos_adresas_field.getText().isEmpty()) {
             WarnStyle();
-            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_STOCK);
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_IMAGE_URL);
         } else if ((item == null)) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CHOSEN_CATEGORY);
@@ -241,7 +242,7 @@ public class ProductFormController extends Main implements Initializable {
 
     public void registerProduct(Categories item) {
         ProductCatalog product = new ProductCatalog(catalog_no_textField.getText(), symbol_textField.getText(),
-                Double.parseDouble(price_textField.getText()), Integer.parseInt(nullCheckerForNumbers(stock_textField.getText())),
+                Double.parseDouble(price_textField.getText()), nuotraukos_adresas_field.getText(),
                 item.getId(), Double.parseDouble(nullCheckerForNumbers(aukstis_field.getText())), Double.parseDouble(nullCheckerForNumbers(plotis_field.getText())),
                 Double.parseDouble(nullCheckerForNumbers(gylis_field.getText())),
                 Double.parseDouble(nullCheckerForNumbers(skersmuo_field.getText())), Double.parseDouble(nullCheckerForNumbers(ilgis_field.getText())),
@@ -256,7 +257,7 @@ public class ProductFormController extends Main implements Initializable {
                 nullCheckerForText(isjungimo_charakteristika_field.getText()), nullCheckerForText(mechaninis_atsparumas_field.getText()), nullCheckerForText(skerspjuvis_Al_field.getText()),
                 nullCheckerForText(skerspjuvis_Cu_field.getText()), nullCheckerForText(nuotekio_srove_field.getText()), nullCheckerForText(dydis_field.getText()),
                 nullCheckerForText(plotas_field.getText()),
-                null, null);
+                null);
         ProductCatalogDAO.insert(product);
         closeWindow();
     }
@@ -285,11 +286,7 @@ public class ProductFormController extends Main implements Initializable {
             if (!categoryComboBox.getSelectionModel().isEmpty()) {
                 System.out.println("!categoryComboBox.getSelectionModel().isEmpty()");
                 tableItem = categoryComboBox.getSelectionModel().getSelectedItem();
-                if (tableItem.getCategory_parameter_id() != 0){
-                    System.out.println("addParametersForProduct(tableItem.getCategory_parameter_id())");
-                    addParametersForProduct(tableItem.getCategory_parameter_id());
-                }
-                else{
+                if (tableItem.getCategory_parameter_id() == 0 || tableItem.getCategory_parameter_id() == 8) {
                     Stage productFormStage = (Stage) create_product_button.getScene().getWindow();
                     productFormStage.setWidth(500);
                     productFormStage.setHeight(400);
@@ -299,9 +296,9 @@ public class ProductFormController extends Main implements Initializable {
                     productFormStage.setMaxHeight(400);
                     productFormStage.setMinHeight(400);
                     letsScroll.setVisible(false);
-                    WarnStyle();
-                    System.out.println("mouseEventForTableView(ActionEvent event).WarnStyle();");
-                    form_info_label.setText("Pasirinkite kategoriją turinčią parametrus");
+                } else if (tableItem.getCategory_parameter_id() != 0) {
+                    System.out.println("addParametersForProduct(tableItem.getCategory_parameter_id())");
+                    addParametersForProduct(tableItem.getCategory_parameter_id());
                 }
             }
         } catch (IllegalStateException e) {
@@ -331,7 +328,6 @@ public class ProductFormController extends Main implements Initializable {
 
 //        CategoryParameters categoryParameters = new CategoryParameters(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,true, true, true, true, true, true, true, true, true, true);
         System.out.println("categoryParameters object: " + categoryParameters);
-
 
         letsScroll.setVisible(true);
         letsScroll.setPrefSize(450, 300);

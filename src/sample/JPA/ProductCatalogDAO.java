@@ -86,13 +86,13 @@ public class ProductCatalogDAO {
         return productCatalog;
     }
 
-    public static List<ProductCatalog> searchByName(String name) {
+    public static List<ProductCatalog> searchByCatalogNo(String catalogNo) {
         EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();
         entityTransaction.begin();
 
-        TypedQuery<ProductCatalog> query = entityManager.createQuery("Select e From ProductCatalog e WHERE e.name = ?1", ProductCatalog.class);
-        List<ProductCatalog> productCatalog = query.setParameter(1, name).getResultList();
+        TypedQuery<ProductCatalog> query = entityManager.createQuery("Select e From ProductCatalog e WHERE e.catalogNo = ?1", ProductCatalog.class);
+        List<ProductCatalog> productCatalog = query.setParameter(1, catalogNo).getResultList();
 
         entityManager.getTransaction().commit();
         entityManager.close();
@@ -138,31 +138,6 @@ public class ProductCatalogDAO {
             entityTransaction.begin();
             productCatalog1 = entityManager.find(ProductCatalog.class, id);
             productCatalog1.setCatalogNo(catalog_no);
-            entityManager.getTransaction().commit();
-            entityManager.close();
-        } catch (IllegalStateException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no IllegalStateException");
-        } catch (JDBCConnectionException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no JDBCConnectionException");
-        } catch (ServiceException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no ServiceException");
-        } catch (PersistenceException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no PersistenceException");
-        }
-    }
-
-    public static void updateStock(int stock, int id) {
-
-        EntityManager entityManager;
-        EntityTransaction entityTransaction;
-        ProductCatalog productCatalog1;
-
-        try {
-            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
-            entityTransaction = entityManager.getTransaction();
-            entityTransaction.begin();
-            productCatalog1 = entityManager.find(ProductCatalog.class, id);
-            productCatalog1.setStock(stock);
             entityManager.getTransaction().commit();
             entityManager.close();
         } catch (IllegalStateException e) {
@@ -231,7 +206,7 @@ public class ProductCatalogDAO {
 
     public static void checkIfCatalogExistsIfNotCreateIt() {
         String checkQuery = "SHOW TABLES FROM ecosprendi_kitm LIKE 'product_catalog'";
-        String createTableQuery = "CREATE TABLE IF NOT EXISTS `product_catalog` (`id` INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,`catalog_no` INT(11) DEFAULT NULL,`date` DATE DEFAULT NULL,`group_id` INT(11) DEFAULT NULL,`price_net` VARCHAR(30) DEFAULT NULL,`stock` INT(11) DEFAULT NULL,`symbol` VARCHAR(255) DEFAULT NULL)";
+        String createTableQuery = "CREATE TABLE IF NOT EXISTS `product_catalog` (`id` INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,`catalog_no` INT(11) DEFAULT NULL,`date` DATE DEFAULT NULL,`group_id` INT(11) DEFAULT NULL,`price_net` VARCHAR(30) DEFAULT NULL,`image_url` VARCHAR(1024) DEFAULT NULL,`symbol` VARCHAR(255) DEFAULT NULL)";
         Statement stmt;
         System.out.println("checkIfCatalogExistsIfNotCreateIt method initiated...");
         try {

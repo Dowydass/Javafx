@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import sample.utils.Validation;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -50,11 +51,11 @@ public class ReadExcelWithProductCatalog {
                             productCatalog.setPriceNet(cell.getNumericCellValue());
                             break;
                         case 4:
-                            Integer stock = (int) cell.getNumericCellValue();
-                            if (stock != null) {
-                                productCatalog.setStock(stock);
-                            } else {
-                                productCatalog.setStock(0);
+                            String imageUrl = cell.getStringCellValue();
+                            if (imageUrl.equals("")) {
+                                productCatalog.setImage_url(null);
+                            } else if (Validation.isValidImageUrl(imageUrl)) {
+                                productCatalog.setImage_url(imageUrl);
                             }
                             break;
                         case 5:

@@ -21,29 +21,27 @@ public class ProductCatalog {
     private String symbol;
     @Column(name = "price_net")
     private double priceNet;
-    @Column(name = "stock")
-    private int stock;
     @Column(name = "group_id")
     private int groupId;
     //@ManyToOne(targetEntity = Categories.class, fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     //@JoinColumn(name = "group_id", referencedColumnName = "id")
-    @Column(name = "aukstis", length = 10)
+    @Column(name = "aukstis", length = 255)
     private double aukstis;
-    @Column(name = "plotis", length = 10)
+    @Column(name = "plotis", length = 255)
     private double plotis;
-    @Column(name = "gylis", length = 10)
+    @Column(name = "gylis", length = 255)
     private double gylis;
-    @Column(name = "skersmuo", length = 10)
+    @Column(name = "skersmuo", length = 255)
     private double skersmuo;
-    @Column(name = "ilgis", length = 10)
+    @Column(name = "ilgis", length = 255)
     private double ilgis;
     @Column(name = "apsaugos_laipsnis")
     private String apsaugos_laipsnis;
-    @Column(name = "moduliu_skaicius", length = 10)
+    @Column(name = "moduliu_skaicius", length = 255)
     private double moduliu_skaicius;
-    @Column(name = "vardine_srove", length = 11)
+    @Column(name = "vardine_srove", length = 255)
     private String vardine_srove;
-    @Column(name = "vardine_itampa", length = 13)
+    @Column(name = "vardine_itampa", length = 255)
     private String vardine_itampa;
     @Column(name = "mechaninis_atsparumas_IK")
     private String mechaninis_atsparumas_IK;
@@ -53,25 +51,25 @@ public class ProductCatalog {
     private String korpuso_medziaga;
     @Column(name = "izoliacija")
     private String izoliacija;
-    @Column(name = "svoris", length = 10)
+    @Column(name = "svoris", length = 255)
     private double svoris;
-    @Column(name = "galia", length = 11)
+    @Column(name = "galia", length = 255)
     private String galia;
-    @Column(name = "sviesos_srautas", length = 10)
+    @Column(name = "sviesos_srautas", length = 255)
     private double sviesos_srautas;
-    @Column(name = "sviesos_spalvos_temperatura", length = 11)
+    @Column(name = "sviesos_spalvos_temperatura", length = 255)
     private String sviesos_spalvos_temperatura;
-    @Column(name = "laidininkas", length = 10)
+    @Column(name = "laidininkas", length = 255)
     private String laidininkas;
-    @Column(name = "darbine_temperatura", length = 12)
+    @Column(name = "darbine_temperatura", length = 255)
     private String darbine_temperatura;
-    @Column(name = "Max_darbine_temperatura", length = 10)
+    @Column(name = "Max_darbine_temperatura", length = 255)
     private String max_darbine_temperatura;
     @Column(name = "apvalkalas")
     private String apvalkalas;
     @Column(name = "CPR_klase")
     private String cpr_klase;
-    @Column(name = "isjungimo_geba", length = 12)
+    @Column(name = "isjungimo_geba", length = 255)
     private String isjungimo_geba;
     @Column(name = "isjungimo_charakteristika")
     private String isjungimo_charakteristika;
@@ -81,11 +79,11 @@ public class ProductCatalog {
     private String skerspjuvis_Al;
     @Column(name = "skerspjuvis_Cu")
     private String skerspjuvis_Cu;
-    @Column(name = "nuotekio_srove", length = 12)
+    @Column(name = "nuotekio_srove", length = 255)
     private String nuotekio_srove;
-    @Column(name = "dydis", length = 10)
+    @Column(name = "dydis", length = 255)
     private String dydis;
-    @Column(name = "plotas", length = 10)
+    @Column(name = "plotas", length = 255)
     private String plotas;
     @Column(name = "image_url", length = 1024)
     private String image_url;
@@ -93,21 +91,21 @@ public class ProductCatalog {
     private Date date;
 
 
-    public ProductCatalog(int id, String catalogNo, String symbol, double priceNet, int stock, int groupId, Date date) {
+    public ProductCatalog(int id, String catalogNo, String symbol, double priceNet, String image_url, int groupId, Date date) {
         this.id = id;
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
-        this.stock = stock;
+        this.image_url = image_url;
         this.groupId = groupId;
         this.date = date;
     }
 
-    public ProductCatalog(String catalogNo, String symbol, double priceNet, int stock, int groupId, double aukstis, double plotis, double gylis, double skersmuo, double ilgis, String apsaugos_laipsnis, double moduliu_skaicius, String vardine_srove, String vardine_itampa, String mechaninis_atsparumas_IK, String spalva, String korpuso_medziaga, String izoliacija, double svoris, String galia, double sviesos_srautas, String sviesos_spalvos_temperatura, String laidininkas, String darbine_temperatura, String max_darbine_temperatura, String apvalkalas, String cpr_klase, String isjungimo_geba, String isjungimo_charakteristika, String mechaninis_atsparumas, String skerspjuvis_Al, String skerspjuvis_Cu, String nuotekio_srove, String dydis, String plotas, String image_url, Date date) {
+    public ProductCatalog(String catalogNo, String symbol, double priceNet, String image_url, int groupId, double aukstis, double plotis, double gylis, double skersmuo, double ilgis, String apsaugos_laipsnis, double moduliu_skaicius, String vardine_srove, String vardine_itampa, String mechaninis_atsparumas_IK, String spalva, String korpuso_medziaga, String izoliacija, double svoris, String galia, double sviesos_srautas, String sviesos_spalvos_temperatura, String laidininkas, String darbine_temperatura, String max_darbine_temperatura, String apvalkalas, String cpr_klase, String isjungimo_geba, String isjungimo_charakteristika, String mechaninis_atsparumas, String skerspjuvis_Al, String skerspjuvis_Cu, String nuotekio_srove, String dydis, String plotas, Date date) {
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
-        this.stock = stock;
+        this.image_url = image_url;
         this.groupId = groupId;
         this.aukstis = aukstis;
         this.plotis = plotis;
@@ -139,15 +137,14 @@ public class ProductCatalog {
         this.nuotekio_srove = nuotekio_srove;
         this.dydis = dydis;
         this.plotas = plotas;
-        this.image_url = image_url;
         this.date = date;
     }
 
-    public ProductCatalog(String catalogNo, String symbol, double priceNet, int stock, int groupId, Date date) {
+    public ProductCatalog(String catalogNo, String symbol, double priceNet, String image_url, int groupId, Date date) {
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
-        this.stock = stock;
+        this.image_url = image_url;
         this.groupId = groupId;
         this.date = date;
     }
@@ -357,14 +354,6 @@ public class ProductCatalog {
         this.priceNet = Math.round(priceNet * 100.0) / 100.0;
     }
 
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
     public int getGroupId() {
         return groupId;
     }
@@ -465,11 +454,82 @@ public class ProductCatalog {
     public String toString() {
         return "ProductCatalog{" +
                 "id=" + id +
-                ", catalogNo=" + catalogNo +
+                ", catalogNo='" + catalogNo + '\'' +
                 ", symbol='" + symbol + '\'' +
                 ", priceNet=" + priceNet +
-                ", stock=" + stock +
                 ", groupId=" + groupId +
+                ", aukstis=" + aukstis +
+                ", plotis=" + plotis +
+                ", gylis=" + gylis +
+                ", skersmuo=" + skersmuo +
+                ", ilgis=" + ilgis +
+                ", apsaugos_laipsnis='" + apsaugos_laipsnis + '\'' +
+                ", moduliu_skaicius=" + moduliu_skaicius +
+                ", vardine_srove='" + vardine_srove + '\'' +
+                ", vardine_itampa='" + vardine_itampa + '\'' +
+                ", mechaninis_atsparumas_IK='" + mechaninis_atsparumas_IK + '\'' +
+                ", spalva='" + spalva + '\'' +
+                ", korpuso_medziaga='" + korpuso_medziaga + '\'' +
+                ", izoliacija='" + izoliacija + '\'' +
+                ", svoris=" + svoris +
+                ", galia='" + galia + '\'' +
+                ", sviesos_srautas=" + sviesos_srautas +
+                ", sviesos_spalvos_temperatura='" + sviesos_spalvos_temperatura + '\'' +
+                ", laidininkas='" + laidininkas + '\'' +
+                ", darbine_temperatura='" + darbine_temperatura + '\'' +
+                ", max_darbine_temperatura='" + max_darbine_temperatura + '\'' +
+                ", apvalkalas='" + apvalkalas + '\'' +
+                ", cpr_klase='" + cpr_klase + '\'' +
+                ", isjungimo_geba='" + isjungimo_geba + '\'' +
+                ", isjungimo_charakteristika='" + isjungimo_charakteristika + '\'' +
+                ", mechaninis_atsparumas='" + mechaninis_atsparumas + '\'' +
+                ", skerspjuvis_Al='" + skerspjuvis_Al + '\'' +
+                ", skerspjuvis_Cu='" + skerspjuvis_Cu + '\'' +
+                ", nuotekio_srove='" + nuotekio_srove + '\'' +
+                ", dydis='" + dydis + '\'' +
+                ", plotas='" + plotas + '\'' +
+                ", image_url='" + image_url + '\'' +
+                ", date=" + date +
+                '}';
+    }
+
+    public String toStringCompare() {
+        return "ProductCatalog{" +
+                ", catalogNo='" + catalogNo + '\'' +
+                ", symbol='" + symbol + '\'' +
+                ", priceNet=" + priceNet +
+                ", groupId=" + groupId +
+                ", aukstis=" + aukstis +
+                ", plotis=" + plotis +
+                ", gylis=" + gylis +
+                ", skersmuo=" + skersmuo +
+                ", ilgis=" + ilgis +
+                ", apsaugos_laipsnis='" + apsaugos_laipsnis + '\'' +
+                ", moduliu_skaicius=" + moduliu_skaicius +
+                ", vardine_srove='" + vardine_srove + '\'' +
+                ", vardine_itampa='" + vardine_itampa + '\'' +
+                ", mechaninis_atsparumas_IK='" + mechaninis_atsparumas_IK + '\'' +
+                ", spalva='" + spalva + '\'' +
+                ", korpuso_medziaga='" + korpuso_medziaga + '\'' +
+                ", izoliacija='" + izoliacija + '\'' +
+                ", svoris=" + svoris +
+                ", galia='" + galia + '\'' +
+                ", sviesos_srautas=" + sviesos_srautas +
+                ", sviesos_spalvos_temperatura='" + sviesos_spalvos_temperatura + '\'' +
+                ", laidininkas='" + laidininkas + '\'' +
+                ", darbine_temperatura='" + darbine_temperatura + '\'' +
+                ", max_darbine_temperatura='" + max_darbine_temperatura + '\'' +
+                ", apvalkalas='" + apvalkalas + '\'' +
+                ", cpr_klase='" + cpr_klase + '\'' +
+                ", isjungimo_geba='" + isjungimo_geba + '\'' +
+                ", isjungimo_charakteristika='" + isjungimo_charakteristika + '\'' +
+                ", mechaninis_atsparumas='" + mechaninis_atsparumas + '\'' +
+                ", skerspjuvis_Al='" + skerspjuvis_Al + '\'' +
+                ", skerspjuvis_Cu='" + skerspjuvis_Cu + '\'' +
+                ", nuotekio_srove='" + nuotekio_srove + '\'' +
+                ", dydis='" + dydis + '\'' +
+                ", plotas='" + plotas + '\'' +
+                ", image_url='" + image_url + '\'' +
                 ", date=" + date +
                 '}';
     }

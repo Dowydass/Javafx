@@ -79,10 +79,10 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_STOCK_PATTERN = "^[0-9]{1,11}$";
-    public static boolean isValidStock(String stock){
-        Pattern pattern = Pattern.compile(PRODUCT_FORM_STOCK_PATTERN);
-        Matcher matcher = pattern.matcher(stock);
+    public static final String IMAGE_URL_PATTERN = "^(http(s?):)([/|.\\w\\s-])*\\.(?:jpg|gif|png)";
+    public static boolean isValidImageUrl(String imageUrl){
+        Pattern pattern = Pattern.compile(IMAGE_URL_PATTERN);
+        Matcher matcher = pattern.matcher(imageUrl);
         return matcher.find();
     }
 

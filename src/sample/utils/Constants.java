@@ -35,8 +35,8 @@ public class Constants {
     public static final String CREDENTIALS_IS_NOT_CHOSEN_CATEGORY = "Tėvinė kategorija privalo būti pasirinkta.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_CATALOG_NUMBER = "Produkto katalogo numeris neatitinka reikalavimų.";
     public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SYMBOL = "Produkto pavadinimas neatitinka reikalavimų.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_PRICE = "Produkto kaina neatitinka reikalavimų.";
-    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_STOCK = "Produkto pasirinktas kiekis neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_PRODUCT_PRICE  = "Produkto kaina neatitinka reikalavimų.";
+    public static final String CREDENTIALS_IS_NOT_CORRECT_IMAGE_URL = "Palaikomi tik .jpg, .gif, .png paveikslėlių formatai.";
 
     /* Naujo produkto kūrimo lango Validacija : Start */
 

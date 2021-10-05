@@ -13,7 +13,7 @@
                 <Insets />
             </opaqueInsets>
         </TableView>
-        <TextField id="treeViewSearchField" fx:id="listViewSearchField" layoutX="3.0" layoutY="29.0" onKeyPressed="#createFilteredCategoryList" prefHeight="25.0" prefWidth="380.0" AnchorPane.topAnchor="29.0" />
+        <TextField id="treeViewSearchField" fx:id="listViewSearchField" layoutX="3.0" layoutY="29.0" onKeyPressed="#createFilteredCategoryList" prefHeight="25.0" prefWidth="352.0" AnchorPane.topAnchor="29.0" />
         <Pane layoutX="928.0" layoutY="29.0" opacity="0.31" prefHeight="51.0" prefWidth="308.0" style="-fx-background-color: gray;" AnchorPane.rightAnchor="106.0" AnchorPane.topAnchor="29.0" />
         <TitledPane fx:id="leftTitledPane" animated="false" collapsible="false" layoutX="3.0" layoutY="56.0" prefHeight="380.0" prefWidth="380.0" text="Prekių kategorijų medis" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="56.0">
             <content>
@@ -57,6 +57,7 @@
                 </Menu>
             </menus>
         </MenuBar>
+      <Button fx:id="allCategoriesButton" layoutX="355.0" layoutY="29.0" mnemonicParsing="false" onAction="#SelectAllCategories" onMouseClicked="#mouseEventForListView" prefHeight="25.0" prefWidth="27.0" />
 
     </children>
 </AnchorPane>

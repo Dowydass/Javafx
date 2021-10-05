@@ -60,6 +60,8 @@ public class DashboardController extends Main implements Initializable {
     public Label current_session_user_status;
     public ListView<Categories> listView;
 
+    public Button allCategoriesButton;
+
 
     // Dešinės panelės label
     @FXML
@@ -100,7 +102,14 @@ public class DashboardController extends Main implements Initializable {
         firstFillDescriptionPanel();
         UserHolder userHolder = UserHolder.getInstance();
         UserDAO.setLastLoginTime(userHolder.getUser());
-        loggedTimeStart = System.currentTimeMillis(); // Fiksuoja prisijungimo laiko pradžią
+        loggedTimeStart = System.currentTimeMillis();// Fiksuoja prisijungimo laiko pradžią
+
+        Image all_Categories_Button_picture = new Image("pictures/all_Categories_Button_picture.jpg");
+        ImageView imageView = new ImageView(all_Categories_Button_picture);
+        imageView.setFitHeight(15);
+        imageView.setFitWidth(14);
+        allCategoriesButton.setGraphic(imageView);
+
 
         if (userHolder.getUser().isAdmin()) {
             file_menu_bar.setVisible(true);
@@ -311,6 +320,12 @@ public class DashboardController extends Main implements Initializable {
             });
         });
         listView.setItems(filteredList);
+    }
+
+    public void SelectAllCategories(ActionEvent actionEvent) {
+        listView.scrollTo(0);
+        listView.getSelectionModel().select(0);
+
     }
 
     //Paspaudus ant listview elemento tableview panelyje pavaizduoja visus produktus priklausančius šiam kategorija.

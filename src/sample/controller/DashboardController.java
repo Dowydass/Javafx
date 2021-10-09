@@ -106,8 +106,8 @@ public class DashboardController extends Main implements Initializable {
 
         Image all_Categories_Button_picture = new Image("pictures/all_Categories_Button_picture.jpg");
         ImageView imageView = new ImageView(all_Categories_Button_picture);
-        imageView.setFitHeight(15);
-        imageView.setFitWidth(14);
+        imageView.setFitHeight(13);
+        imageView.setFitWidth(12);
         allCategoriesButton.setGraphic(imageView);
 
 

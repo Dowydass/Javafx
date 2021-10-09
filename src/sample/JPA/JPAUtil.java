@@ -24,7 +24,7 @@ public class JPAUtil {
             } catch (RuntimeException e) {
                 System.out.println("JPAUtil RuntimeException ");
                 Platform.runLater(() -> {
-                    showWarningPopupWindow("Nepavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Tel. nr.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El. paštu: " + Constants.CONTACT_EMAIL +  "\n- Programos versija: " + Constants.PROGRAM_VERSION + "\n- Klaidos kodas: " + e, 500, 200, Constants.BUTTON_NAME_OK);
+                    showErrorPopupWindowAndClose("Nepavyko užmegzti ryšio", "Nepavyko prisijungti prie duomenų bazės\n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Tel. nr.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El. paštu: " + Constants.CONTACT_EMAIL +  "\n- Programos versija: " + Constants.PROGRAM_VERSION + "\n- Klaidos kodas: " + e, 500, 200, Constants.BUTTON_NAME_OK);
                 });
             }
         }

@@ -32,6 +32,8 @@ import javafx.stage.*;
 import javafx.stage.Popup;
 import javafx.util.Callback;
 import javafx.util.converter.DoubleStringConverter;
+import sample.API.Dto.StocksDto;
+import sample.API.YahooStockAPI;
 import sample.JPA.*;
 import sample.JPA.user.User;
 import sample.JPA.user.UserDAO;
@@ -328,8 +330,29 @@ public class DashboardController extends Main implements Initializable {
 
     }
 
-    //Paspaudus ant listview elemento tableview panelyje pavaizduoja visus produktus priklausančius šiam kategorija.
-    public void mouseEventForListView(MouseEvent mouseEvent) {
+    public void setProductPrice(){
+
+
+
+       Categories item = listView.getSelectionModel().getSelectedItem();
+
+        item = CategoriesDAO.findEntityById(item.getId());
+
+        if(item.getlft() >= 84 && item.getrght() <= 133){
+            System.out.println("\nSelected: "+ item.getId() +"\nlft: "+ item.getlft()+"\nrght: "+item.getrght());
+
+            item = listView.getSelectionModel().getSelectedItem();
+
+            fullProductList = ProductCatalogDAO.displayAllItems();
+
+        }
+
+    }
+
+
+    public void getSelectionModel(){
+
+
         Categories item;
         try {
             if (!listView.getSelectionModel().isEmpty()) {
@@ -346,6 +369,11 @@ public class DashboardController extends Main implements Initializable {
         } catch (NullPointerException e) {
             System.out.println("mouseEventForListView( " + e + " )");
         }
+    }
+    //Paspaudus ant listview elemento tableview panelyje pavaizduoja visus produktus priklausančius šiam kategorija.
+    public void mouseEventForListView(MouseEvent mouseEvent) {
+        getSelectionModel();
+        setProductPrice();
 
     }
 

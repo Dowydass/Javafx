@@ -256,6 +256,9 @@ public class LoginController implements Initializable {
             windowCloseLoginButton();
 
         } catch (Exception e) {
+            Platform.runLater(() -> {
+                JPAUtil.showErrorPopupWindowAndClose("Programos klaida", "Nepavyko užkrauti programos. \n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Tel. nr.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El. paštu: " + Constants.CONTACT_EMAIL +  "\n- Programos versija: " + Constants.PROGRAM_VERSION, 500, 200, Constants.BUTTON_NAME_OK);
+            });
             e.printStackTrace();
             e.getCause();
         }

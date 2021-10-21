@@ -21,10 +21,18 @@ public class ProductCatalog {
     private String symbol;
     @Column(name = "price_net")
     private double priceNet;
+    @Column(name = "image_url", length = 1024)
+    private String image_url;
     @Column(name = "group_id")
     private int groupId;
     //@ManyToOne(targetEntity = Categories.class, fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     //@JoinColumn(name = "group_id", referencedColumnName = "id")
+    @Column(name = "Cu")
+    private double cu;
+    @Column(name = "Cu_price")
+    private double cuPrice;
+    @Column(name = "gamintojas", length = 1024)
+    private String gamintojas;
     @Column(name = "aukstis", length = 255)
     private double aukstis;
     @Column(name = "plotis", length = 255)
@@ -45,6 +53,8 @@ public class ProductCatalog {
     private String vardine_itampa;
     @Column(name = "mechaninis_atsparumas_IK")
     private String mechaninis_atsparumas_IK;
+    @Column(name = "storis")
+    private double storis;
     @Column(name = "spalva")
     private String spalva;
     @Column(name = "korpuso_medziaga")
@@ -61,10 +71,14 @@ public class ProductCatalog {
     private String sviesos_spalvos_temperatura;
     @Column(name = "laidininkas", length = 255)
     private String laidininkas;
+    @Column(name = "Laidininko_izoliacija", length = 1024)
+    private String laidininkoIzoliacija;
     @Column(name = "darbine_temperatura", length = 255)
     private String darbine_temperatura;
     @Column(name = "Max_darbine_temperatura", length = 255)
     private String max_darbine_temperatura;
+    @Column(name = "apsvieta", length = 1024)
+    private String apsvieta;
     @Column(name = "apvalkalas")
     private String apvalkalas;
     @Column(name = "CPR_klase")
@@ -85,8 +99,42 @@ public class ProductCatalog {
     private String dydis;
     @Column(name = "plotas", length = 255)
     private String plotas;
-    @Column(name = "image_url", length = 1024)
-    private String image_url;
+    @Column(name = "aptikimo_zona")
+    private String aptikimoZona;
+    @Column(name = "maksimali_darbine_itampa")
+    private String maksimaliDarbineItampa;
+    @Column(name = "iskrovimo_srove(8/20)")
+    private String iskrovimoSrove820;
+    @Column(name = "iskrovimo_srove(10/350)")
+    private String iskrovimoSrove10350;
+    @Column(name = "itampos_apsaugos_lygis")
+    private String itamposApsaugosLygis;
+    @Column(name = "Kategorija")
+    private String kategorija;
+    @Column(name = "CRI")
+    private int CRI;
+    @Column(name = "Garantija")
+    private String garantija;
+    @Column(name = "sertifikatai")
+    private String sertifikatai;
+    @Column(name = "Nema_jungtis")
+    private String nemaJungtis;
+    @Column(name = "virsitampiu_apsauga")
+    private String virsitampiuApsauga;
+    @Column(name = "ilgaamziskumas")
+    private String ilgaamziskumas;
+    @Column(name = "korpuso_atidarymas")
+    private String korpusoAtidarymas;
+    @Column(name = "optines_ir_elektrines_dalies_pertvara")
+    private String optinesIrElektrinesDaliesPertvara;
+    @Column(name = "valdymas")
+    private String valdymas;
+    @Column(name = "apatinis_diametras")
+    private int apatinisDiametras;
+    @Column(name = "virsutinis_diametras")
+    private int virsutinisDiametras;
+    @Column(name = "gembes_diametras")
+    private int gembesDiametras;
     @Column(name = "date")
     private Date date;
 

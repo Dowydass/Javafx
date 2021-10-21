@@ -66,6 +66,23 @@ public class CategoriesDAO {
     }
 
 
+
+
+    public static Categories findEntityById(int id) {
+        EntityManager entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+
+        TypedQuery<Categories> query = entityManager.createQuery("Select e From Categories e WHERE e.id = ?1", Categories.class);
+        Categories categories = query.setParameter(1, id).getSingleResult();
+
+        entityManager.getTransaction().commit();
+        entityManager.close();
+
+        return categories;
+    }
+
+
     public static List<Categories> selectCategoryById(int id) {
 
         EntityManager entityManager;

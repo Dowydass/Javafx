@@ -27,12 +27,10 @@ public class ProductCatalog {
     private int groupId;
     //@ManyToOne(targetEntity = Categories.class, fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     //@JoinColumn(name = "group_id", referencedColumnName = "id")
-    @Column(name = "cu_amount")
-    private double cuAmount;
-    @Column(name = "cu_price")
+    @Column(name = "Cu")
+    private double cu;
+    @Column(name = "Cu_price")
     private double cuPrice;
-    @Column(name = "cu_kintamsis")
-    private double cuVariable;
     @Column(name = "gamintojas", length = 1024)
     private String gamintojas;
     @Column(name = "aukstis", length = 255)
@@ -89,7 +87,7 @@ public class ProductCatalog {
     private String isjungimo_geba;
     @Column(name = "isjungimo_charakteristika")
     private String isjungimo_charakteristika;
-    @Column(name = "mechaninis_atsparumas_n")
+    @Column(name = "mechaninis_atsparumas")
     private String mechaninis_atsparumas;
     @Column(name = "skerspjuvis_Al")
     private String skerspjuvis_Al;
@@ -114,7 +112,7 @@ public class ProductCatalog {
     @Column(name = "Kategorija")
     private String kategorija;
     @Column(name = "CRI")
-    private double CRI;
+    private int CRI;
     @Column(name = "Garantija")
     private String garantija;
     @Column(name = "sertifikatai")
@@ -132,11 +130,11 @@ public class ProductCatalog {
     @Column(name = "valdymas")
     private String valdymas;
     @Column(name = "apatinis_diametras")
-    private double apatinisDiametras;
+    private int apatinisDiametras;
     @Column(name = "virsutinis_diametras")
-    private double virsutinisDiametras;
+    private int virsutinisDiametras;
     @Column(name = "gembes_diametras")
-    private double gembesDiametras;
+    private int gembesDiametras;
     @Column(name = "date")
     private Date date;
 
@@ -187,70 +185,6 @@ public class ProductCatalog {
         this.nuotekio_srove = nuotekio_srove;
         this.dydis = dydis;
         this.plotas = plotas;
-        this.date = date;
-    }
-
-    public ProductCatalog(String catalogNo, String symbol, double priceNet, String image_url, int groupId, double cuAmount, double cuPrice, int cuVariable, String gamintojas, double aukstis, double plotis, double gylis, double skersmuo, double ilgis, String apsaugos_laipsnis, double moduliu_skaicius, String vardine_srove, String vardine_itampa, String mechaninis_atsparumas_IK, double storis, String spalva, String korpuso_medziaga, String izoliacija, double svoris, String galia, double sviesos_srautas, String sviesos_spalvos_temperatura, String laidininkas, String laidininkoIzoliacija, String darbine_temperatura, String max_darbine_temperatura, String apsvieta, String apvalkalas, String cpr_klase, String isjungimo_geba, String isjungimo_charakteristika, String mechaninis_atsparumas, String skerspjuvis_Al, String skerspjuvis_Cu, String nuotekio_srove, String dydis, String plotas, String aptikimoZona, String maksimaliDarbineItampa, String iskrovimoSrove820, String iskrovimoSrove10350, String itamposApsaugosLygis, String kategorija, int CRI, String garantija, String sertifikatai, String nemaJungtis, String virsitampiuApsauga, String ilgaamziskumas, String korpusoAtidarymas, String optinesIrElektrinesDaliesPertvara, String valdymas, int apatinisDiametras, int virsutinisDiametras, int gembesDiametras, Date date) {
-        this.catalogNo = catalogNo;
-        this.symbol = symbol;
-        this.priceNet = priceNet;
-        this.image_url = image_url;
-        this.groupId = groupId;
-        this.cuAmount = cuAmount;
-        this.cuPrice = cuPrice;
-        this.cuVariable = cuVariable;
-        this.gamintojas = gamintojas;
-        this.aukstis = aukstis;
-        this.plotis = plotis;
-        this.gylis = gylis;
-        this.skersmuo = skersmuo;
-        this.ilgis = ilgis;
-        this.apsaugos_laipsnis = apsaugos_laipsnis;
-        this.moduliu_skaicius = moduliu_skaicius;
-        this.vardine_srove = vardine_srove;
-        this.vardine_itampa = vardine_itampa;
-        this.mechaninis_atsparumas_IK = mechaninis_atsparumas_IK;
-        this.storis = storis;
-        this.spalva = spalva;
-        this.korpuso_medziaga = korpuso_medziaga;
-        this.izoliacija = izoliacija;
-        this.svoris = svoris;
-        this.galia = galia;
-        this.sviesos_srautas = sviesos_srautas;
-        this.sviesos_spalvos_temperatura = sviesos_spalvos_temperatura;
-        this.laidininkas = laidininkas;
-        this.laidininkoIzoliacija = laidininkoIzoliacija;
-        this.darbine_temperatura = darbine_temperatura;
-        this.max_darbine_temperatura = max_darbine_temperatura;
-        this.apsvieta = apsvieta;
-        this.apvalkalas = apvalkalas;
-        this.cpr_klase = cpr_klase;
-        this.isjungimo_geba = isjungimo_geba;
-        this.isjungimo_charakteristika = isjungimo_charakteristika;
-        this.mechaninis_atsparumas = mechaninis_atsparumas;
-        this.skerspjuvis_Al = skerspjuvis_Al;
-        this.skerspjuvis_Cu = skerspjuvis_Cu;
-        this.nuotekio_srove = nuotekio_srove;
-        this.dydis = dydis;
-        this.plotas = plotas;
-        this.aptikimoZona = aptikimoZona;
-        this.maksimaliDarbineItampa = maksimaliDarbineItampa;
-        this.iskrovimoSrove820 = iskrovimoSrove820;
-        this.iskrovimoSrove10350 = iskrovimoSrove10350;
-        this.itamposApsaugosLygis = itamposApsaugosLygis;
-        this.kategorija = kategorija;
-        this.CRI = CRI;
-        this.garantija = garantija;
-        this.sertifikatai = sertifikatai;
-        this.nemaJungtis = nemaJungtis;
-        this.virsitampiuApsauga = virsitampiuApsauga;
-        this.ilgaamziskumas = ilgaamziskumas;
-        this.korpusoAtidarymas = korpusoAtidarymas;
-        this.optinesIrElektrinesDaliesPertvara = optinesIrElektrinesDaliesPertvara;
-        this.valdymas = valdymas;
-        this.apatinisDiametras = apatinisDiametras;
-        this.virsutinisDiametras = virsutinisDiametras;
-        this.gembesDiametras = gembesDiametras;
         this.date = date;
     }
 
@@ -556,206 +490,6 @@ public class ProductCatalog {
         this.image_url = image_url;
     }
 
-    public double getCuAmount() {
-        return cuAmount;
-    }
-
-    public void setCuAmount(double cuAmount) {
-        this.cuAmount = cuAmount;
-    }
-
-    public double getCuPrice() {
-        return cuPrice;
-    }
-
-    public void setCuPrice(double cuPrice) {
-        this.cuPrice = cuPrice;
-    }
-
-    public double getCuVariable() {
-        return cuVariable;
-    }
-
-    public void setCuVariable(double cuVariable) {
-        this.cuVariable = cuVariable;
-    }
-
-    public String getGamintojas() {
-        return gamintojas;
-    }
-
-    public void setGamintojas(String gamintojas) {
-        this.gamintojas = gamintojas;
-    }
-
-    public double getStoris() {
-        return storis;
-    }
-
-    public void setStoris(double storis) {
-        this.storis = storis;
-    }
-
-    public String getLaidininkoIzoliacija() {
-        return laidininkoIzoliacija;
-    }
-
-    public void setLaidininkoIzoliacija(String laidininkoIzoliacija) {
-        this.laidininkoIzoliacija = laidininkoIzoliacija;
-    }
-
-    public String getApsvieta() {
-        return apsvieta;
-    }
-
-    public void setApsvieta(String apsvieta) {
-        this.apsvieta = apsvieta;
-    }
-
-    public String getAptikimoZona() {
-        return aptikimoZona;
-    }
-
-    public void setAptikimoZona(String aptikimoZona) {
-        this.aptikimoZona = aptikimoZona;
-    }
-
-    public String getMaksimaliDarbineItampa() {
-        return maksimaliDarbineItampa;
-    }
-
-    public void setMaksimaliDarbineItampa(String maksimaliDarbineItampa) {
-        this.maksimaliDarbineItampa = maksimaliDarbineItampa;
-    }
-
-    public String getIskrovimoSrove820() {
-        return iskrovimoSrove820;
-    }
-
-    public void setIskrovimoSrove820(String iskrovimoSrove820) {
-        this.iskrovimoSrove820 = iskrovimoSrove820;
-    }
-
-    public String getIskrovimoSrove10350() {
-        return iskrovimoSrove10350;
-    }
-
-    public void setIskrovimoSrove10350(String iskrovimoSrove10350) {
-        this.iskrovimoSrove10350 = iskrovimoSrove10350;
-    }
-
-    public String getItamposApsaugosLygis() {
-        return itamposApsaugosLygis;
-    }
-
-    public void setItamposApsaugosLygis(String itamposApsaugosLygis) {
-        this.itamposApsaugosLygis = itamposApsaugosLygis;
-    }
-
-    public String getKategorija() {
-        return kategorija;
-    }
-
-    public void setKategorija(String kategorija) {
-        this.kategorija = kategorija;
-    }
-
-    public double getCRI() {
-        return CRI;
-    }
-
-    public void setCRI(double CRI) {
-        this.CRI = CRI;
-    }
-
-    public String getGarantija() {
-        return garantija;
-    }
-
-    public void setGarantija(String garantija) {
-        this.garantija = garantija;
-    }
-
-    public String getSertifikatai() {
-        return sertifikatai;
-    }
-
-    public void setSertifikatai(String sertifikatai) {
-        this.sertifikatai = sertifikatai;
-    }
-
-    public String getNemaJungtis() {
-        return nemaJungtis;
-    }
-
-    public void setNemaJungtis(String nemaJungtis) {
-        this.nemaJungtis = nemaJungtis;
-    }
-
-    public String getVirsitampiuApsauga() {
-        return virsitampiuApsauga;
-    }
-
-    public void setVirsitampiuApsauga(String virsitampiuApsauga) {
-        this.virsitampiuApsauga = virsitampiuApsauga;
-    }
-
-    public String getIlgaamziskumas() {
-        return ilgaamziskumas;
-    }
-
-    public void setIlgaamziskumas(String ilgaamziskumas) {
-        this.ilgaamziskumas = ilgaamziskumas;
-    }
-
-    public String getKorpusoAtidarymas() {
-        return korpusoAtidarymas;
-    }
-
-    public void setKorpusoAtidarymas(String korpusoAtidarymas) {
-        this.korpusoAtidarymas = korpusoAtidarymas;
-    }
-
-    public String getOptinesIrElektrinesDaliesPertvara() {
-        return optinesIrElektrinesDaliesPertvara;
-    }
-
-    public void setOptinesIrElektrinesDaliesPertvara(String optinesIrElektrinesDaliesPertvara) {
-        this.optinesIrElektrinesDaliesPertvara = optinesIrElektrinesDaliesPertvara;
-    }
-
-    public String getValdymas() {
-        return valdymas;
-    }
-
-    public void setValdymas(String valdymas) {
-        this.valdymas = valdymas;
-    }
-
-    public double getApatinisDiametras() {
-        return apatinisDiametras;
-    }
-
-    public void setApatinisDiametras(double apatinisDiametras) {
-        this.apatinisDiametras = apatinisDiametras;
-    }
-
-    public double getVirsutinisDiametras() {
-        return virsutinisDiametras;
-    }
-
-    public void setVirsutinisDiametras(double virsutinisDiametras) {
-        this.virsutinisDiametras = virsutinisDiametras;
-    }
-
-    public double getGembesDiametras() {
-        return gembesDiametras;
-    }
-
-    public void setGembesDiametras(double gembesDiametras) {
-        this.gembesDiametras = gembesDiametras;
-    }
-
     public Date getDate() {
         return date;
     }
@@ -771,11 +505,7 @@ public class ProductCatalog {
                 ", catalogNo='" + catalogNo + '\'' +
                 ", symbol='" + symbol + '\'' +
                 ", priceNet=" + priceNet +
-                ", image_url='" + image_url + '\'' +
                 ", groupId=" + groupId +
-                ", cu=" + cuAmount +
-                ", cuPrice=" + cuPrice +
-                ", gamintojas='" + gamintojas + '\'' +
                 ", aukstis=" + aukstis +
                 ", plotis=" + plotis +
                 ", gylis=" + gylis +
@@ -786,7 +516,6 @@ public class ProductCatalog {
                 ", vardine_srove='" + vardine_srove + '\'' +
                 ", vardine_itampa='" + vardine_itampa + '\'' +
                 ", mechaninis_atsparumas_IK='" + mechaninis_atsparumas_IK + '\'' +
-                ", storis=" + storis +
                 ", spalva='" + spalva + '\'' +
                 ", korpuso_medziaga='" + korpuso_medziaga + '\'' +
                 ", izoliacija='" + izoliacija + '\'' +
@@ -795,10 +524,8 @@ public class ProductCatalog {
                 ", sviesos_srautas=" + sviesos_srautas +
                 ", sviesos_spalvos_temperatura='" + sviesos_spalvos_temperatura + '\'' +
                 ", laidininkas='" + laidininkas + '\'' +
-                ", laidininkoIzoliacija='" + laidininkoIzoliacija + '\'' +
                 ", darbine_temperatura='" + darbine_temperatura + '\'' +
                 ", max_darbine_temperatura='" + max_darbine_temperatura + '\'' +
-                ", apsvieta='" + apsvieta + '\'' +
                 ", apvalkalas='" + apvalkalas + '\'' +
                 ", cpr_klase='" + cpr_klase + '\'' +
                 ", isjungimo_geba='" + isjungimo_geba + '\'' +
@@ -809,24 +536,7 @@ public class ProductCatalog {
                 ", nuotekio_srove='" + nuotekio_srove + '\'' +
                 ", dydis='" + dydis + '\'' +
                 ", plotas='" + plotas + '\'' +
-                ", aptikimoZona='" + aptikimoZona + '\'' +
-                ", maksimaliDarbineItampa='" + maksimaliDarbineItampa + '\'' +
-                ", iskrovimoSrove820='" + iskrovimoSrove820 + '\'' +
-                ", iskrovimoSrove10350='" + iskrovimoSrove10350 + '\'' +
-                ", itamposApsaugosLygis='" + itamposApsaugosLygis + '\'' +
-                ", kategorija='" + kategorija + '\'' +
-                ", CRI=" + CRI +
-                ", garantija='" + garantija + '\'' +
-                ", sertifikatai='" + sertifikatai + '\'' +
-                ", nemaJungtis='" + nemaJungtis + '\'' +
-                ", virsitampiuApsauga='" + virsitampiuApsauga + '\'' +
-                ", ilgaamziskumas='" + ilgaamziskumas + '\'' +
-                ", korpusoAtidarymas='" + korpusoAtidarymas + '\'' +
-                ", optinesIrElektrinesDaliesPertvara='" + optinesIrElektrinesDaliesPertvara + '\'' +
-                ", valdymas='" + valdymas + '\'' +
-                ", apatinisDiametras=" + apatinisDiametras +
-                ", virsutinisDiametras=" + virsutinisDiametras +
-                ", gembesDiametras=" + gembesDiametras +
+                ", image_url='" + image_url + '\'' +
                 ", date=" + date +
                 '}';
     }
@@ -836,11 +546,7 @@ public class ProductCatalog {
                 ", catalogNo='" + catalogNo + '\'' +
                 ", symbol='" + symbol + '\'' +
                 ", priceNet=" + priceNet +
-                ", image_url='" + image_url + '\'' +
                 ", groupId=" + groupId +
-                ", cu=" + cuAmount +
-                ", cuPrice=" + cuPrice +
-                ", gamintojas='" + gamintojas + '\'' +
                 ", aukstis=" + aukstis +
                 ", plotis=" + plotis +
                 ", gylis=" + gylis +
@@ -851,7 +557,6 @@ public class ProductCatalog {
                 ", vardine_srove='" + vardine_srove + '\'' +
                 ", vardine_itampa='" + vardine_itampa + '\'' +
                 ", mechaninis_atsparumas_IK='" + mechaninis_atsparumas_IK + '\'' +
-                ", storis=" + storis +
                 ", spalva='" + spalva + '\'' +
                 ", korpuso_medziaga='" + korpuso_medziaga + '\'' +
                 ", izoliacija='" + izoliacija + '\'' +
@@ -860,10 +565,8 @@ public class ProductCatalog {
                 ", sviesos_srautas=" + sviesos_srautas +
                 ", sviesos_spalvos_temperatura='" + sviesos_spalvos_temperatura + '\'' +
                 ", laidininkas='" + laidininkas + '\'' +
-                ", laidininkoIzoliacija='" + laidininkoIzoliacija + '\'' +
                 ", darbine_temperatura='" + darbine_temperatura + '\'' +
                 ", max_darbine_temperatura='" + max_darbine_temperatura + '\'' +
-                ", apsvieta='" + apsvieta + '\'' +
                 ", apvalkalas='" + apvalkalas + '\'' +
                 ", cpr_klase='" + cpr_klase + '\'' +
                 ", isjungimo_geba='" + isjungimo_geba + '\'' +
@@ -874,24 +577,7 @@ public class ProductCatalog {
                 ", nuotekio_srove='" + nuotekio_srove + '\'' +
                 ", dydis='" + dydis + '\'' +
                 ", plotas='" + plotas + '\'' +
-                ", aptikimoZona='" + aptikimoZona + '\'' +
-                ", maksimaliDarbineItampa='" + maksimaliDarbineItampa + '\'' +
-                ", iskrovimoSrove820='" + iskrovimoSrove820 + '\'' +
-                ", iskrovimoSrove10350='" + iskrovimoSrove10350 + '\'' +
-                ", itamposApsaugosLygis='" + itamposApsaugosLygis + '\'' +
-                ", kategorija='" + kategorija + '\'' +
-                ", CRI=" + CRI +
-                ", garantija='" + garantija + '\'' +
-                ", sertifikatai='" + sertifikatai + '\'' +
-                ", nemaJungtis='" + nemaJungtis + '\'' +
-                ", virsitampiuApsauga='" + virsitampiuApsauga + '\'' +
-                ", ilgaamziskumas='" + ilgaamziskumas + '\'' +
-                ", korpusoAtidarymas='" + korpusoAtidarymas + '\'' +
-                ", optinesIrElektrinesDaliesPertvara='" + optinesIrElektrinesDaliesPertvara + '\'' +
-                ", valdymas='" + valdymas + '\'' +
-                ", apatinisDiametras=" + apatinisDiametras +
-                ", virsutinisDiametras=" + virsutinisDiametras +
-                ", gembesDiametras=" + gembesDiametras +
+                ", image_url='" + image_url + '\'' +
                 ", date=" + date +
                 '}';
     }

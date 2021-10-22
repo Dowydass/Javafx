@@ -78,14 +78,6 @@ public class ReadExcelWithProductCatalog {
                             }
                             break;
                         case 8:
-                            Double cuVariable = cell.getNumericCellValue();
-                            if (cuVariable == null) {
-                                productCatalog.setCuVariable(0);
-                            } else {
-                                productCatalog.setCuVariable(cuVariable);
-                            }
-                            break;
-                        case 9:
                             String manufacturer = cell.getStringCellValue();
                             if (manufacturer.equals("")) {
                                 productCatalog.setGamintojas(null);
@@ -94,7 +86,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             break;
 
-                        case 10:
+                        case 9:
                             Double aukstis = cell.getNumericCellValue();
                             if (aukstis == null) {
                                 productCatalog.setAukstis(0);
@@ -102,7 +94,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setAukstis(aukstis);
                             }
                             break;
-                        case 11:
+                        case 10:
                             Double plotis = cell.getNumericCellValue();
                             if (plotis == null) {
                                 productCatalog.setPlotis(0);
@@ -110,7 +102,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setPlotis(plotis);
                             }
                             break;
-                        case 12:
+                        case 11:
                             Double gylis = cell.getNumericCellValue();
                             if (gylis == null) {
                                 productCatalog.setGylis(0);
@@ -118,7 +110,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setGylis(gylis);
                             }
                             break;
-                        case 13:
+                        case 12:
                             Double skersmuo = cell.getNumericCellValue();
                             if (skersmuo == null) {
                                 productCatalog.setSkersmuo(0);
@@ -126,7 +118,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setSkersmuo(skersmuo);
                             }
                             break;
-                        case 14:
+                        case 13:
                             Double ilgis = cell.getNumericCellValue();
                             if (ilgis == null) {
                                 productCatalog.setIlgis(0);
@@ -134,7 +126,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setIlgis(ilgis);
                             }
                             break;
-                        case 15:
+                        case 14:
                             String apsaugos_laipsnis = cell.getStringCellValue();
                             if (apsaugos_laipsnis.equals("")) {
                                 productCatalog.setApsaugos_laipsnis(null);
@@ -142,7 +134,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setApsaugos_laipsnis(apsaugos_laipsnis);
                             }
                             break;
-                        case 16:
+                        case 15:
                             Double moduliu_skaicius = cell.getNumericCellValue();
                             if (moduliu_skaicius == null) {
                                 productCatalog.setModuliu_skaicius(0);
@@ -150,7 +142,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setModuliu_skaicius(moduliu_skaicius);
                             }
                             break;
-                        case 17:
+                        case 16:
                             String vardine_srove = cell.getStringCellValue();
                             if (vardine_srove.equals("")) {
                                 productCatalog.setVardine_srove(null);
@@ -158,7 +150,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setVardine_srove(vardine_srove);
                             }
                             break;
-                        case 18:
+                        case 17:
                             String vardine_itampa = cell.getStringCellValue();
                             if (vardine_itampa.equals("")) {
                                 productCatalog.setVardine_itampa(null);
@@ -166,7 +158,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setVardine_itampa(vardine_itampa);
                             }
                             break;
-                        case 19:
+                        case 18:
                             String mechaninis_atsparumas_IK = cell.getStringCellValue();
                             if (mechaninis_atsparumas_IK.equals("")) {
                                 productCatalog.setMechaninis_atsparumas_IK(null);
@@ -174,7 +166,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setMechaninis_atsparumas_IK(mechaninis_atsparumas_IK);
                             }
                             break;
-                        case 20:
+                        case 19:
                             Double storis = cell.getNumericCellValue();
                             if (storis == null) {
                                 productCatalog.setStoris(0);
@@ -182,7 +174,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setStoris(storis);
                             }
                             break;
-                        case 21:
+                        case 20:
                             String spalva = cell.getStringCellValue();
                             if (spalva.equals("")) {
                                 productCatalog.setSpalva(null);
@@ -190,7 +182,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setSpalva(spalva);
                             }
                             break;
-                        case 22:
+                        case 21:
                             String korpuso_medziaga = cell.getStringCellValue();
                             if (korpuso_medziaga.equals("")) {
                                 productCatalog.setKorpuso_medziaga(null);
@@ -198,7 +190,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setKorpuso_medziaga(korpuso_medziaga);
                             }
                             break;
-                        case 23:
+                        case 22:
                             String izoliacija = cell.getStringCellValue();
                             if (izoliacija.equals("")) {
                                 productCatalog.setIzoliacija(null);
@@ -206,7 +198,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setIzoliacija(izoliacija);
                             }
                             break;
-                        case 24:
+                        case 23:
                             Double svoris = cell.getNumericCellValue();
                             if (svoris == null) {
                                 productCatalog.setSvoris(0);
@@ -214,7 +206,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setSvoris(svoris);
                             }
                             break;
-                        case 25:
+                        case 24:
                             String galia = cell.getStringCellValue();
                             if (galia.equals("")) {
                                 productCatalog.setGalia(null);
@@ -222,7 +214,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setGalia(galia);
                             }
                             break;
-                        case 26:
+                        case 25:
                             Double sviesos_srautas = cell.getNumericCellValue();
                             if (sviesos_srautas == null) {
                                 productCatalog.setSviesos_srautas(0);
@@ -230,7 +222,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setSviesos_srautas(sviesos_srautas);
                             }
                             break;
-                        case 27:
+                        case 26:
                             String sviesos_spalvos_temperatura = cell.getStringCellValue();
                             if (sviesos_spalvos_temperatura.equals("")) {
                                 productCatalog.setSviesos_spalvos_temperatura(null);
@@ -238,12 +230,20 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setSviesos_spalvos_temperatura(sviesos_spalvos_temperatura);
                             }
                             break;
-                        case 28:
+                        case 27:
                             String laidininkas = cell.getStringCellValue();
                             if (laidininkas.equals("")) {
                                 productCatalog.setLaidininkas(null);
                             } else {
                                 productCatalog.setLaidininkas(laidininkas);
+                            }
+                            break;
+                        case 28:
+                            String laidininkoIzoliacija = cell.getStringCellValue();
+                            if (laidininkoIzoliacija.equals("")) {
+                                productCatalog.setLaidininkoIzoliacija(null);
+                            } else {
+                                productCatalog.setLaidininkoIzoliacija(laidininkoIzoliacija);
                             }
                             break;
                         case 29:
@@ -263,6 +263,13 @@ public class ReadExcelWithProductCatalog {
                             }
                             break;
                         case 31:
+                            String apsvieta = cell.getStringCellValue();
+                            if (apsvieta.equals("")) {
+                                productCatalog.setApsvieta(null);
+                            } else {
+                                productCatalog.setApsvieta(apsvieta);
+                            }
+                        case 32:
                             String apvalkalas = cell.getStringCellValue();
                             if (apvalkalas.equals("")) {
                                 productCatalog.setApvalkalas(null);
@@ -270,7 +277,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setApvalkalas(apvalkalas);
                             }
                             break;
-                        case 32:
+                        case 33:
                             String CPR_klase = cell.getStringCellValue();
                             if (CPR_klase.equals("")) {
                                 productCatalog.setCpr_klase(null);
@@ -278,7 +285,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setCpr_klase(CPR_klase);
                             }
                             break;
-                        case 33:
+                        case 34:
                             String isjungimo_geba = cell.getStringCellValue();
                             if (isjungimo_geba.equals("")) {
                                 productCatalog.setIsjungimo_geba(null);
@@ -286,7 +293,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setIsjungimo_geba(isjungimo_geba);
                             }
                             break;
-                        case 34:
+                        case 35:
                             String isjungimo_charakteristika = cell.getStringCellValue();
                             if (isjungimo_charakteristika.equals("")) {
                                 productCatalog.setIsjungimo_charakteristika(null);
@@ -294,7 +301,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setIsjungimo_charakteristika(isjungimo_charakteristika);
                             }
                             break;
-                        case 35:
+                        case 36:
                             String mechaninis_atsparumas = cell.getStringCellValue();
                             if (mechaninis_atsparumas.equals("")) {
                                 productCatalog.setMechaninis_atsparumas(null);
@@ -302,7 +309,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setMechaninis_atsparumas(mechaninis_atsparumas);
                             }
                             break;
-                        case 36:
+                        case 37:
                             String skerspjuvis_Al = cell.getStringCellValue();
                             if (skerspjuvis_Al.equals("")) {
                                 productCatalog.setSkerspjuvis_Al(null);
@@ -310,7 +317,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setSkerspjuvis_Al(skerspjuvis_Al);
                             }
                             break;
-                        case 37:
+                        case 38:
                             String skerspjuvis_Cu = cell.getStringCellValue();
                             if (skerspjuvis_Cu.equals("")) {
                                 productCatalog.setSkerspjuvis_Cu(null);
@@ -318,7 +325,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setSkerspjuvis_Cu(skerspjuvis_Cu);
                             }
                             break;
-                        case 38:
+                        case 39:
                             String nuotekio_srove = cell.getStringCellValue();
                             if (nuotekio_srove.equals("")) {
                                 productCatalog.setNuotekio_srove(null);
@@ -326,7 +333,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setNuotekio_srove(nuotekio_srove);
                             }
                             break;
-                        case 39:
+                        case 40:
                             String dydis = cell.getStringCellValue();
                             if (dydis.equals("")) {
                                 productCatalog.setDydis(null);
@@ -334,7 +341,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setDydis(dydis);
                             }
                             break;
-                        case 40:
+                        case 41:
                             String plotas = cell.getStringCellValue();
                             if (plotas.equals("")) {
                                 productCatalog.setPlotas(null);
@@ -342,7 +349,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setPlotas(plotas);
                             }
                             break;
-                        case 41:
+                        case 42:
                             String aptikimoZona = cell.getStringCellValue();
                             if (aptikimoZona.equals("")) {
                                 productCatalog.setAptikimoZona(null);
@@ -350,7 +357,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setAptikimoZona(aptikimoZona);
                             }
                             break;
-                        case 42:
+                        case 43:
                             String maxDarbineItampa = cell.getStringCellValue();
                             if (maxDarbineItampa.equals("")) {
                                 productCatalog.setMaksimaliDarbineItampa(null);
@@ -358,7 +365,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setMaksimaliDarbineItampa(maxDarbineItampa);
                             }
                             break;
-                        case 43:
+                        case 44:
                             String iskrovimoSrove820 = cell.getStringCellValue();
                             if (iskrovimoSrove820.equals("")) {
                                 productCatalog.setIskrovimoSrove820(iskrovimoSrove820);
@@ -366,7 +373,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setIskrovimoSrove820(iskrovimoSrove820);
                             }
                             break;
-                        case 44:
+                        case 45:
                             String iskrovimoSrove10350 = cell.getStringCellValue();
                             if (iskrovimoSrove10350.equals("")) {
                                 productCatalog.setIskrovimoSrove10350(null);
@@ -374,7 +381,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setIskrovimoSrove10350(iskrovimoSrove10350);
                             }
                             break;
-                        case 45:
+                        case 46:
                             String itamposApsaugosLygis = cell.getStringCellValue();
                             if (itamposApsaugosLygis.equals("")) {
                                 productCatalog.setItamposApsaugosLygis(null);
@@ -382,7 +389,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setItamposApsaugosLygis(itamposApsaugosLygis);
                             }
                             break;
-                        case 46:
+                        case 47:
                             String kategorija = cell.getStringCellValue();
                             if (kategorija.equals("")) {
                                 productCatalog.setKategorija(null);
@@ -390,7 +397,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setKategorija(kategorija);
                             }
                             break;
-                        case 47:
+                        case 48:
                             Double cri = cell.getNumericCellValue();
                             if (cri == null) {
                                 productCatalog.setCRI(0);
@@ -398,7 +405,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setCRI(cri);
                             }
                             break;
-                        case 48:
+                        case 49:
                             String garantija = cell.getStringCellValue();
                             if (garantija.equals("")) {
                                 productCatalog.setGarantija(null);
@@ -406,7 +413,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setGarantija(garantija);
                             }
                             break;
-                        case 49:
+                        case 50:
                             String sertifikatai = cell.getStringCellValue();
                             if (sertifikatai.equals("")) {
                                 productCatalog.setSertifikatai(null);
@@ -414,7 +421,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setSertifikatai(sertifikatai);
                             }
                             break;
-                        case 50:
+                        case 51:
                             String nemaJungtis = cell.getStringCellValue();
                             if (nemaJungtis.equals("")) {
                                 productCatalog.setNemaJungtis(null);
@@ -422,7 +429,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setNemaJungtis(nemaJungtis);
                             }
                             break;
-                        case 51:
+                        case 52:
                             String virsItampiuApsauga = cell.getStringCellValue();
                             if (virsItampiuApsauga.equals("")) {
                                 productCatalog.setVirsitampiuApsauga(null);
@@ -430,7 +437,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setVirsitampiuApsauga(virsItampiuApsauga);
                             }
                             break;
-                        case 52:
+                        case 53:
                             String ilgaamziskumas = cell.getStringCellValue();
                             if (ilgaamziskumas.equals("")) {
                                 productCatalog.setIlgaamziskumas(null);
@@ -438,7 +445,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setIlgaamziskumas(ilgaamziskumas);
                             }
                             break;
-                        case 53:
+                        case 54:
                             String korpusoAtidarymas = cell.getStringCellValue();
                             if (korpusoAtidarymas.equals("")) {
                                 productCatalog.setKorpusoAtidarymas(null);
@@ -446,7 +453,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setKorpusoAtidarymas(korpusoAtidarymas);
                             }
                             break;
-                        case 54:
+                        case 55:
                             String optinesIrElektrinesDaliesPertvara = cell.getStringCellValue();
                             if (optinesIrElektrinesDaliesPertvara.equals("")) {
                                 productCatalog.setOptinesIrElektrinesDaliesPertvara(null);
@@ -454,7 +461,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setOptinesIrElektrinesDaliesPertvara(optinesIrElektrinesDaliesPertvara);
                             }
                             break;
-                        case 55:
+                        case 56:
                             String valdymas = cell.getStringCellValue();
                             if (valdymas.equals("")) {
                                 productCatalog.setValdymas(null);
@@ -462,7 +469,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setValdymas(valdymas);
                             }
                             break;
-                        case 56:
+                        case 57:
                             Double apatinisDiametras = cell.getNumericCellValue();
                             if (apatinisDiametras == null) {
                                 productCatalog.setApatinisDiametras(0);
@@ -470,7 +477,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setApatinisDiametras(apatinisDiametras);
                             }
                             break;
-                        case 57:
+                        case 58:
                             Double virsutinisDiametras = cell.getNumericCellValue();
                             if (virsutinisDiametras == null) {
                                 productCatalog.setVirsutinisDiametras(0);
@@ -478,7 +485,7 @@ public class ReadExcelWithProductCatalog {
                                 productCatalog.setVirsutinisDiametras(virsutinisDiametras);
                             }
                             break;
-                        case 58:
+                        case 59:
                             Double gembesDiametras = cell.getNumericCellValue();
                             if (gembesDiametras == null) {
                                 productCatalog.setGembesDiametras(0);

@@ -172,7 +172,7 @@ public class LoginController implements Initializable {
                             });
                         } else {
                             Platform.runLater(() -> {
-                                JPAUtil.showErrorPopupWindowAndClose("Informacija", "Vartotojo paskyra yra išjungta. \nPrašome kreiptis į ECOSprendimai atstovą.\n- Telefono nr.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El.paštas: " + Constants.CONTACT_EMAIL,400, 150, Constants.BUTTON_NAME_OK);
+                                JPAUtil.showErrorPopupWindowAndClose("Informacija", "Vartotojo paskyra yra išjungta. \nPrašome kreiptis į ECOSprendimai atstovą.\n- Telefono nr.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El.paštas: " + Constants.CONTACT_EMAIL,440, 150, Constants.BUTTON_NAME_OK);
                             });
                         }
 
@@ -257,7 +257,7 @@ public class LoginController implements Initializable {
 
         } catch (Exception e) {
             Platform.runLater(() -> {
-                JPAUtil.showErrorPopupWindowAndClose("Programos klaida", "Nepavyko užkrauti programos. \n- Patikrinkite ar turite interneto ryšį. \n- Priešingu atveju kreipkitės: į ECOSprendimai\n- Tel. nr.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El. paštu: " + Constants.CONTACT_EMAIL +  "\n- Programos versija: " + Constants.PROGRAM_VERSION, 500, 200, Constants.BUTTON_NAME_OK);
+                JPAUtil.showErrorPopupWindowAndClose("Programos klaida", "Nepavyko užkrauti programos. \n- Patikrinkite ar turite interneto ryšį. \nPriešingu atveju kreipkitės: į ECOSprendimai\n- Tel. nr.: " + Constants.CONTACT_PHONE_NUMBER + "\n- El. paštu: " + Constants.CONTACT_EMAIL +  "\n- Programos versija: " + Constants.PROGRAM_VERSION, 490, 200, Constants.BUTTON_NAME_OK);
             });
             e.printStackTrace();
             e.getCause();

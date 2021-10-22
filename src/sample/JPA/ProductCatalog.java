@@ -27,12 +27,10 @@ public class ProductCatalog {
     private int groupId;
     //@ManyToOne(targetEntity = Categories.class, fetch = FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     //@JoinColumn(name = "group_id", referencedColumnName = "id")
-    @Column(name = "cu_amount")
+    @Column(name = "Cu_amount")
     private double cuAmount;
-    @Column(name = "cu_price")
+    @Column(name = "Cu_price")
     private double cuPrice;
-    @Column(name = "cu_kintamsis")
-    private double cuVariable;
     @Column(name = "gamintojas", length = 1024)
     private String gamintojas;
     @Column(name = "aukstis", length = 255)
@@ -89,7 +87,7 @@ public class ProductCatalog {
     private String isjungimo_geba;
     @Column(name = "isjungimo_charakteristika")
     private String isjungimo_charakteristika;
-    @Column(name = "mechaninis_atsparumas_n")
+    @Column(name = "mechaninis_atsparumas")
     private String mechaninis_atsparumas;
     @Column(name = "skerspjuvis_Al")
     private String skerspjuvis_Al;
@@ -105,9 +103,9 @@ public class ProductCatalog {
     private String aptikimoZona;
     @Column(name = "maksimali_darbine_itampa")
     private String maksimaliDarbineItampa;
-    @Column(name = "iskrovimo_srove(8/20)")
+    @Column(name = "iskrovimo_srove_8_20")
     private String iskrovimoSrove820;
-    @Column(name = "iskrovimo_srove(10/350)")
+    @Column(name = "iskrovimo_srove_10_350")
     private String iskrovimoSrove10350;
     @Column(name = "itampos_apsaugos_lygis")
     private String itamposApsaugosLygis;
@@ -190,7 +188,7 @@ public class ProductCatalog {
         this.date = date;
     }
 
-    public ProductCatalog(String catalogNo, String symbol, double priceNet, String image_url, int groupId, double cuAmount, double cuPrice, int cuVariable, String gamintojas, double aukstis, double plotis, double gylis, double skersmuo, double ilgis, String apsaugos_laipsnis, double moduliu_skaicius, String vardine_srove, String vardine_itampa, String mechaninis_atsparumas_IK, double storis, String spalva, String korpuso_medziaga, String izoliacija, double svoris, String galia, double sviesos_srautas, String sviesos_spalvos_temperatura, String laidininkas, String laidininkoIzoliacija, String darbine_temperatura, String max_darbine_temperatura, String apsvieta, String apvalkalas, String cpr_klase, String isjungimo_geba, String isjungimo_charakteristika, String mechaninis_atsparumas, String skerspjuvis_Al, String skerspjuvis_Cu, String nuotekio_srove, String dydis, String plotas, String aptikimoZona, String maksimaliDarbineItampa, String iskrovimoSrove820, String iskrovimoSrove10350, String itamposApsaugosLygis, String kategorija, int CRI, String garantija, String sertifikatai, String nemaJungtis, String virsitampiuApsauga, String ilgaamziskumas, String korpusoAtidarymas, String optinesIrElektrinesDaliesPertvara, String valdymas, int apatinisDiametras, int virsutinisDiametras, int gembesDiametras, Date date) {
+    public ProductCatalog(String catalogNo, String symbol, double priceNet, String image_url, int groupId, double cuAmount, double cuPrice, String gamintojas, double aukstis, double plotis, double gylis, double skersmuo, double ilgis, String apsaugos_laipsnis, double moduliu_skaicius, String vardine_srove, String vardine_itampa, String mechaninis_atsparumas_IK, double storis, String spalva, String korpuso_medziaga, String izoliacija, double svoris, String galia, double sviesos_srautas, String sviesos_spalvos_temperatura, String laidininkas, String laidininkoIzoliacija, String darbine_temperatura, String max_darbine_temperatura, String apsvieta, String apvalkalas, String cpr_klase, String isjungimo_geba, String isjungimo_charakteristika, String mechaninis_atsparumas, String skerspjuvis_Al, String skerspjuvis_Cu, String nuotekio_srove, String dydis, String plotas, String aptikimoZona, String maksimaliDarbineItampa, String iskrovimoSrove820, String iskrovimoSrove10350, String itamposApsaugosLygis, String kategorija, int CRI, String garantija, String sertifikatai, String nemaJungtis, String virsitampiuApsauga, String ilgaamziskumas, String korpusoAtidarymas, String optinesIrElektrinesDaliesPertvara, String valdymas, int apatinisDiametras, int virsutinisDiametras, int gembesDiametras, Date date) {
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
@@ -198,7 +196,6 @@ public class ProductCatalog {
         this.groupId = groupId;
         this.cuAmount = cuAmount;
         this.cuPrice = cuPrice;
-        this.cuVariable = cuVariable;
         this.gamintojas = gamintojas;
         this.aukstis = aukstis;
         this.plotis = plotis;
@@ -570,14 +567,6 @@ public class ProductCatalog {
 
     public void setCuPrice(double cuPrice) {
         this.cuPrice = cuPrice;
-    }
-
-    public double getCuVariable() {
-        return cuVariable;
-    }
-
-    public void setCuVariable(double cuVariable) {
-        this.cuVariable = cuVariable;
     }
 
     public String getGamintojas() {

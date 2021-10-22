@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "categories")
-public class Categories {
+public class  Categories {
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "incrementation")

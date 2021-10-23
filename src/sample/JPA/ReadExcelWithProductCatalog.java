@@ -398,7 +398,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             break;
                         case 48:
-                            Double cri = cell.getNumericCellValue();
+                            Integer cri = (int) cell.getNumericCellValue();
                             if (cri == null) {
                                 productCatalog.setCRI(0);
                             } else {
@@ -470,7 +470,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             break;
                         case 57:
-                            Double apatinisDiametras = cell.getNumericCellValue();
+                            Integer apatinisDiametras =(int) cell.getNumericCellValue();
                             if (apatinisDiametras == null) {
                                 productCatalog.setApatinisDiametras(0);
                             } else {
@@ -478,7 +478,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             break;
                         case 58:
-                            Double virsutinisDiametras = cell.getNumericCellValue();
+                            Integer virsutinisDiametras =(int) cell.getNumericCellValue();
                             if (virsutinisDiametras == null) {
                                 productCatalog.setVirsutinisDiametras(0);
                             } else {
@@ -486,7 +486,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             break;
                         case 59:
-                            Double gembesDiametras = cell.getNumericCellValue();
+                            Integer gembesDiametras =(int) cell.getNumericCellValue();
                             if (gembesDiametras == null) {
                                 productCatalog.setGembesDiametras(0);
                             } else {

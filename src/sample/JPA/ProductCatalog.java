@@ -112,7 +112,7 @@ public class ProductCatalog {
     @Column(name = "Kategorija")
     private String kategorija;
     @Column(name = "CRI")
-    private double CRI;
+    private int CRI;
     @Column(name = "Garantija")
     private String garantija;
     @Column(name = "sertifikatai")
@@ -130,11 +130,11 @@ public class ProductCatalog {
     @Column(name = "valdymas")
     private String valdymas;
     @Column(name = "apatinis_diametras")
-    private double apatinisDiametras;
+    private int apatinisDiametras;
     @Column(name = "virsutinis_diametras")
-    private double virsutinisDiametras;
+    private int virsutinisDiametras;
     @Column(name = "gembes_diametras")
-    private double gembesDiametras;
+    private int gembesDiametras;
     @Column(name = "date")
     private Date date;
 
@@ -188,7 +188,7 @@ public class ProductCatalog {
         this.date = date;
     }
 
-    public ProductCatalog(String catalogNo, String symbol, double priceNet, String image_url, int groupId, double cuAmount, double cuPrice, String gamintojas, double aukstis, double plotis, double gylis, double skersmuo, double ilgis, String apsaugos_laipsnis, double moduliu_skaicius, String vardine_srove, String vardine_itampa, String mechaninis_atsparumas_IK, double storis, String spalva, String korpuso_medziaga, String izoliacija, double svoris, String galia, double sviesos_srautas, String sviesos_spalvos_temperatura, String laidininkas, String laidininkoIzoliacija, String darbine_temperatura, String max_darbine_temperatura, String apsvieta, String apvalkalas, String cpr_klase, String isjungimo_geba, String isjungimo_charakteristika, String mechaninis_atsparumas, String skerspjuvis_Al, String skerspjuvis_Cu, String nuotekio_srove, String dydis, String plotas, String aptikimoZona, String maksimaliDarbineItampa, String iskrovimoSrove820, String iskrovimoSrove10350, String itamposApsaugosLygis, String kategorija, int CRI, String garantija, String sertifikatai, String nemaJungtis, String virsitampiuApsauga, String ilgaamziskumas, String korpusoAtidarymas, String optinesIrElektrinesDaliesPertvara, String valdymas, int apatinisDiametras, int virsutinisDiametras, int gembesDiametras, Date date) {
+    public ProductCatalog( String catalogNo, String symbol, double priceNet, String image_url, int groupId, double cuAmount, double cuPrice, String gamintojas, double aukstis, double plotis, double gylis, double skersmuo, double ilgis, String apsaugos_laipsnis, double moduliu_skaicius, String vardine_srove, String vardine_itampa, String mechaninis_atsparumas_IK, double storis, String spalva, String korpuso_medziaga, String izoliacija, double svoris, String galia, double sviesos_srautas, String sviesos_spalvos_temperatura, String laidininkas, String laidininkoIzoliacija, String darbine_temperatura, String max_darbine_temperatura, String apsvieta, String apvalkalas, String cpr_klase, String isjungimo_geba, String isjungimo_charakteristika, String mechaninis_atsparumas, String skerspjuvis_Al, String skerspjuvis_Cu, String nuotekio_srove, String dydis, String plotas, String aptikimoZona, String maksimaliDarbineItampa, String iskrovimoSrove820, String iskrovimoSrove10350, String itamposApsaugosLygis, String kategorija, int CRI, String garantija, String sertifikatai, String nemaJungtis, String virsitampiuApsauga, String ilgaamziskumas, String korpusoAtidarymas, String optinesIrElektrinesDaliesPertvara, String valdymas, int apatinisDiametras, int virsutinisDiametras, int gembesDiametras, Date date) {
         this.catalogNo = catalogNo;
         this.symbol = symbol;
         this.priceNet = priceNet;
@@ -553,6 +553,14 @@ public class ProductCatalog {
         this.image_url = image_url;
     }
 
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     public double getCuAmount() {
         return cuAmount;
     }
@@ -649,11 +657,11 @@ public class ProductCatalog {
         this.kategorija = kategorija;
     }
 
-    public double getCRI() {
+    public int getCRI() {
         return CRI;
     }
 
-    public void setCRI(double CRI) {
+    public void setCRI(int CRI) {
         this.CRI = CRI;
     }
 
@@ -721,36 +729,28 @@ public class ProductCatalog {
         this.valdymas = valdymas;
     }
 
-    public double getApatinisDiametras() {
+    public int getApatinisDiametras() {
         return apatinisDiametras;
     }
 
-    public void setApatinisDiametras(double apatinisDiametras) {
+    public void setApatinisDiametras(int apatinisDiametras) {
         this.apatinisDiametras = apatinisDiametras;
     }
 
-    public double getVirsutinisDiametras() {
+    public int getVirsutinisDiametras() {
         return virsutinisDiametras;
     }
 
-    public void setVirsutinisDiametras(double virsutinisDiametras) {
+    public void setVirsutinisDiametras(int virsutinisDiametras) {
         this.virsutinisDiametras = virsutinisDiametras;
     }
 
-    public double getGembesDiametras() {
+    public int getGembesDiametras() {
         return gembesDiametras;
     }
 
-    public void setGembesDiametras(double gembesDiametras) {
+    public void setGembesDiametras(int gembesDiametras) {
         this.gembesDiametras = gembesDiametras;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     @Override
@@ -762,7 +762,7 @@ public class ProductCatalog {
                 ", priceNet=" + priceNet +
                 ", image_url='" + image_url + '\'' +
                 ", groupId=" + groupId +
-                ", cu=" + cuAmount +
+                ", cuAmount=" + cuAmount +
                 ", cuPrice=" + cuPrice +
                 ", gamintojas='" + gamintojas + '\'' +
                 ", aukstis=" + aukstis +
@@ -822,12 +822,13 @@ public class ProductCatalog {
 
     public String toStringCompare() {
         return "ProductCatalog{" +
+                "id=" + id +
                 ", catalogNo='" + catalogNo + '\'' +
                 ", symbol='" + symbol + '\'' +
                 ", priceNet=" + priceNet +
                 ", image_url='" + image_url + '\'' +
                 ", groupId=" + groupId +
-                ", cu=" + cuAmount +
+                ", cuAmount=" + cuAmount +
                 ", cuPrice=" + cuPrice +
                 ", gamintojas='" + gamintojas + '\'' +
                 ", aukstis=" + aukstis +

@@ -47,6 +47,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
+import java.util.prefs.Preferences;
 
 
 public class DashboardController extends Main implements Initializable {
@@ -128,6 +129,9 @@ public class DashboardController extends Main implements Initializable {
         }
         user_about.setVisible(true);
 
+
+        preferencesPriceRate.put(STOCK_PRICE, String.valueOf(0));
+        preferencesPriceRate.put(IS_NEW_SESSION, String.valueOf(false));
 
     }
 
@@ -272,8 +276,6 @@ public class DashboardController extends Main implements Initializable {
         }
 
 
-
-
         number.setResizable(true);
         catalogNo.setResizable(true);
         symbol.setResizable(true);
@@ -330,27 +332,93 @@ public class DashboardController extends Main implements Initializable {
 
     }
 
-    public void setProductPrice(){
-
-
-
-       Categories item = listView.getSelectionModel().getSelectedItem();
-
-        item = CategoriesDAO.findEntityById(item.getId());
-
-        if(item.getlft() >= 84 && item.getrght() <= 133){
-            System.out.println("\nSelected: "+ item.getId() +"\nlft: "+ item.getlft()+"\nrght: "+item.getrght());
-
-            item = listView.getSelectionModel().getSelectedItem();
-
-            fullProductList = ProductCatalogDAO.displayAllItems();
-
+    public List<ProductCatalog> createFilteredProductLists(List<Categories> categories, List<ProductCatalog> products) {
+        List<ProductCatalog> filteredProduct = FXCollections.observableArrayList();
+        for (Categories category : categories) {
+            for (ProductCatalog product : products) {
+                if (category.getId() == product.getGroupId()) {
+                    filteredProduct.add(product);
+                }
+            }
         }
+        return filteredProduct;
+    }
 
+    private Double callAPI() {
+
+
+        YahooStockAPI yahooStockAPI = new YahooStockAPI();
+
+        StocksDto rateInfo = null;
+        try {
+            rateInfo = yahooStockAPI.getRealTimeRate();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
+        double price = rateInfo.getPrice().doubleValue();
+
+        return price;
     }
 
 
-    public void getSelectionModel(){
+    final String STOCK_PRICE = "PRICE";
+    final String IS_NEW_SESSION = "IS_NEW_SESSION";
+
+
+    Preferences preferencesPriceRate = Preferences.userNodeForPackage(DashboardController.class);
+
+    /**
+     * @see #setProductPrice() gets selected item from categories and if item valid gets list of products.
+     *
+     * latter method calls to api and updates list of products.
+     */
+    public void setProductPrice() {
+
+        Categories item = listView.getSelectionModel().getSelectedItem();
+        item = CategoriesDAO.findEntityById(item.getId());
+
+        if (item.getlft() >= 84 && item.getrght() <= 133) {
+
+
+            boolean s = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
+
+            if (s == false) {
+
+                Boolean session = true;
+                double price = callAPI();
+
+                preferencesPriceRate.put(STOCK_PRICE, String.valueOf(price));
+                preferencesPriceRate.put(IS_NEW_SESSION, String.valueOf(session));
+
+                System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
+
+            }
+
+                System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
+                System.out.println(preferencesPriceRate.get(STOCK_PRICE, ""));
+
+                double price = Double.parseDouble(preferencesPriceRate.get(STOCK_PRICE, ""));
+                price = price/(156*100);
+                System.out.println("\nSelected: " + item.getId() + "\nlft: " + item.getlft() + "\nrght: " + item.getrght());
+
+
+
+            fullCategoryList = CategoriesDAO.selectCategoryById(item.getId());
+            fullProductList = ProductCatalogDAO.displayAllItems();
+
+            List<ProductCatalog> selectedProducts = createFilteredProductLists(fullCategoryList, fullProductList);
+
+            for (ProductCatalog productCatalog : selectedProducts) {
+                /**
+                 * listas su atnaujinta kaina...
+                 */
+               productCatalog.setPriceNet(price);
+
+            }
+        }
+    }
+
+    public void getSelectionModel() {
 
 
         Categories item;
@@ -370,6 +438,7 @@ public class DashboardController extends Main implements Initializable {
             System.out.println("mouseEventForListView( " + e + " )");
         }
     }
+
     //Paspaudus ant listview elemento tableview panelyje pavaizduoja visus produktus priklausančius šiam kategorija.
     public void mouseEventForListView(MouseEvent mouseEvent) {
         getSelectionModel();
@@ -432,18 +501,18 @@ public class DashboardController extends Main implements Initializable {
                     countEveryProductInExcel = excelProducts.size();
 
                     for (ProductCatalog excelProduct : excelProducts) {
-                       List<ProductCatalog> dbProducts = ProductCatalogDAO.searchByCatalogNo(excelProduct.getCatalogNo());
-                       if (!dbProducts.isEmpty()) {
-                           ProductCatalog dbProduct = dbProducts.get(0);
-                           if (doSameProductsHaveDifferences(dbProduct, excelProduct)) {
-                               excelProduct.setId(dbProduct.getId());
-                               ProductCatalogDAO.replace(excelProduct);
-                               countEveryProductUpdated++;
-                           }
-                       } else {
-                           ProductCatalogDAO.insert(excelProduct);
-                           countEveryNewProduct++;
-                       }
+                        List<ProductCatalog> dbProducts = ProductCatalogDAO.searchByCatalogNo(excelProduct.getCatalogNo());
+                        if (!dbProducts.isEmpty()) {
+                            ProductCatalog dbProduct = dbProducts.get(0);
+                            if (doSameProductsHaveDifferences(dbProduct, excelProduct)) {
+                                excelProduct.setId(dbProduct.getId());
+                                ProductCatalogDAO.replace(excelProduct);
+                                countEveryProductUpdated++;
+                            }
+                        } else {
+                            ProductCatalogDAO.insert(excelProduct);
+                            countEveryNewProduct++;
+                        }
 
                     }
                 } catch (NullPointerException e) {
@@ -489,7 +558,7 @@ public class DashboardController extends Main implements Initializable {
     }
 
     public boolean doSameProductsHaveDifferences(ProductCatalog excelProduct, ProductCatalog dbProduct) {
-        if (dbProduct.toStringCompare().equals(excelProduct.toStringCompare()) ) {
+        if (dbProduct.toStringCompare().equals(excelProduct.toStringCompare())) {
             return false;
         }
         return true;
@@ -1431,6 +1500,7 @@ public class DashboardController extends Main implements Initializable {
         table.setItems(observableProducts);
     }
 
+
     public static void showInformationPopupWindow(String title, String information, int width, int height) {
 
         Alert dialog = new Alert(Alert.AlertType.INFORMATION);
@@ -1463,4 +1533,3 @@ public class DashboardController extends Main implements Initializable {
     }
 
 }
-

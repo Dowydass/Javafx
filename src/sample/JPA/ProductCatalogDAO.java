@@ -31,9 +31,9 @@ public class ProductCatalogDAO {
             entityManager.getTransaction().commit();
             entityManager.close();
         } catch (JDBCConnectionException e) {
-            System.out.println("ProductCatalogDAO.insert() JDBCConnectionException");
+            System.out.println("ProductCatalogDAO.insert() " + e);
         } catch (HibernateException e) {
-            System.out.println("ProductCatalogDAO.insert() HibernateException");
+            System.out.println("ProductCatalogDAO.insert() " + e);
         }
 
     }
@@ -144,13 +144,13 @@ public class ProductCatalogDAO {
             entityManager.getTransaction().commit();
             entityManager.close();
         } catch (IllegalStateException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no IllegalStateException");
+            System.out.println("ProductCaalogDAO.updateByCatalog_no " + e);
         } catch (JDBCConnectionException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no JDBCConnectionException");
+            System.out.println("ProductCaalogDAO.updateByCatalog_no " + e);
         } catch (ServiceException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no ServiceException");
+            System.out.println("ProductCaalogDAO.updateByCatalog_no " + e);
         } catch (PersistenceException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no PersistenceException");
+            System.out.println("ProductCaalogDAO.updateByCatalog_no " + e);
         }
     }
 
@@ -169,13 +169,13 @@ public class ProductCatalogDAO {
             entityManager.getTransaction().commit();
             entityManager.close();
         } catch (IllegalStateException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no IllegalStateException");
+            System.out.println("ProductCaalogDAO.updateByCatalog_no " + e);
         } catch (JDBCConnectionException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no JDBCConnectionException");
+            System.out.println("ProductCaalogDAO.updateByCatalog_no " + e);
         } catch (ServiceException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no ServiceException");
+            System.out.println("ProductCaalogDAO.updateByCatalog_no " + e);
         } catch (PersistenceException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no PersistenceException");
+            System.out.println("ProductCaalogDAO.updateByCatalog_no " + e);
         }
     }
 
@@ -223,11 +223,11 @@ public class ProductCatalogDAO {
             conn.close();
             stmt.close();
         } catch (SQLException throwables) {
-            System.out.println("checkIfCatalogExistsIfNotCreateIt() SQLExecption");
+            System.out.println("checkIfCatalogExistsIfNotCreateIt() " + throwables);
         } catch (NullPointerException e) {
-            System.out.println("checkIfCatalogExistsIfNotCreateIt NullPointerException");
+            System.out.println("checkIfCatalogExistsIfNotCreateIt " + e);
         } catch (RuntimeException e) {
-            System.out.println("checkIfCatalogExistsIfNotCreateIt RuntimeExeception");
+            System.out.println("checkIfCatalogExistsIfNotCreateIt " + e);
         }
     }
 }

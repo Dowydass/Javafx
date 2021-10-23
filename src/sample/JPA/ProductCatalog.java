@@ -822,7 +822,6 @@ public class ProductCatalog {
 
     public String toStringCompare() {
         return "ProductCatalog{" +
-                "id=" + id +
                 ", catalogNo='" + catalogNo + '\'' +
                 ", symbol='" + symbol + '\'' +
                 ", priceNet=" + priceNet +

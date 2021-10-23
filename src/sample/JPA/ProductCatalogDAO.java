@@ -52,9 +52,9 @@ public class ProductCatalogDAO {
             entityManager.getTransaction().commit();
             entityManager.close();
         } catch (JDBCConnectionException e) {
-            System.out.println("ProductCatalogDAO.insert() " + e);
+            System.out.println("ProductCatalogDAO.insert()" + e);
         } catch (HibernateException e) {
-            System.out.println("ProductCatalogDAO.insert() "  + e);
+            System.out.println("ProductCatalogDAO.insert()" + e);
         }
 
     }
@@ -70,6 +70,7 @@ public class ProductCatalogDAO {
             entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
             entityTransaction = entityManager.getTransaction();
             entityTransaction.begin();
+
             query = entityManager.createQuery("Select e From ProductCatalog e", ProductCatalog.class);
             productCatalog = query.getResultList();
 
@@ -77,10 +78,10 @@ public class ProductCatalogDAO {
             entityManager.close();
 
         } catch (NullPointerException e ) {
-            System.out.println("ProductCatalogDAO.displayAllItems() " + e);
+            System.out.println("ProductCatalogDAO.displayAllItems()" + e);
         }
         catch (RuntimeException e) {
-            System.out.println("ProductCatalogDAO.displayAllItems() " + e);
+            System.out.println("ProductCatalogDAO.displayAllItems()" + e);
         }
 
         return productCatalog;
@@ -111,18 +112,20 @@ public class ProductCatalogDAO {
             entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
             entityTransaction = entityManager.getTransaction();
             entityTransaction.begin();
+
             productCatalog1 = entityManager.find(ProductCatalog.class, id);
             productCatalog1.setPriceNet(price);
+
             entityManager.getTransaction().commit();
             entityManager.close();
         } catch (IllegalStateException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no " + e);
+            System.out.println("ProductCatalogDAO.updateByCatalog_no" + e);
         } catch (JDBCConnectionException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no " + e);
+            System.out.println("ProductCatalogDAO.updateByCatalog_no" + e);
         } catch (ServiceException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no " + e);
+            System.out.println("ProductCatalogDAO.updateByCatalog_no" + e);
         } catch (PersistenceException e) {
-            System.out.println("ProductCaalogDAO.updateByCatalog_no " + e);
+            System.out.println("ProductCatalogDAO.updateByCatalog_no" + e);
         }
     }
 

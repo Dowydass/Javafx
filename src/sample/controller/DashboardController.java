@@ -48,6 +48,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.prefs.Preferences;
+import java.io.FileWriter;
 
 
 public class DashboardController extends Main implements Initializable {
@@ -394,12 +395,12 @@ public class DashboardController extends Main implements Initializable {
 
             }
 
-                System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
-                System.out.println(preferencesPriceRate.get(STOCK_PRICE, ""));
+            System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
+            System.out.println(preferencesPriceRate.get(STOCK_PRICE, ""));
 
-                double price = Double.parseDouble(preferencesPriceRate.get(STOCK_PRICE, ""));
-                price = price/(156*100);
-                System.out.println("\nSelected: " + item.getId() + "\nlft: " + item.getlft() + "\nrght: " + item.getrght());
+            double price = Double.parseDouble(preferencesPriceRate.get(STOCK_PRICE, ""));
+            price = price/(156*100);
+            System.out.println("\nSelected: " + item.getId() + "\nlft: " + item.getlft() + "\nrght: " + item.getrght());
 
 
 
@@ -412,7 +413,7 @@ public class DashboardController extends Main implements Initializable {
                 /**
                  * listas su atnaujinta kaina...
                  */
-               productCatalog.setPriceNet(price);
+                productCatalog.setPriceNet(price);
 
             }
         }
@@ -481,6 +482,8 @@ public class DashboardController extends Main implements Initializable {
             public void run() {
                 List<ProductCatalog> excelProducts = null;
                 List<CategoryParameters> allCategoryParameters;
+                List<String> uniqueProducts = new ArrayList<>();
+                List<String> dublicatedProducts = new ArrayList<>();
 
                 try {
                     excelProducts = ReadExcelWithProductCatalog.readFileUsingPOI(file);
@@ -494,48 +497,60 @@ public class DashboardController extends Main implements Initializable {
                 int countEveryProductInExcel = 0;
                 int countEveryProductUpdated = 0;
                 int countEveryNewProduct = 0;
-                boolean isProductChanged;
-                boolean isProductNew;
+                int countEveryDublicateProduct = 0;
 
                 try {
                     countEveryProductInExcel = excelProducts.size();
 
                     for (ProductCatalog excelProduct : excelProducts) {
-                        List<ProductCatalog> dbProducts = ProductCatalogDAO.searchByCatalogNo(excelProduct.getCatalogNo());
-                        if (!dbProducts.isEmpty()) {
-                            ProductCatalog dbProduct = dbProducts.get(0);
-                            if (doSameProductsHaveDifferences(dbProduct, excelProduct)) {
-                                excelProduct.setId(dbProduct.getId());
-                                ProductCatalogDAO.replace(excelProduct);
-                                countEveryProductUpdated++;
+                        if (!uniqueProducts.contains(excelProduct.getCatalogNo())) {
+                            List<ProductCatalog> dbProducts = ProductCatalogDAO.searchByCatalogNo(excelProduct.getCatalogNo());
+                            if (!dbProducts.isEmpty()) {
+                                ProductCatalog dbProduct = dbProducts.get(0);
+                                uniqueProducts.add(excelProduct.getCatalogNo());
+                                if (doSameProductsHaveDifferences(dbProduct, excelProduct)) {
+                                    excelProduct.setId(dbProduct.getId());
+                                    ProductCatalogDAO.replace(excelProduct);
+                                    countEveryProductUpdated++;
+                                }
+                            } else {
+                                ProductCatalogDAO.insert(excelProduct);
+                                uniqueProducts.add(excelProduct.getCatalogNo());
+                                countEveryNewProduct++;
                             }
                         } else {
-                            ProductCatalogDAO.insert(excelProduct);
-                            countEveryNewProduct++;
+                            dublicatedProducts.add(excelProduct.getCatalogNo());
+                            countEveryDublicateProduct++;
                         }
 
                     }
+                    dublicateWriter(dublicatedProducts);
                 } catch (NullPointerException e) {
                     System.out.println("openFile(" + e + " )");
                 } catch (RuntimeException e) {
                     System.out.println("openFile(" + e + " )");
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
-                if (countEveryProductUpdated != 0 || countEveryNewProduct != 0) {
-                    String successToPopup = "Faile rasta produktų: " + countEveryProductInExcel + "\nPakeista produktų: " + countEveryProductUpdated + "\nPridėti nauji produktai: " + countEveryNewProduct + "\n";
-
-                    Platform.runLater(() -> {
-                        showInformationPopupWindow("Failas sėkmingai įkeltas", successToPopup, 300, 130);
-                        loadProgress.setVisible(false);
-
-                    });
-                } else if (countEveryProductUpdated == 0 && countEveryNewProduct == 0 && countEveryProductInExcel == 0) {
+                if (countEveryProductUpdated == 0 && countEveryNewProduct == 0 && countEveryProductInExcel == 0) {
                     Platform.runLater(() -> {
                         showErrorPopupWindow("Klaida!", "Failas nebuvo nuskaitytas dėl blogo lentelių formato, \npatikrinkite ar dokumente nepalikote klaidų. \n\nFailo pavadinimas: " + file.getName(), 400, 150);
                         loadProgress.setVisible(false);
                     });
+                } else if (countEveryDublicateProduct != 0) {
+                    String successToPopup = "Faile rasta produktų: " + countEveryProductInExcel + "\nPakeista produktų: " +
+                            countEveryProductUpdated + "\nPridėti nauji produktai: " + countEveryNewProduct + "\nRasta dublikatų: " +
+                            countEveryDublicateProduct + "\n - Dublikatų katalogo ID išsaugoti faile:\n  \"dublikatai.txt\" ";
+
+                    Platform.runLater(() -> {
+                        showInformationPopupWindow("Failas sėkmingai įkeltas", successToPopup, 300, 190);
+                        loadProgress.setVisible(false);
+
+                    });
+
                 } else {
-                    String successToPopup = "Faile rasta produktų: " + countEveryProductInExcel + "\nPakeista produktų: " + countEveryProductUpdated + "\nPridėti nauji produktai: " + countEveryNewProduct + "\n";
+                    String successToPopup = "Faile rasta produktų: " + countEveryProductInExcel + "\nPakeista produktų: " + countEveryProductUpdated + "\nPridėti nauji produktai: " + countEveryNewProduct + "\nRasta dublikatų: " + countEveryDublicateProduct;
 
                     Platform.runLater(() -> {
                         showInformationPopupWindow("Failas sėkmingai įkeltas", successToPopup, 300, 130);
@@ -555,6 +570,14 @@ public class DashboardController extends Main implements Initializable {
         uploadExcelLogicalThread.setDaemon(true);
         uploadExcelLogicalThread.start();
 
+    }
+
+    public void dublicateWriter(List<String> arr) throws IOException {
+        FileWriter writer = new FileWriter("dublikatai.txt");
+        for(String str: arr) {
+            writer.write(str + System.lineSeparator());
+        }
+        writer.close();
     }
 
     public boolean doSameProductsHaveDifferences(ProductCatalog excelProduct, ProductCatalog dbProduct) {
@@ -594,17 +617,7 @@ public class DashboardController extends Main implements Initializable {
 
     //Lygina du categoryParameter objektus.
     public boolean compareCategoryParameters(CategoryParameters parameter, CategoryParameters parameter2) {
-        return parameter.isDarbine_temperatura() == parameter2.isDarbine_temperatura() && parameter.isSviesos_srautas() == parameter2.isSviesos_srautas() &&
-                parameter.isGalia() == parameter2.isGalia() && parameter.isVardine_itampa() == parameter2.isVardine_itampa() && parameter.isSpalva() == parameter2.isSpalva() &&
-                parameter.isGylis() == parameter2.isGylis() && parameter.isPlotis() == parameter2.isPlotis() &&
-                parameter.isAukstis() == parameter2.isAukstis() && parameter.isApsaugos_laipsnis() == parameter2.isApsaugos_laipsnis() && parameter.isApvalkalas() == parameter2.isApvalkalas() &&
-                parameter.isCPR_klase() == parameter2.isCPR_klase() && parameter.isDydis() == parameter2.isDydis() && parameter.isIlgis() == parameter2.isIlgis() &&
-                parameter.isIsjungimo_charakteristika() == parameter2.isIsjungimo_charakteristika() && parameter.isIsjungimo_geba() == parameter2.isIsjungimo_geba() &&
-                parameter.isIzoliacija() == parameter2.isIzoliacija() && parameter.isKorpuso_medziaga() == parameter2.isKorpuso_medziaga() &&
-                parameter.isLaidininkas() == parameter2.isLaidininkas() && parameter.isMax_darbine_temperatura() == parameter2.isMax_darbine_temperatura() && parameter.isMechaninis_atsparumas() == parameter2.isMechaninis_atsparumas() &&
-                parameter.isMechaninis_atsparumas_IK() == parameter2.isMechaninis_atsparumas_IK() && parameter.isModuliu_skaicius() == parameter2.isModuliu_skaicius() && parameter.isNuotekio_srove() == parameter2.isNuotekio_srove() &&
-                parameter.isPlotas() == parameter2.isPlotas() && parameter.isSkersmuo() == parameter2.isSkersmuo() && parameter.isSkerspjuvis_Al() == parameter2.isSkerspjuvis_Al() && parameter.isSkerspjuvis_Cu() == parameter2.isSkerspjuvis_Cu() &&
-                parameter.isSviesos_spalvos_temperatura() == parameter2.isSviesos_spalvos_temperatura() && parameter.isSvoris() == parameter2.isSvoris() && parameter.isVardine_srove() == parameter2.isVardine_srove();
+        return !parameter.toString().equals(parameter2.toString());
     }
 
     //Sukuria categoryParameter objektą iš produkto esamų parametrų.
@@ -675,8 +688,6 @@ public class DashboardController extends Main implements Initializable {
         String apvalkalas = product.getApvalkalas();
         categoryParameters.setApvalkalas(apvalkalas != null);
 
-        String cpr_klase = product.getCpr_klase();
-        categoryParameters.setCPR_klase(cpr_klase != null);
 
         String isjungimo_geba = product.getIsjungimo_geba();
         categoryParameters.setIsjungimo_geba(isjungimo_geba != null);

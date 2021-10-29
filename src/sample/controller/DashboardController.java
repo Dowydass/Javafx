@@ -594,7 +594,17 @@ public class DashboardController extends Main implements Initializable {
 
     //Lygina du categoryParameter objektus.
     public boolean compareCategoryParameters(CategoryParameters parameter, CategoryParameters parameter2) {
-        return !parameter.toString().equals(parameter2.toString());
+        return parameter.isDarbine_temperatura() == parameter2.isDarbine_temperatura() && parameter.isSviesos_srautas() == parameter2.isSviesos_srautas() &&
+                parameter.isGalia() == parameter2.isGalia() && parameter.isVardine_itampa() == parameter2.isVardine_itampa() && parameter.isSpalva() == parameter2.isSpalva() &&
+                parameter.isGylis() == parameter2.isGylis() && parameter.isPlotis() == parameter2.isPlotis() &&
+                parameter.isAukstis() == parameter2.isAukstis() && parameter.isApsaugos_laipsnis() == parameter2.isApsaugos_laipsnis() && parameter.isApvalkalas() == parameter2.isApvalkalas() &&
+                parameter.isCPR_klase() == parameter2.isCPR_klase() && parameter.isDydis() == parameter2.isDydis() && parameter.isIlgis() == parameter2.isIlgis() &&
+                parameter.isIsjungimo_charakteristika() == parameter2.isIsjungimo_charakteristika() && parameter.isIsjungimo_geba() == parameter2.isIsjungimo_geba() &&
+                parameter.isIzoliacija() == parameter2.isIzoliacija() && parameter.isKorpuso_medziaga() == parameter2.isKorpuso_medziaga() &&
+                parameter.isLaidininkas() == parameter2.isLaidininkas() && parameter.isMax_darbine_temperatura() == parameter2.isMax_darbine_temperatura() && parameter.isMechaninis_atsparumas() == parameter2.isMechaninis_atsparumas() &&
+                parameter.isMechaninis_atsparumas_IK() == parameter2.isMechaninis_atsparumas_IK() && parameter.isModuliu_skaicius() == parameter2.isModuliu_skaicius() && parameter.isNuotekio_srove() == parameter2.isNuotekio_srove() &&
+                parameter.isPlotas() == parameter2.isPlotas() && parameter.isSkersmuo() == parameter2.isSkersmuo() && parameter.isSkerspjuvis_Al() == parameter2.isSkerspjuvis_Al() && parameter.isSkerspjuvis_Cu() == parameter2.isSkerspjuvis_Cu() &&
+                parameter.isSviesos_spalvos_temperatura() == parameter2.isSviesos_spalvos_temperatura() && parameter.isSvoris() == parameter2.isSvoris() && parameter.isVardine_srove() == parameter2.isVardine_srove();
     }
 
     //Sukuria categoryParameter objektą iš produkto esamų parametrų.
@@ -665,6 +675,8 @@ public class DashboardController extends Main implements Initializable {
         String apvalkalas = product.getApvalkalas();
         categoryParameters.setApvalkalas(apvalkalas != null);
 
+        String cpr_klase = product.getCpr_klase();
+        categoryParameters.setCPR_klase(cpr_klase != null);
 
         String isjungimo_geba = product.getIsjungimo_geba();
         categoryParameters.setIsjungimo_geba(isjungimo_geba != null);

@@ -159,6 +159,9 @@ public class ProductFormController extends Main implements Initializable {
         } else if (categoryParameters.isApvalkalas() && !Validation.isValidApvalkalas(apvalkalas_field.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_APVALKALAS);
+        } else if (categoryParameters.isCPR_klase() && !Validation.isValidCprKlase(cpr_klase_field.getText())) {
+            WarnStyle();
+            form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_CPR_KLASE);
         } else if (categoryParameters.isIsjungimo_geba() && !Validation.isValidIsjungimoGeba(isjungimo_geba_field.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_ISJUNGIMO_GEBA);
@@ -655,7 +658,20 @@ public class ProductFormController extends Main implements Initializable {
             vBox1.getChildren().add(label);
             vBox2.getChildren().add(apvalkalas_field);
         }
+        if (categoryParameters.isCPR_klase()) {
+            Label label = new Label();
+            label.setLayoutX(20);
+            label.setLayoutY(getformBoxY());
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("CPR klasė:");
 
+            vbox.setSpacing(10);
+            cpr_klase_field.setLayoutX(60);
+            cpr_klase_field.setPrefWidth(250);
+            cpr_klase_field.setLayoutY(getformBoxY());
+            vBox1.getChildren().add(label);
+            vBox2.getChildren().add(cpr_klase_field);
+        }
         if (categoryParameters.isIsjungimo_geba()) {
             Label label = new Label();
             label.setLayoutX(20);

@@ -459,6 +459,7 @@ public class DashboardController extends Main implements Initializable {
                 fullCategoryList = CategoriesDAO.selectCategoryById(item.getId());
                 fullProductList = ProductCatalogDAO.displayAllItems();
                 observableProducts = FXCollections.observableList(createFilteredProductList(fullCategoryList, fullProductList));
+                setProductPrice();
                 countTableViewObservableProducts(observableProducts);
                 table.setItems(observableProducts);
 
@@ -472,8 +473,8 @@ public class DashboardController extends Main implements Initializable {
 
     //Paspaudus ant listview elemento tableview panelyje pavaizduoja visus produktus priklausančius šiam kategorija.
     public void mouseEventForListView(MouseEvent mouseEvent) {
-        //  getSelectionModel();
-        setProductPrice();
+          getSelectionModel();
+
 
     }
 

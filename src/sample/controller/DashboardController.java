@@ -364,57 +364,87 @@ public class DashboardController extends Main implements Initializable {
 
     final String STOCK_PRICE = "PRICE";
     final String IS_NEW_SESSION = "IS_NEW_SESSION";
-
+    final String IS_SESSION_UPDATED_IN_DB = "IS_SESSION_IN_DB";
 
     Preferences preferencesPriceRate = Preferences.userNodeForPackage(DashboardController.class);
 
     /**
      * @see #setProductPrice() gets selected item from categories and if item valid gets list of products.
-     *
+     * <p>
      * latter method calls to api and updates list of products.
      */
     public void setProductPrice() {
-
-        Categories item = listView.getSelectionModel().getSelectedItem();
-        item = CategoriesDAO.findEntityById(item.getId());
-
-        if (item.getlft() >= 84 && item.getrght() <= 133) {
+        if (!listView.getSelectionModel().isEmpty()) {
 
 
-            boolean s = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
+            Categories item = listView.getSelectionModel().getSelectedItem();
+            item = CategoriesDAO.findEntityById(item.getId());
 
-            if (s == false) {
+            if (item.getlft() >= 84 && item.getrght() <= 133) {
 
-                Boolean session = true;
-                double price = callAPI();
 
-                preferencesPriceRate.put(STOCK_PRICE, String.valueOf(price));
-                preferencesPriceRate.put(IS_NEW_SESSION, String.valueOf(session));
+                boolean s = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
+
+                if (s == false) {
+
+                    Boolean session = true;
+                    Boolean UPDATED_IN_DB = true;
+                    double price = callAPI();
+
+                    preferencesPriceRate.put(STOCK_PRICE, String.valueOf(price));
+                    preferencesPriceRate.put(IS_NEW_SESSION, String.valueOf(session));
+
+                    System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
+
+
+                }
 
                 System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
+                System.out.println(preferencesPriceRate.get(STOCK_PRICE, ""));
 
-            }
+                double price = Double.parseDouble(preferencesPriceRate.get(STOCK_PRICE, ""));
 
-            System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
-            System.out.println(preferencesPriceRate.get(STOCK_PRICE, ""));
+                price = (price * 100) / 1.14;
 
-            double price = Double.parseDouble(preferencesPriceRate.get(STOCK_PRICE, ""));
-            price = price/(156*100);
-            System.out.println("\nSelected: " + item.getId() + "\nlft: " + item.getlft() + "\nrght: " + item.getrght());
+                System.out.println("\nSelected: " + item.getId() + "\nlft: " + item.getlft() + "\nrght: " + item.getrght());
 
 
+                fullCategoryList = CategoriesDAO.selectCategoryById(item.getId());
+                fullProductList = ProductCatalogDAO.displayAllItems();
 
-            fullCategoryList = CategoriesDAO.selectCategoryById(item.getId());
-            fullProductList = ProductCatalogDAO.displayAllItems();
+                List<ProductCatalog> selectedProducts = createFilteredProductLists(fullCategoryList, fullProductList);
 
-            List<ProductCatalog> selectedProducts = createFilteredProductLists(fullCategoryList, fullProductList);
+                for (ProductCatalog productCatalog : selectedProducts) {
+                    /**
+                     * listas su atnaujinta kaina...
+                     */
+                    double l = productCatalog.getPriceNet();
 
-            for (ProductCatalog productCatalog : selectedProducts) {
-                /**
-                 * listas su atnaujinta kaina...
-                 */
-                productCatalog.setPriceNet(price);
+                    double cuAmount = productCatalog.getCuAmount();
+                    double cuPrice = productCatalog.getCuPrice();
 
+                    double estimated_amount = ((cuPrice + (cuAmount * (price - 150) / 100)) / 1000) / 0.8;
+
+
+                    productCatalog.setPriceNet(l + price);
+                    double calculatedPrice = productCatalog.getPriceNet();
+
+
+                    productCatalog.setPriceNet(calculatedPrice);
+                    System.out.println(productCatalog.getId() + " " + productCatalog.getCatalogNo() + " Before eur:" + l + " After:" + String.format("%.2f", estimated_amount) + " Cu:" + productCatalog.getCuPrice() + " Cu q:" + productCatalog.getCuAmount());
+
+
+                    boolean ss = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
+
+                    if (ss == false) {
+                        Boolean UPDATED_IN_DB = true;
+                        preferencesPriceRate.put(IS_SESSION_UPDATED_IN_DB, String.valueOf(UPDATED_IN_DB));
+
+
+                    }
+
+
+                }
             }
         }
     }
@@ -429,6 +459,7 @@ public class DashboardController extends Main implements Initializable {
                 fullCategoryList = CategoriesDAO.selectCategoryById(item.getId());
                 fullProductList = ProductCatalogDAO.displayAllItems();
                 observableProducts = FXCollections.observableList(createFilteredProductList(fullCategoryList, fullProductList));
+                setProductPrice();
                 countTableViewObservableProducts(observableProducts);
                 table.setItems(observableProducts);
 
@@ -442,8 +473,8 @@ public class DashboardController extends Main implements Initializable {
 
     //Paspaudus ant listview elemento tableview panelyje pavaizduoja visus produktus priklausančius šiam kategorija.
     public void mouseEventForListView(MouseEvent mouseEvent) {
-        getSelectionModel();
-        setProductPrice();
+          getSelectionModel();
+
 
     }
 
@@ -575,7 +606,7 @@ public class DashboardController extends Main implements Initializable {
 
     public void dublicateWriter(List<String> arr) throws IOException {
         FileWriter writer = new FileWriter("dublikatai.txt");
-        for(String str: arr) {
+        for (String str : arr) {
             writer.write(str + System.lineSeparator());
         }
         writer.close();

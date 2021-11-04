@@ -10,6 +10,12 @@ public class Constants {
     public static final int CATEGORY_FORM_WINDOW_WIDTH = 600;
     public static final int CATEGORY_FORM_WINDOW_HEIGHT = 350;
 
+    //Kabelio tipų skaičiai
+    public static final int KABELIS100 = 100;
+    public static final int KABELIS150 = 150;
+    public static final int KABELIS300 = 300;
+
+
     // keliai iki vaizdo
     public static final String REGISTER_VIEW_DIRECTORY_PATH = "sample/Resources/view/register.fxml";
     public static final String DASHBOARD_VIEW_DIRECTORY_PATH = "sample/Resources/view/dashboard.fxml";

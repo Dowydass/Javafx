@@ -368,90 +368,58 @@ public class DashboardController extends Main implements Initializable {
 
     Preferences preferencesPriceRate = Preferences.userNodeForPackage(DashboardController.class);
 
-    /**
-     * @see #setProductPrice() gets selected item from categories and if item valid gets list of products.
-     * <p>
-     * latter method calls to api and updates list of products.
-     */
-    public void setProductPrice() {
-        if (!listView.getSelectionModel().isEmpty()) {
 
+    public void setProductPrice(List<ProductCatalog> observableProducts) {
+        if (observableProducts != null) {
+            boolean s = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
+            if (!s) {
 
-            Categories item = listView.getSelectionModel().getSelectedItem();
-            item = CategoriesDAO.findEntityById(item.getId());
+                Boolean session = true;
+                Boolean UPDATED_IN_DB = true;
+                double price = callAPI();
 
-            if (item.getlft() >= 84 && item.getrght() <= 133) {
-
-
-                boolean s = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
-
-                if (s == false) {
-
-                    Boolean session = true;
-                    Boolean UPDATED_IN_DB = true;
-                    double price = callAPI();
-
-                    preferencesPriceRate.put(STOCK_PRICE, String.valueOf(price));
-                    preferencesPriceRate.put(IS_NEW_SESSION, String.valueOf(session));
-
-                    System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
-
-
-                }
+                preferencesPriceRate.put(STOCK_PRICE, String.valueOf(price));
+                preferencesPriceRate.put(IS_NEW_SESSION, String.valueOf(session));
 
                 System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
-                System.out.println(preferencesPriceRate.get(STOCK_PRICE, ""));
 
-                double price = Double.parseDouble(preferencesPriceRate.get(STOCK_PRICE, ""));
+            }
 
-                price = (price * 100) / 1.14;
+            System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
+            System.out.println(preferencesPriceRate.get(STOCK_PRICE, ""));
 
-                System.out.println("\nSelected: " + item.getId() + "\nlft: " + item.getlft() + "\nrght: " + item.getrght());
+            //Pakeisti skaičių iš api jei toks yra.
+            double eurosToDollars = 1;
+            double price = Double.parseDouble(preferencesPriceRate.get(STOCK_PRICE, ""));
+            price = (price * 100) / eurosToDollars;
 
+            for (ProductCatalog observableProduct : observableProducts) {
 
-                fullCategoryList = CategoriesDAO.selectCategoryById(item.getId());
-                fullProductList = ProductCatalogDAO.displayAllItems();
+                double cuAmount = observableProduct.getCuAmount();
+                double cuPrice = observableProduct.getCuPrice();
+                int cableType;
 
-                List<ProductCatalog> selectedProducts = createFilteredProductLists(fullCategoryList, fullProductList);
-
-                for (ProductCatalog productCatalog : selectedProducts) {
-                    /**
-                     * listas su atnaujinta kaina...
-                     */
-                    double l = productCatalog.getPriceNet();
-
-                    double cuAmount = productCatalog.getCuAmount();
-                    double cuPrice = productCatalog.getCuPrice();
-
-                    double estimated_amount = ((cuPrice + (cuAmount * (price - 150) / 100)) / 1000) / 0.8;
+                if (cuAmount != 0 && cuPrice != 0) {
 
 
-                    productCatalog.setPriceNet(l + price);
-                    double calculatedPrice = productCatalog.getPriceNet();
+                    //if'ai nustatantis kabelio tipą.
+                    cableType = Constants.KABELIS300;
 
+                    double priceNet = ((cuPrice + (cuAmount * (price - cableType) / 100)) / 1000) / 0.8;
+                    observableProduct.setPriceNet(priceNet);
 
-                    productCatalog.setPriceNet(calculatedPrice);
-                    System.out.println(productCatalog.getId() + " " + productCatalog.getCatalogNo() + " Before eur:" + l + " After:" + String.format("%.2f", estimated_amount) + " Cu:" + productCatalog.getCuPrice() + " Cu q:" + productCatalog.getCuAmount());
-
-
+                    //Pakeisti šitą į metodą.
                     boolean ss = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
-
                     if (ss == false) {
                         Boolean UPDATED_IN_DB = true;
                         preferencesPriceRate.put(IS_SESSION_UPDATED_IN_DB, String.valueOf(UPDATED_IN_DB));
-
-
                     }
-
-
                 }
             }
         }
     }
 
     public void getSelectionModel() {
-
-
         Categories item;
         try {
             if (!listView.getSelectionModel().isEmpty()) {
@@ -459,7 +427,7 @@ public class DashboardController extends Main implements Initializable {
                 fullCategoryList = CategoriesDAO.selectCategoryById(item.getId());
                 fullProductList = ProductCatalogDAO.displayAllItems();
                 observableProducts = FXCollections.observableList(createFilteredProductList(fullCategoryList, fullProductList));
-                setProductPrice();
+                setProductPrice(observableProducts);
                 countTableViewObservableProducts(observableProducts);
                 table.setItems(observableProducts);
 
@@ -473,7 +441,7 @@ public class DashboardController extends Main implements Initializable {
 
     //Paspaudus ant listview elemento tableview panelyje pavaizduoja visus produktus priklausančius šiam kategorija.
     public void mouseEventForListView(MouseEvent mouseEvent) {
-          getSelectionModel();
+        getSelectionModel();
 
 
     }

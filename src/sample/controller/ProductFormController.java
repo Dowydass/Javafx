@@ -214,7 +214,7 @@ public class ProductFormController extends Main implements Initializable {
         } else if (categoryParameters.isSkerspjuvis_Cu() && !Validation.isValidSkerspjuvisCu(skerspjuvis_Cu_field.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_SKERSPJUVIS2);
-        } else if (categoryParameters.isNuotekio_srove() && !Validation.isValidNuotekuSrove(nuotekio_srove_field.getText())) {
+        } else if (categoryParameters.isNuotekio_srove() && !Validation.isValidNuotekioSrove(nuotekio_srove_field.getText())) {
             WarnStyle();
             form_info_label.setText(Constants.CREDENTIALS_IS_NOT_CORRECT_PRODUCT_NUOTEKIO_SROVE);
         } else if (categoryParameters.isDydis() && !Validation.isValidDydis(dydis_field.getText())) {

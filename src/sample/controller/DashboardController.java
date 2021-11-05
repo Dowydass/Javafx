@@ -373,6 +373,7 @@ public class DashboardController extends Main implements Initializable {
 
     public void setProductPrice(List<ProductCatalog> observableProducts) {
         if (observableProducts != null) {
+
             boolean s = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
             if (!s) {
 

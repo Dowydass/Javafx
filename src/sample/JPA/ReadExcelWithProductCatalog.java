@@ -54,17 +54,13 @@ public class ReadExcelWithProductCatalog {
                             break;
                         case 4:
                             String imageUrl;
-                            if (cell.getCellType() == 0) {
-                                imageUrl = String.valueOf(cell.getNumericCellValue());
-                            } else if (cell.getCellType() == 1) {
+                            if (cell.getCellType() == 1) {
                                 imageUrl = cell.getStringCellValue();
-                            } else {
-                                break;
-                            }
-                            if (imageUrl.equals("")) {
-                                productCatalog.setGamintojas(null);
-                            } else if (Validation.isValidImageUrl(imageUrl)) {
-                                productCatalog.setImage_url(imageUrl);
+                                if (imageUrl.equals("")) {
+                                    productCatalog.setGamintojas(null);
+                                } else if (Validation.isValidImageUrl(imageUrl)) {
+                                    productCatalog.setImage_url(imageUrl);
+                                }
                             }
                             break;
                         case 5:
@@ -75,7 +71,7 @@ public class ReadExcelWithProductCatalog {
                                 Double cuAmount = cell.getNumericCellValue();
                                 if (cuAmount == null) {
                                     productCatalog.setCuAmount(0);
-                                } else {
+                                } else if (Validation.isValidCuAmount(String.valueOf(cuAmount))) {
                                     productCatalog.setCuAmount(cuAmount);
                                 }
                             }
@@ -85,7 +81,7 @@ public class ReadExcelWithProductCatalog {
                                 Double cuPrice = cell.getNumericCellValue();
                                 if (cuPrice == null) {
                                     productCatalog.setCuPrice(0);
-                                } else {
+                                } else if (Validation.isValidCuPrice(String.valueOf(cuPrice))) {
                                     productCatalog.setCuPrice(cuPrice);
                                 }
                             }
@@ -101,7 +97,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (manufacturer.equals("")) {
                                 productCatalog.setGamintojas(null);
-                            } else {
+                            } else if (Validation.isValidGamintojas(manufacturer)) {
                                 productCatalog.setGamintojas(manufacturer);
                             }
                             break;
@@ -110,7 +106,7 @@ public class ReadExcelWithProductCatalog {
                                 Double aukstis = cell.getNumericCellValue();
                                 if (aukstis == null) {
                                     productCatalog.setAukstis(0);
-                                } else {
+                                } else if (Validation.isValidAukstis(String.valueOf(aukstis))) {
                                     productCatalog.setAukstis(aukstis);
                                 }
                             }
@@ -120,7 +116,7 @@ public class ReadExcelWithProductCatalog {
                                 Double plotis = cell.getNumericCellValue();
                                 if (plotis == null) {
                                     productCatalog.setPlotis(0);
-                                } else {
+                                } else if (Validation.isValidPlotis(String.valueOf(plotis))) {
                                     productCatalog.setPlotis(plotis);
                                 }
                             }
@@ -130,7 +126,7 @@ public class ReadExcelWithProductCatalog {
                                 Double gylis = cell.getNumericCellValue();
                                 if (gylis == null) {
                                     productCatalog.setGylis(0);
-                                } else {
+                                } else if (Validation.isValidGylis(String.valueOf(gylis))) {
                                     productCatalog.setGylis(gylis);
                                 }
                             }
@@ -140,7 +136,7 @@ public class ReadExcelWithProductCatalog {
                                 Double skersmuo = cell.getNumericCellValue();
                                 if (skersmuo == null) {
                                     productCatalog.setSkersmuo(0);
-                                } else {
+                                } else if (Validation.isValidSkersmuo(String.valueOf(skersmuo))){
                                     productCatalog.setSkersmuo(skersmuo);
                                 }
                             }
@@ -150,7 +146,7 @@ public class ReadExcelWithProductCatalog {
                                 Double ilgis = cell.getNumericCellValue();
                                 if (ilgis == null) {
                                     productCatalog.setIlgis(0);
-                                } else {
+                                } else if (Validation.isValidIlgis(String.valueOf(ilgis))) {
                                     productCatalog.setIlgis(ilgis);
                                 }
                             }
@@ -166,7 +162,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (apsaugos_laipsnis.equals("")) {
                                 productCatalog.setApsaugos_laipsnis(null);
-                            } else {
+                            } else if (Validation.isValidApsaugosLaipsnis(apsaugos_laipsnis)) {
                                 productCatalog.setApsaugos_laipsnis(apsaugos_laipsnis);
                             }
                             break;
@@ -175,7 +171,7 @@ public class ReadExcelWithProductCatalog {
                                 Double moduliu_skaicius = cell.getNumericCellValue();
                                 if (moduliu_skaicius == null) {
                                     productCatalog.setModuliu_skaicius(0);
-                                } else {
+                                } else if (Validation.isValidModuliuSkaicius(String.valueOf(moduliu_skaicius))) {
                                     productCatalog.setModuliu_skaicius(moduliu_skaicius);
                                 }
                             }
@@ -191,7 +187,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (vardine_srove.equals("")) {
                                 productCatalog.setVardine_srove(null);
-                            } else {
+                            } else if (Validation.isValidVardineSrove(String.valueOf(vardine_srove))){
                                 productCatalog.setVardine_srove(vardine_srove);
                             }
                             break;
@@ -206,7 +202,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (vardine_itampa.equals("")) {
                                 productCatalog.setVardine_itampa(null);
-                            } else {
+                            } else if (Validation.isValidVardineItampa(vardine_itampa)){
                                 productCatalog.setVardine_itampa(vardine_itampa);
                             }
                             break;
@@ -221,7 +217,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (mechaninis_atsparumas_IK.equals("")) {
                                 productCatalog.setMechaninis_atsparumas_IK(null);
-                            } else {
+                            } else if (Validation.isValidMechaninisAtsparumasIK(mechaninis_atsparumas_IK)){
                                 productCatalog.setMechaninis_atsparumas_IK(mechaninis_atsparumas_IK);
                             }
                             break;
@@ -230,7 +226,7 @@ public class ReadExcelWithProductCatalog {
                                 Double storis = cell.getNumericCellValue();
                                 if (storis == null) {
                                     productCatalog.setStoris(0);
-                                } else {
+                                } else if (Validation.isValidStoris(String.valueOf(storis))){
                                     productCatalog.setStoris(storis);
                                 }
                             }
@@ -246,7 +242,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (spalva.equals("")) {
                                 productCatalog.setSpalva(null);
-                            } else {
+                            } else if (Validation.isValidSpalva(spalva)) {
                                 productCatalog.setSpalva(spalva);
                             }
                             break;
@@ -261,7 +257,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (korpuso_medziaga.equals("")) {
                                 productCatalog.setKorpuso_medziaga(null);
-                            } else {
+                            } else if (Validation.isValidKorpusoMedziaga(korpuso_medziaga)) {
                                 productCatalog.setKorpuso_medziaga(korpuso_medziaga);
                             }
                             break;
@@ -276,7 +272,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (izoliacija.equals("")) {
                                 productCatalog.setIzoliacija(null);
-                            } else {
+                            } else if (Validation.isValidIzoliacija(izoliacija)) {
                                 productCatalog.setIzoliacija(izoliacija);
                             }
                             break;
@@ -285,7 +281,7 @@ public class ReadExcelWithProductCatalog {
                                 Double svoris = cell.getNumericCellValue();
                                 if (svoris == null) {
                                     productCatalog.setSvoris(0);
-                                } else {
+                                } else if (Validation.isValidSvoris(String.valueOf(svoris))) {
                                     productCatalog.setSvoris(svoris);
                                 }
                             }
@@ -301,7 +297,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (galia.equals("")) {
                                 productCatalog.setGalia(null);
-                            } else {
+                            } else if (Validation.isValidGalia(galia)){
                                 productCatalog.setGalia(galia);
                             }
                             break;
@@ -310,7 +306,7 @@ public class ReadExcelWithProductCatalog {
                                 Double sviesos_srautas = cell.getNumericCellValue();
                                 if (sviesos_srautas == null) {
                                     productCatalog.setSviesos_srautas(0);
-                                } else {
+                                } else if (Validation.isValidSviesosSrautas(String.valueOf(sviesos_srautas))) {
                                     productCatalog.setSviesos_srautas(sviesos_srautas);
                                 }
                             }
@@ -326,7 +322,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (sviesos_spalvos_temperatura.equals("")) {
                                 productCatalog.setSviesos_spalvos_temperatura(null);
-                            } else {
+                            } else if (Validation.isValidSviesosSpalvosTemperatura(sviesos_spalvos_temperatura)) {
                                 productCatalog.setSviesos_spalvos_temperatura(sviesos_spalvos_temperatura);
                             }
                             break;
@@ -341,7 +337,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (laidininkas.equals("")) {
                                 productCatalog.setLaidininkas(null);
-                            } else {
+                            } else if (Validation.isValidLaidininkas(laidininkas)) {
                                 productCatalog.setLaidininkas(laidininkas);
                             }
                             break;
@@ -356,7 +352,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (laidininkoIzoliacija.equals("")) {
                                 productCatalog.setLaidininkoIzoliacija(null);
-                            } else {
+                            } else if (Validation.isValidLaidininkoIzoliacija(laidininkoIzoliacija)) {
                                 productCatalog.setLaidininkoIzoliacija(laidininkoIzoliacija);
                             }
                             break;
@@ -371,7 +367,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (darbine_temperatura.equals("")) {
                                 productCatalog.setDarbine_temperatura(null);
-                            } else {
+                            } else if (Validation.isValidDarbineTemperatura(darbine_temperatura)) {
                                 productCatalog.setDarbine_temperatura(darbine_temperatura);
                             }
                             break;
@@ -386,7 +382,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (max_darbine_temperatura.equals("")) {
                                 productCatalog.setMax_darbine_temperatura(null);
-                            } else {
+                            } else if (Validation.isValidMaxDarbineTemperatura(max_darbine_temperatura)) {
                                 productCatalog.setMax_darbine_temperatura(max_darbine_temperatura);
                             }
                             break;
@@ -401,7 +397,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (apsvieta.equals("")) {
                                 productCatalog.setApsvieta(null);
-                            } else {
+                            } else if (Validation.isValidApsvieta(apsvieta)){
                                 productCatalog.setApsvieta(apsvieta);
                             }
                             break;
@@ -416,7 +412,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (apvalkalas.equals("")) {
                                 productCatalog.setApvalkalas(null);
-                            } else {
+                            } else if (Validation.isValidApvalkalas(apvalkalas)) {
                                 productCatalog.setApvalkalas(apvalkalas);
                             }
                             break;
@@ -431,7 +427,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (CPR_klase.equals("")) {
                                 productCatalog.setCpr_klase(null);
-                            } else {
+                            } else if (Validation.isValidCprKlase(CPR_klase)) {
                                 productCatalog.setCpr_klase(CPR_klase);
                             }
                             break;
@@ -446,7 +442,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (isjungimo_geba.equals("")) {
                                 productCatalog.setIsjungimo_geba(null);
-                            } else {
+                            } else if (Validation.isValidIsjungimoGeba(isjungimo_geba)){
                                 productCatalog.setIsjungimo_geba(isjungimo_geba);
                             }
                             break;
@@ -461,7 +457,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (isjungimo_charakteristika.equals("")) {
                                 productCatalog.setIsjungimo_charakteristika(null);
-                            } else {
+                            } else if (Validation.isValidIsjungimoCharakteristika(isjungimo_charakteristika)) {
                                 productCatalog.setIsjungimo_charakteristika(isjungimo_charakteristika);
                             }
                             break;
@@ -476,7 +472,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (mechaninis_atsparumas.equals("")) {
                                 productCatalog.setMechaninis_atsparumas(null);
-                            } else {
+                            } else if (Validation.isValidMechaninisAtsparumas(mechaninis_atsparumas)){
                                 productCatalog.setMechaninis_atsparumas(mechaninis_atsparumas);
                             }
                             break;
@@ -491,7 +487,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (skerspjuvis_Al.equals("")) {
                                 productCatalog.setSkerspjuvis_Al(null);
-                            } else {
+                            } else if (Validation.isValidSkerspjuvisAl(skerspjuvis_Al)){
                                 productCatalog.setSkerspjuvis_Al(skerspjuvis_Al);
                             }
                             break;
@@ -506,7 +502,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (skerspjuvis_Cu.equals("")) {
                                 productCatalog.setSkerspjuvis_Cu(null);
-                            } else {
+                            } else if (Validation.isValidSkerspjuvisCu(skerspjuvis_Cu)) {
                                 productCatalog.setSkerspjuvis_Cu(skerspjuvis_Cu);
                             }
                             break;
@@ -521,7 +517,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (nuotekio_srove.equals("")) {
                                 productCatalog.setNuotekio_srove(null);
-                            } else {
+                            } else if (Validation.isValidNuotekioSrove(nuotekio_srove)) {
                                 productCatalog.setNuotekio_srove(nuotekio_srove);
                             }
                             break;
@@ -536,7 +532,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (dydis.equals("")) {
                                 productCatalog.setDydis(null);
-                            } else {
+                            } else if (Validation.isValidDydis(dydis)){
                                 productCatalog.setDydis(dydis);
                             }
                             break;
@@ -551,7 +547,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (plotas.equals("")) {
                                 productCatalog.setPlotas(null);
-                            } else {
+                            } else if (Validation.isValidPlotas(plotas)) {
                                 productCatalog.setPlotas(plotas);
                             }
                             break;
@@ -566,7 +562,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (aptikimoZona.equals("")) {
                                 productCatalog.setAptikimoZona(null);
-                            } else {
+                            } else if (Validation.isValidAptikimoZona(aptikimoZona)){
                                 productCatalog.setAptikimoZona(aptikimoZona);
                             }
                             break;
@@ -581,7 +577,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (maxDarbineItampa.equals("")) {
                                 productCatalog.setMaksimaliDarbineItampa(null);
-                            } else {
+                            } else if (Validation.isValidMaksDarbineItampa(maxDarbineItampa)){
                                 productCatalog.setMaksimaliDarbineItampa(maxDarbineItampa);
                             }
                             break;
@@ -596,7 +592,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (iskrovimoSrove820.equals("")) {
                                 productCatalog.setIskrovimoSrove820(null);
-                            } else {
+                            } else if (Validation.isValidiskrovimoSrove820(iskrovimoSrove820)){
                                 productCatalog.setIskrovimoSrove820(iskrovimoSrove820);
                             }
                             break;
@@ -611,7 +607,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (iskrovimoSrove10350.equals("")) {
                                 productCatalog.setIskrovimoSrove10350(null);
-                            } else {
+                            } else if (Validation.isValidiskrovimoSrove10350(iskrovimoSrove10350)) {
                                 productCatalog.setIskrovimoSrove10350(iskrovimoSrove10350);
                             }
                             break;
@@ -626,7 +622,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (itamposApsaugosLygis.equals("")) {
                                 productCatalog.setItamposApsaugosLygis(null);
-                            } else {
+                            } else if (Validation.isValidItamposApsaugosLygis(itamposApsaugosLygis)) {
                                 productCatalog.setItamposApsaugosLygis(itamposApsaugosLygis);
                             }
                             break;
@@ -641,21 +637,19 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (kategorija.equals("")) {
                                 productCatalog.setKategorija(null);
-                            } else {
+                            } else if (Validation.isValidKategorija(kategorija)){
                                 productCatalog.setKategorija(kategorija);
                             }
                             break;
                         case 48:
-                            if (cell.getCellType() == 0) {
                                 if (cell.getCellType() == 0) {
                                     Integer cri = (int) cell.getNumericCellValue();
                                     if (cri == null) {
                                         productCatalog.setCRI(0);
-                                    } else {
+                                    } else if (Validation.isValidCri(String.valueOf(cri))) {
                                         productCatalog.setCRI(cri);
                                     }
                                 }
-                            }
                             break;
                         case 49:
                             String garantija;
@@ -668,7 +662,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (garantija.equals("")) {
                                 productCatalog.setGarantija(null);
-                            } else {
+                            } else if (Validation.isValidGarantija(garantija)){
                                 productCatalog.setGarantija(garantija);
                             }
                             break;
@@ -683,7 +677,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (sertifikatai.equals("")) {
                                 productCatalog.setSertifikatai(null);
-                            } else {
+                            } else if (Validation.isValidSertifikatai(sertifikatai)){
                                 productCatalog.setSertifikatai(sertifikatai);
                             }
                             break;
@@ -698,7 +692,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (nemaJungtis.equals("")) {
                                 productCatalog.setNemaJungtis(null);
-                            } else {
+                            } else if (Validation.isValidNema(nemaJungtis)){
                                 productCatalog.setNemaJungtis(nemaJungtis);
                             }
                             break;
@@ -713,7 +707,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (virsItampiuApsauga.equals("")) {
                                 productCatalog.setVirsitampiuApsauga(null);
-                            } else {
+                            } else if (Validation.isValidVirsitampiuApsauga(virsItampiuApsauga)) {
                                 productCatalog.setVirsitampiuApsauga(virsItampiuApsauga);
                             }
                             break;
@@ -728,7 +722,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (ilgaamziskumas.equals("")) {
                                 productCatalog.setIlgaamziskumas(null);
-                            } else {
+                            } else if (Validation.isValidIlgaamziskumas(ilgaamziskumas)) {
                                 productCatalog.setIlgaamziskumas(ilgaamziskumas);
                             }
                             break;
@@ -743,7 +737,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (korpusoAtidarymas.equals("")) {
                                 productCatalog.setKorpusoAtidarymas(null);
-                            } else {
+                            } else if (Validation.isValidKorpusoAtidarymas(korpusoAtidarymas)){
                                 productCatalog.setKorpusoAtidarymas(korpusoAtidarymas);
                             }
                             break;
@@ -758,7 +752,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (optinesIrElektrinesDaliesPertvara.equals("")) {
                                 productCatalog.setOptinesIrElektrinesDaliesPertvara(null);
-                            } else {
+                            } else if (Validation.isValidOptinesElektrinesDaliesPertvara(optinesIrElektrinesDaliesPertvara)){
                                 productCatalog.setOptinesIrElektrinesDaliesPertvara(optinesIrElektrinesDaliesPertvara);
                             }
                             break;
@@ -773,7 +767,7 @@ public class ReadExcelWithProductCatalog {
                             }
                             if (valdymas.equals("")) {
                                 productCatalog.setValdymas(null);
-                            } else {
+                            } else if (Validation.isValidValdymas(valdymas)){
                                 productCatalog.setValdymas(valdymas);
                             }
                             break;
@@ -782,7 +776,7 @@ public class ReadExcelWithProductCatalog {
                                 Integer apatinisDiametras = (int) cell.getNumericCellValue();
                                 if (apatinisDiametras == null) {
                                     productCatalog.setApatinisDiametras(0);
-                                } else {
+                                } else if (Validation.isValidApatinisDiametras(String.valueOf(apatinisDiametras))) {
                                     productCatalog.setApatinisDiametras(apatinisDiametras);
                                 }
                             }
@@ -792,7 +786,7 @@ public class ReadExcelWithProductCatalog {
                                 Integer virsutinisDiametras = (int) cell.getNumericCellValue();
                                 if (virsutinisDiametras == null) {
                                     productCatalog.setVirsutinisDiametras(0);
-                                } else {
+                                } else if (Validation.isValidVirsutinisDiametras(String.valueOf(virsutinisDiametras))) {
                                     productCatalog.setVirsutinisDiametras(virsutinisDiametras);
                                 }
                             }
@@ -802,7 +796,7 @@ public class ReadExcelWithProductCatalog {
                                 Integer gembesDiametras = (int) cell.getNumericCellValue();
                                 if (gembesDiametras == null) {
                                     productCatalog.setGembesDiametras(0);
-                                } else {
+                                } else if (Validation.isValidGembesDiametras(String.valueOf(gembesDiametras))){
                                     productCatalog.setGembesDiametras(gembesDiametras);
                                 }
                             }

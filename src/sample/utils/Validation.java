@@ -369,7 +369,7 @@ public class Validation {
 
     public static final String PRODUCT_FORM_NUOTEKU_SROVE_PATTERN = "^[0-9 ]{1,12}(?=.*mA).*$";
 
-    public static boolean isValidNuotekuSrove(String nuotekuSrove) {
+    public static boolean isValidNuotekioSrove(String nuotekuSrove) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_NUOTEKU_SROVE_PATTERN);
         Matcher matcher = pattern.matcher(nuotekuSrove);
         return matcher.find();

@@ -363,10 +363,12 @@ public class DashboardController extends Main implements Initializable {
 
 
     final String STOCK_PRICE = "PRICE";
+    final String CHANGE = "CHANGE";
     final String IS_NEW_SESSION = "IS_NEW_SESSION";
     final String IS_SESSION_UPDATED_IN_DB = "IS_SESSION_IN_DB";
 
     Preferences preferencesPriceRate = Preferences.userNodeForPackage(DashboardController.class);
+
 
 
     public void setProductPrice(List<ProductCatalog> observableProducts) {
@@ -377,8 +379,10 @@ public class DashboardController extends Main implements Initializable {
                 Boolean session = true;
                 Boolean UPDATED_IN_DB = true;
                 double price = callAPI();
+                double change = callAPI();
 
                 preferencesPriceRate.put(STOCK_PRICE, String.valueOf(price));
+                preferencesPriceRate.put(CHANGE, String.valueOf(change));
                 preferencesPriceRate.put(IS_NEW_SESSION, String.valueOf(session));
 
                 System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
@@ -388,22 +392,27 @@ public class DashboardController extends Main implements Initializable {
             System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
             System.out.println(preferencesPriceRate.get(STOCK_PRICE, ""));
 
-            //Pakeisti skaičių iš api jei toks yra.
-            double eurosToDollars = 1;
+
+            double change = Double.parseDouble(preferencesPriceRate.get(CHANGE, ""));
             double price = Double.parseDouble(preferencesPriceRate.get(STOCK_PRICE, ""));
-            price = (price * 100) / eurosToDollars;
+            price = (price * 100) / change;
 
             for (ProductCatalog observableProduct : observableProducts) {
 
                 double cuAmount = observableProduct.getCuAmount();
                 double cuPrice = observableProduct.getCuPrice();
-                int cableType;
+                int cableType = 0;
 
                 if (cuAmount != 0 && cuPrice != 0) {
 
+                    if (observableProduct.getSymbol().contains("Instaliacinis kabelis NYM")){cableType = Constants.KABELIS150;}
+                    if (observableProduct.getSymbol().contains("Jėgos kabelis NYY")){cableType = Constants.KABELIS150;}
+                    if (observableProduct.getSymbol().contains("Behalogeninis kabelis N2XH")){cableType = Constants.KABELIS300;}
+                    if (observableProduct.getSymbol().contains("Lankstus viengyslis laidas")){cableType = Constants.KABELIS300;}
+                    if (observableProduct.getSymbol().contains("Jėgos kabelis U")){cableType = Constants.KABELIS300;}
+                    if (observableProduct.getSymbol().contains("Ekranuotas Behalogeninis kabelis")){cableType = Constants.KABELIS300;}
+                    if (observableProduct.getSymbol().contains("Ugniai atsparus kabelis")){cableType = Constants.KABELIS300;}
 
-                    //if'ai nustatantis kabelio tipą.
-                    cableType = Constants.KABELIS300;
 
                     double priceNet = ((cuPrice + (cuAmount * (price - cableType) / 100)) / 1000) / 0.8;
                     observableProduct.setPriceNet(priceNet);

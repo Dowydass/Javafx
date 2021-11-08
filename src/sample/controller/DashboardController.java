@@ -545,7 +545,7 @@ public class DashboardController extends Main implements Initializable {
 
                 if (countEveryProductUpdated == 0 && countEveryNewProduct == 0 && countEveryProductInExcel == 0) {
                     Platform.runLater(() -> {
-                        showErrorPopupWindow("Klaida!", "Failas nebuvo nuskaitytas dėl blogo lentelių formato, \npatikrinkite ar dokumente nepalikote klaidų. \n\nFailo pavadinimas: " + file.getName(), 400, 150);
+                        showErrorPopupWindow("Klaida!", "Failas nebuvo nuskaitytas dėl blogo lentelių formato, \npatikrinkite ar dokumente nepalikote klaidų. \n\nFailo pavadinimas: " + file.getName(), 500, 200);
                         loadProgress.setVisible(false);
                     });
                 } else if (countEveryDublicateProduct != 0) {
@@ -554,7 +554,7 @@ public class DashboardController extends Main implements Initializable {
                             countEveryDublicateProduct + "\n - Dublikatų katalogo ID išsaugoti faile:\n  \"dublikatai.txt\" ";
 
                     Platform.runLater(() -> {
-                        showInformationPopupWindow("Failas sėkmingai įkeltas", successToPopup, 300, 190);
+                        showInformationPopupWindow("Failas sėkmingai įkeltas", successToPopup, 500, 250);
                         loadProgress.setVisible(false);
 
                     });
@@ -563,7 +563,7 @@ public class DashboardController extends Main implements Initializable {
                     String successToPopup = "Faile rasta produktų: " + countEveryProductInExcel + "\nPakeista produktų: " + countEveryProductUpdated + "\nPridėti nauji produktai: " + countEveryNewProduct + "\nRasta dublikatų: " + countEveryDublicateProduct;
 
                     Platform.runLater(() -> {
-                        showInformationPopupWindow("Failas sėkmingai įkeltas", successToPopup, 300, 130);
+                        showInformationPopupWindow("Failas sėkmingai įkeltas", successToPopup, 500, 200);
                         loadProgress.setVisible(false);
 
                     });

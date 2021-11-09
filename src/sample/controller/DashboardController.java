@@ -108,11 +108,7 @@ public class DashboardController extends Main implements Initializable {
         UserDAO.setLastLoginTime(userHolder.getUser());
         loggedTimeStart = System.currentTimeMillis();// Fiksuoja prisijungimo laiko pradžią
 
-        Image all_Categories_Button_picture = new Image("pictures/all_Categories_Button_picture.jpg");
-        ImageView imageView = new ImageView(all_Categories_Button_picture);
-        imageView.setFitHeight(13);
-        imageView.setFitWidth(12);
-        allCategoriesButton.setGraphic(imageView);
+        setImageOnAllCategoriesButton();
 
 
         if (userHolder.getUser().isAdmin()) {
@@ -134,6 +130,14 @@ public class DashboardController extends Main implements Initializable {
         preferencesPriceRate.put(STOCK_PRICE, String.valueOf(0));
         preferencesPriceRate.put(IS_NEW_SESSION, String.valueOf(false));
 
+    }
+    public void setImageOnAllCategoriesButton(){
+
+        Image all_Categories_Button_picture = new Image("pictures/all_Categories_Button_picture.jpg");
+        ImageView imageView = new ImageView(all_Categories_Button_picture);
+        imageView.setFitHeight(13);//13
+        imageView.setFitWidth(12);//12
+        allCategoriesButton.setGraphic(imageView);
     }
 
     //Nusako table'o stulpelius ir jų matmenys.
@@ -405,14 +409,13 @@ public class DashboardController extends Main implements Initializable {
                 int cableType = 0;
 
                 if (cuAmount != 0 && cuPrice != 0) {
-
-                    if (observableProduct.getSymbol().contains("Instaliacinis kabelis NYM")){cableType = Constants.KABELIS150;}
-                    if (observableProduct.getSymbol().contains("Jėgos kabelis NYY")){cableType = Constants.KABELIS150;}
-                    if (observableProduct.getSymbol().contains("Behalogeninis kabelis N2XH")){cableType = Constants.KABELIS300;}
-                    if (observableProduct.getSymbol().contains("Lankstus viengyslis laidas")){cableType = Constants.KABELIS300;}
-                    if (observableProduct.getSymbol().contains("Jėgos kabelis U")){cableType = Constants.KABELIS300;}
-                    if (observableProduct.getSymbol().contains("Ekranuotas Behalogeninis kabelis")){cableType = Constants.KABELIS300;}
-                    if (observableProduct.getSymbol().contains("Ugniai atsparus kabelis")){cableType = Constants.KABELIS300;}
+                    if (observableProduct.getSymbol().toLowerCase().contains("instaliacinis kabelis nym")){cableType = Constants.KABELIS150;}
+                    if (observableProduct.getSymbol().toLowerCase().contains("jėgos kabelis nyy")){cableType = Constants.KABELIS150;}
+                    if (observableProduct.getSymbol().toLowerCase().contains("behalogeninis kabelis n2xh")){cableType = Constants.KABELIS300;}
+                    if (observableProduct.getSymbol().toLowerCase().contains("lankstus viengyslis laidas")){cableType = Constants.KABELIS300;}
+                    if (observableProduct.getSymbol().toLowerCase().contains("jėgos kabelis u")){cableType = Constants.KABELIS300;}
+                    if (observableProduct.getSymbol().toLowerCase().contains("ekranuotas behalogeninis kabelis")){cableType = Constants.KABELIS300;}
+                    if (observableProduct.getSymbol().toLowerCase().contains("ugniai atsparus kabelis")){cableType = Constants.KABELIS300;}
 
 
                     double priceNet = ((cuPrice + (cuAmount * (price - cableType) / 100)) / 1000) / 0.8;

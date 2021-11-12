@@ -447,6 +447,7 @@ public class DashboardController extends Main implements Initializable {
                     if (observableProduct.getPriceNet() != priceNet) {
                         observableProduct.setPriceNet(priceNet);
                         ProductCatalogDAO.updatePrice(priceNet, observableProduct.getId());
+
                     }
 
 

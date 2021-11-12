@@ -108,11 +108,12 @@ public class DashboardController extends Main implements Initializable {
         loadCategoriesToListView();
         currentSessionUserData();
         reloadCategoryListView();
-        if ((today.getTime() - userLastLogin.getTime())/ 1000 / 3600 >= 24){setProductPrice(fullProductList);}
+        if ((today.getTime() - userLastLogin.getTime()) / 1000 / 3600 >= 24) {
+            setProductPrice(fullProductList);
+        }
         loggedTimePriceUpdateStart = System.currentTimeMillis();
         reloadProductTableView();
         firstFillDescriptionPanel();
-
 
 
         UserDAO.setLastLoginTime(userHolder.getUser());
@@ -141,7 +142,8 @@ public class DashboardController extends Main implements Initializable {
         preferencesPriceRate.put(IS_NEW_SESSION, String.valueOf(false));
 
     }
-    public void setImageOnAllCategoriesButton(){
+
+    public void setImageOnAllCategoriesButton() {
 
         Image all_Categories_Button_picture = new Image("pictures/all_Categories_Button_picture.jpg");
         ImageView imageView = new ImageView(all_Categories_Button_picture);
@@ -384,7 +386,6 @@ public class DashboardController extends Main implements Initializable {
     Preferences preferencesPriceRate = Preferences.userNodeForPackage(DashboardController.class);
 
 
-
     public void setProductPrice(List<ProductCatalog> observableProducts) {
         if (observableProducts != null) {
 
@@ -419,18 +420,35 @@ public class DashboardController extends Main implements Initializable {
                 int cableType = 0;
 
                 if (cuAmount != 0 && cuPrice != 0) {
-                    if (observableProduct.getSymbol().toLowerCase().contains("instaliacinis kabelis nym")){cableType = Constants.KABELIS150;}
-                    if (observableProduct.getSymbol().toLowerCase().contains("jėgos kabelis nyy")){cableType = Constants.KABELIS150;}
-                    if (observableProduct.getSymbol().toLowerCase().contains("behalogeninis kabelis n2xh")){cableType = Constants.KABELIS300;}
-                    if (observableProduct.getSymbol().toLowerCase().contains("lankstus viengyslis laidas")){cableType = Constants.KABELIS300;}
-                    if (observableProduct.getSymbol().toLowerCase().contains("jėgos kabelis u")){cableType = Constants.KABELIS300;}
-                    if (observableProduct.getSymbol().toLowerCase().contains("ekranuotas behalogeninis kabelis")){cableType = Constants.KABELIS300;}
-                    if (observableProduct.getSymbol().toLowerCase().contains("ugniai atsparus kabelis")){cableType = Constants.KABELIS300;}
+                    if (observableProduct.getSymbol().toLowerCase().contains("instaliacinis kabelis nym")) {
+                        cableType = Constants.KABELIS150;
+                    }
+                    if (observableProduct.getSymbol().toLowerCase().contains("jėgos kabelis nyy")) {
+                        cableType = Constants.KABELIS150;
+                    }
+                    if (observableProduct.getSymbol().toLowerCase().contains("behalogeninis kabelis n2xh")) {
+                        cableType = Constants.KABELIS300;
+                    }
+                    if (observableProduct.getSymbol().toLowerCase().contains("lankstus viengyslis laidas")) {
+                        cableType = Constants.KABELIS300;
+                    }
+                    if (observableProduct.getSymbol().toLowerCase().contains("jėgos kabelis u")) {
+                        cableType = Constants.KABELIS300;
+                    }
+                    if (observableProduct.getSymbol().toLowerCase().contains("ekranuotas behalogeninis kabelis")) {
+                        cableType = Constants.KABELIS300;
+                    }
+                    if (observableProduct.getSymbol().toLowerCase().contains("ugniai atsparus kabelis")) {
+                        cableType = Constants.KABELIS300;
+                    }
 
 
                     double priceNet = ((cuPrice + (cuAmount * (price - cableType) / 100)) / 1000) / 0.8;
-                    observableProduct.setPriceNet(priceNet);
-                    ProductCatalogDAO.updatePrice(priceNet, observableProduct.getId());
+                    if (observableProduct.getPriceNet() != priceNet) {
+                        observableProduct.setPriceNet(priceNet);
+                        ProductCatalogDAO.updatePrice(priceNet, observableProduct.getId());
+                    }
+
 
                     //Pakeisti šitą į metodą.
                     boolean ss = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
@@ -452,7 +470,7 @@ public class DashboardController extends Main implements Initializable {
                 fullProductList = ProductCatalogDAO.displayAllItems();
                 observableProducts = FXCollections.observableList(createFilteredProductList(fullCategoryList, fullProductList));
                 loggedTimePriceUpdateEnd = System.currentTimeMillis();
-                if ((loggedTimePriceUpdateEnd - loggedTimePriceUpdateStart)/ 1000 / 3600 >= 2){
+                if ((loggedTimePriceUpdateEnd - loggedTimePriceUpdateStart) / 1000 / 3600 >= 2) {
                     setProductPrice(observableProducts);
                     loggedTimePriceUpdateStart = System.currentTimeMillis();
                 }

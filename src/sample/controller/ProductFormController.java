@@ -1,5 +1,6 @@
 package sample.controller;
 
+import com.sun.javafx.css.Size;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -444,27 +445,31 @@ public class ProductFormController extends Main implements Initializable {
 
 
     public double formBoxY;
+    public double textBoxY;
 
-    private void setformBoxY(double y) {
+
+    private void setFormBoxY(double y) {
         this.formBoxY = y;
     }
 
-    private double getformBoxY() {
+    private double getFormBoxY() {
         return formBoxY = this.formBoxY + 20;
+    }
+
+    private double getTextBoxY() {
+        return textBoxY = this.textBoxY + 20;
     }
 
 
     public void addParametersForProduct(int category_parameter_id) {
-        System.out.println("Method addParametersForProduct() initialized");
         form_info_label.setText("");
         categoryParameters = CategoryParametersDAO.getParametersByCategoryParameterId(category_parameter_id);
-        System.out.println("getParametersByCategoryParameterId()");
 
 //        CategoryParameters categoryParameters = new CategoryParameters(true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true,true, true, true, true, true, true, true, true, true, true);
-        System.out.println("categoryParameters object: " + categoryParameters);
 
         letsScroll.setVisible(true);
-        letsScroll.setPrefSize(450, 300);
+        letsScroll.setPrefSize(470, 300);
+        letsScroll.setMaxSize(470, 300);
         AnchorPane.setTopAnchor(letsScroll, 40.0);
         AnchorPane.setBottomAnchor(letsScroll, 80.0);
 
@@ -486,749 +491,952 @@ public class ProductFormController extends Main implements Initializable {
 
 
         HBox hBox1 = new HBox();
-        VBox vBox1 = new VBox();
-        VBox vBox2 = new VBox();
+        HBox hBox2 = new HBox();
+//        VBox hBox1 = new VBox();
 
 
-        vBox1.setPadding(new Insets(5, 5, 10, 9));
-        vBox2.setPadding(new Insets(5, 20, 10, 5));
-        setformBoxY(40);
-        vBox2.setSpacing(6);
-        vBox1.setSpacing(12);
-        vBox1.setAlignment(Pos.CENTER_RIGHT);
+        hBox1.setPadding(new Insets(5, 5, 10, 9));
+        hBox2.setPadding(new Insets(5, 20, 10, 5));
+//        setformBoxY(40);
+        hBox1.setSpacing(6);
+        hBox2.setSpacing(6);
+        hBox1.setAlignment(Pos.CENTER_RIGHT);
+        hBox2.setAlignment(Pos.CENTER_RIGHT);
 
 
         if (categoryParameters.isGamintojas()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Gamintojas:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            gamintojas_field.setLayoutX(60);
-            gamintojas_field.setPrefWidth(250);
-            gamintojas_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(gamintojas_field);
+            gamintojas_field.setAlignment(Pos.CENTER_RIGHT);
+            gamintojas_field.setPrefWidth(255);
+
+            HBox hboxField = new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(gamintojas_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isAukstis()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Aukštis:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            aukstis_field.setLayoutX(60);
-            aukstis_field.setPrefWidth(250);
-            aukstis_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(aukstis_field);
+            aukstis_field.setAlignment(Pos.CENTER_RIGHT);
+            aukstis_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(aukstis_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isPlotis()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Plotis:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            plotis_field.setLayoutX(60);
-            plotis_field.setPrefWidth(250);
-            plotis_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(plotis_field);
+            plotis_field.setAlignment(Pos.CENTER_RIGHT);
+            plotis_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(plotis_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isGylis()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Gylis:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            gylis_field.setLayoutX(60);
-            gylis_field.setPrefWidth(250);
-            gylis_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(gylis_field);
+            gylis_field.setAlignment(Pos.CENTER_RIGHT);
+            gylis_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(gylis_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isSkersmuo()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Skersmuo:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            skersmuo_field.setLayoutX(60);
-            skersmuo_field.setPrefWidth(250);
-            skersmuo_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(skersmuo_field);
+            skersmuo_field.setAlignment(Pos.CENTER_RIGHT);
+            skersmuo_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(skersmuo_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isIlgis()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Ilgis:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            ilgis_field.setLayoutX(60);
-            ilgis_field.setPrefWidth(250);
-            ilgis_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(ilgis_field);
+            ilgis_field.setAlignment(Pos.CENTER_RIGHT);
+            ilgis_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(aukstis_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isApsaugos_laipsnis()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Apsaugos laipsnis:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            apsaugos_laipsnis_field.setLayoutX(60);
-            apsaugos_laipsnis_field.setPrefWidth(250);
-            apsaugos_laipsnis_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(apsaugos_laipsnis_field);
+            apsaugos_laipsnis_field.setAlignment(Pos.CENTER_RIGHT);
+            apsaugos_laipsnis_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(apsaugos_laipsnis_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isModuliu_skaicius()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Modulių skaičius:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            moduliu_skaicius_field.setLayoutX(60);
-            moduliu_skaicius_field.setPrefWidth(250);
-            moduliu_skaicius_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(moduliu_skaicius_field);
+            moduliu_skaicius_field.setAlignment(Pos.CENTER_RIGHT);
+            moduliu_skaicius_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(moduliu_skaicius_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isVardine_srove()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Vardinė srovė:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            vardine_srove_field.setLayoutX(60);
-            vardine_srove_field.setPrefWidth(250);
-            vardine_srove_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(vardine_srove_field);
+            vardine_srove_field.setAlignment(Pos.CENTER_RIGHT);
+            vardine_srove_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(vardine_srove_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isVardine_itampa()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Vardinė įtampa:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            vardine_itampa_field.setLayoutX(60);
-            vardine_itampa_field.setPrefWidth(250);
-            vardine_itampa_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(vardine_itampa_field);
+            vardine_itampa_field.setAlignment(Pos.CENTER_RIGHT);
+            vardine_itampa_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(vardine_itampa_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
+        }
+        if (categoryParameters.isMechaninis_atsparumas_IK()) {
+            Label label = new Label();
+            label.setFont(new Font("Segoe UI Light", SIZE));
+            label.setText("Mech. atsparumas IK:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
+
+            mechaninis_atsparumas_IK_field.setAlignment(Pos.CENTER_RIGHT);
+            mechaninis_atsparumas_IK_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(mechaninis_atsparumas_IK_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isStoris()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Storis:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            storis_field.setLayoutX(60);
-            storis_field.setPrefWidth(250);
-            storis_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(storis_field);
+            storis_field.setAlignment(Pos.CENTER_RIGHT);
+            storis_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(storis_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isSpalva()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Spalva:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            spalva_field.setLayoutX(60);
-            spalva_field.setPrefWidth(250);
-            spalva_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(spalva_field);
+            spalva_field.setAlignment(Pos.CENTER_RIGHT);
+            spalva_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(spalva_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isKorpuso_medziaga()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Korpuso medžiaga:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            korpuso_medziaga_field.setLayoutX(60);
-            korpuso_medziaga_field.setPrefWidth(250);
-            korpuso_medziaga_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(korpuso_medziaga_field);
+            korpuso_medziaga_field.setAlignment(Pos.CENTER_RIGHT);
+            korpuso_medziaga_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(korpuso_medziaga_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isIzoliacija()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Izoliacija:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            izoliacija_field.setLayoutX(60);
-            izoliacija_field.setPrefWidth(250);
-            izoliacija_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(izoliacija_field);
+            izoliacija_field.setAlignment(Pos.CENTER_RIGHT);
+            izoliacija_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(izoliacija_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isSvoris()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Svoris:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            svoris_field.setLayoutX(60);
-            svoris_field.setPrefWidth(250);
-            svoris_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(svoris_field);
+            svoris_field.setAlignment(Pos.CENTER_RIGHT);
+            svoris_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(svoris_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isGalia()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Galia:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            galia_field.setLayoutX(60);
-            galia_field.setPrefWidth(250);
-            galia_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(galia_field);
+            galia_field.setAlignment(Pos.CENTER_RIGHT);
+            galia_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(galia_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isSviesos_srautas()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Šviesos srautas:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            sviesos_srautas_field.setLayoutX(60);
-            sviesos_srautas_field.setPrefWidth(250);
-            sviesos_srautas_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(sviesos_srautas_field);
+            sviesos_srautas_field.setAlignment(Pos.CENTER_RIGHT);
+            sviesos_srautas_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(sviesos_srautas_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isSviesos_spalvos_temperatura()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Spalvos temperatūra:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            sviesos_spalvos_temperatura_field.setLayoutX(60);
-            sviesos_spalvos_temperatura_field.setPrefWidth(250);
-            sviesos_spalvos_temperatura_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(sviesos_spalvos_temperatura_field);
+            sviesos_spalvos_temperatura_field.setAlignment(Pos.CENTER_RIGHT);
+            sviesos_spalvos_temperatura_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(sviesos_spalvos_temperatura_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isLaidininkas()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Laidininkas:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            laidininkas_field.setLayoutX(60);
-            laidininkas_field.setPrefWidth(250);
-            laidininkas_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(laidininkas_field);
+            laidininkas_field.setAlignment(Pos.CENTER_RIGHT);
+            laidininkas_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(laidininkas_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
 
         if (categoryParameters.isLaidininkoIzoliacija()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Laidininko izoliacija:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            laidininko_izoliacija_field.setLayoutX(60);
-            laidininko_izoliacija_field.setPrefWidth(250);
-            laidininko_izoliacija_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(laidininko_izoliacija_field);
+            laidininko_izoliacija_field.setAlignment(Pos.CENTER_RIGHT);
+            laidininko_izoliacija_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(laidininko_izoliacija_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
 
         if (categoryParameters.isDarbine_temperatura()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Darbinė temperatūra:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            darbine_temperatura_field.setLayoutX(60);
-            darbine_temperatura_field.setPrefWidth(250);
-            darbine_temperatura_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(darbine_temperatura_field);
+            darbine_temperatura_field.setAlignment(Pos.CENTER_RIGHT);
+            darbine_temperatura_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(darbine_temperatura_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isMax_darbine_temperatura()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Maks. darbinė temp.:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            max_darbine_temperatura_field.setLayoutX(60);
-            max_darbine_temperatura_field.setPrefWidth(250);
-            max_darbine_temperatura_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(max_darbine_temperatura_field);
+            darbine_temperatura_field.setAlignment(Pos.CENTER_RIGHT);
+            darbine_temperatura_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(darbine_temperatura_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
 
         if (categoryParameters.isApsvieta()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Apšvieta:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            apsvieta_field.setLayoutX(60);
-            apsvieta_field.setPrefWidth(250);
-            apsvieta_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(apsvieta_field);
+            apsvieta_field.setAlignment(Pos.CENTER_RIGHT);
+            apsvieta_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(apsvieta_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
 
         if (categoryParameters.isApvalkalas()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Apvalkalas:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            apvalkalas_field.setLayoutX(60);
-            apvalkalas_field.setPrefWidth(250);
-            apvalkalas_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(apvalkalas_field);
+            apvalkalas_field.setAlignment(Pos.CENTER_RIGHT);
+            apvalkalas_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(apvalkalas_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isCpr_klase()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("CPR klasė:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            cpr_klase_field.setLayoutX(60);
-            cpr_klase_field.setPrefWidth(250);
-            cpr_klase_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(cpr_klase_field);
+            cpr_klase_field.setAlignment(Pos.CENTER_RIGHT);
+            cpr_klase_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(cpr_klase_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isIsjungimo_geba()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Išjungimo geba:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            isjungimo_geba_field.setLayoutX(60);
-            isjungimo_geba_field.setPrefWidth(250);
-            isjungimo_geba_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(isjungimo_geba_field);
+            isjungimo_geba_field.setAlignment(Pos.CENTER_RIGHT);
+            isjungimo_geba_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(isjungimo_geba_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isIsjungimo_charakteristika()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Išjungimo charakter.:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            isjungimo_charakteristika_field.setLayoutX(60);
-            isjungimo_charakteristika_field.setPrefWidth(250);
-            isjungimo_charakteristika_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(isjungimo_charakteristika_field);
+            isjungimo_charakteristika_field.setAlignment(Pos.CENTER_RIGHT);
+            isjungimo_charakteristika_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(isjungimo_charakteristika_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isMechaninis_atsparumas()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Mechaninis atsparumas:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            mechaninis_atsparumas_field.setLayoutX(60);
-            mechaninis_atsparumas_field.setPrefWidth(250);
-            mechaninis_atsparumas_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(mechaninis_atsparumas_field);
+            mechaninis_atsparumas_field.setAlignment(Pos.CENTER_RIGHT);
+            mechaninis_atsparumas_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(mechaninis_atsparumas_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isSkerspjuvis_Al()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Skerspjūvis Al:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            skerspjuvis_Al_field.setLayoutX(60);
-            skerspjuvis_Al_field.setPrefWidth(250);
-            skerspjuvis_Al_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(skerspjuvis_Al_field);
+            skerspjuvis_Al_field.setAlignment(Pos.CENTER_RIGHT);
+            skerspjuvis_Al_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(skerspjuvis_Al_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isSkerspjuvis_Cu()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Skerspjūvis Cu:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            skerspjuvis_Cu_field.setLayoutX(60);
-            skerspjuvis_Cu_field.setPrefWidth(250);
-            skerspjuvis_Cu_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(skerspjuvis_Cu_field);
+            skerspjuvis_Cu_field.setAlignment(Pos.CENTER_RIGHT);
+            skerspjuvis_Cu_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(skerspjuvis_Cu_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isNuotekio_srove()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Nuotekio srovė:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            nuotekio_srove_field.setLayoutX(60);
-            nuotekio_srove_field.setPrefWidth(250);
-            nuotekio_srove_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(nuotekio_srove_field);
+            nuotekio_srove_field.setAlignment(Pos.CENTER_RIGHT);
+            nuotekio_srove_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(nuotekio_srove_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isDydis()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Dydis:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            dydis_field.setLayoutX(60);
-            dydis_field.setPrefWidth(250);
-            dydis_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(dydis_field);
+            dydis_field.setAlignment(Pos.CENTER_RIGHT);
+            dydis_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(dydis_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isPlotas()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Plotis:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            plotas_field.setLayoutX(60);
-            plotas_field.setPrefWidth(250);
-            plotas_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(plotas_field);
+            plotas_field.setAlignment(Pos.CENTER_RIGHT);
+            plotas_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(plotas_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isAptikimoZona()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Aptikimo zona:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            aptikimo_zona_field.setLayoutX(60);
-            aptikimo_zona_field.setPrefWidth(250);
-            aptikimo_zona_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(aptikimo_zona_field);
+            aptikimo_zona_field.setAlignment(Pos.CENTER_RIGHT);
+            aptikimo_zona_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(aptikimo_zona_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isMaksimaliDarbineItampa()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Maks. darbinė įtampa:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            max_darbine_itampa_field.setLayoutX(60);
-            max_darbine_itampa_field.setPrefWidth(250);
-            max_darbine_itampa_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(max_darbine_itampa_field);
+            max_darbine_itampa_field.setAlignment(Pos.CENTER_RIGHT);
+            max_darbine_itampa_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(max_darbine_itampa_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isIskrovimoSrove820()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Iškrovimo srovė 8/20:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            iskrovimo_srove_8_20_field.setLayoutX(60);
-            iskrovimo_srove_8_20_field.setPrefWidth(250);
-            iskrovimo_srove_8_20_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(iskrovimo_srove_8_20_field);
+            iskrovimo_srove_8_20_field.setAlignment(Pos.CENTER_RIGHT);
+            iskrovimo_srove_8_20_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(iskrovimo_srove_8_20_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isIskrovimoSrove10350()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Iškrovimo srovė 10/350:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            iskrovimo_srove_10_350_field.setLayoutX(60);
-            iskrovimo_srove_10_350_field.setPrefWidth(250);
-            iskrovimo_srove_10_350_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(iskrovimo_srove_10_350_field);
+            iskrovimo_srove_10_350_field.setAlignment(Pos.CENTER_RIGHT);
+            iskrovimo_srove_10_350_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(iskrovimo_srove_10_350_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isItamposApsaugosLygis()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Įtampos apsaugos lygis:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            itampos_apsaugos_lygis.setLayoutX(60);
-            itampos_apsaugos_lygis.setPrefWidth(250);
-            itampos_apsaugos_lygis.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(itampos_apsaugos_lygis);
+            itampos_apsaugos_lygis.setAlignment(Pos.CENTER_RIGHT);
+            itampos_apsaugos_lygis.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(itampos_apsaugos_lygis);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isKategorija()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Kategorija:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            kategorija_field.setLayoutX(60);
-            kategorija_field.setPrefWidth(250);
-            kategorija_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(kategorija_field);
+            kategorija_field.setAlignment(Pos.CENTER_RIGHT);
+            kategorija_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(kategorija_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isCRI()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("CRI:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            cri_field.setLayoutX(60);
-            cri_field.setPrefWidth(250);
-            cri_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(cri_field);
+            cri_field.setAlignment(Pos.CENTER_RIGHT);
+            cri_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(cri_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isGarantija()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Garantija:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            garantija_field.setLayoutX(60);
-            garantija_field.setPrefWidth(250);
-            garantija_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(garantija_field);
+            garantija_field.setAlignment(Pos.CENTER_RIGHT);
+            garantija_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(garantija_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isSertifikatai()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Sertifikatai:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            sertifikatai_field.setLayoutX(60);
-            sertifikatai_field.setPrefWidth(250);
-            sertifikatai_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(sertifikatai_field);
+            sertifikatai_field.setAlignment(Pos.CENTER_RIGHT);
+            sertifikatai_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(sertifikatai_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isNemaJungtis()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Nema jungtis:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            nema_jungtis_field.setLayoutX(60);
-            nema_jungtis_field.setPrefWidth(250);
-            nema_jungtis_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(nema_jungtis_field);
+            nema_jungtis_field.setAlignment(Pos.CENTER_RIGHT);
+            nema_jungtis_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(nema_jungtis_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isVirsitampiuApsauga()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Virš įtamp. apsauga:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            virsitampiu_apsauga_field.setLayoutX(60);
-            virsitampiu_apsauga_field.setPrefWidth(250);
-            virsitampiu_apsauga_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(virsitampiu_apsauga_field);
+            virsitampiu_apsauga_field.setAlignment(Pos.CENTER_RIGHT);
+            virsitampiu_apsauga_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(virsitampiu_apsauga_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isIlgaamziskumas()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Ilgaamžiškumas:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            ilgaamziskumas_field.setLayoutX(60);
-            ilgaamziskumas_field.setPrefWidth(250);
-            ilgaamziskumas_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(ilgaamziskumas_field);
+            ilgaamziskumas_field.setAlignment(Pos.CENTER_RIGHT);
+            ilgaamziskumas_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(ilgaamziskumas_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isKorpusoAtidarymas()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Korpuso atidarymas:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            korpuso_atidarymas_field.setLayoutX(60);
-            korpuso_atidarymas_field.setPrefWidth(250);
-            korpuso_atidarymas_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(korpuso_atidarymas_field);
+            korpuso_atidarymas_field.setAlignment(Pos.CENTER_RIGHT);
+            korpuso_atidarymas_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(korpuso_atidarymas_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isOptinesIrElektrinesDaliesPertvara()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Opt. ir elektr. dalies pertv.:");
+            label.setPrefSize(122,25);
+            label.setAlignment(Pos.CENTER_RIGHT);
 
-            vbox.setSpacing(10);
-            optines_ir_elektrines_dalies_pertvarka_field.setLayoutX(60);
-            optines_ir_elektrines_dalies_pertvarka_field.setPrefWidth(250);
-            optines_ir_elektrines_dalies_pertvarka_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(optines_ir_elektrines_dalies_pertvarka_field);
+            optines_ir_elektrines_dalies_pertvarka_field.setAlignment(Pos.CENTER_RIGHT);
+            optines_ir_elektrines_dalies_pertvarka_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(optines_ir_elektrines_dalies_pertvarka_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isValdymas()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Valdymas:");
 
-            vbox.setSpacing(10);
-            valdymas_field.setLayoutX(60);
-            valdymas_field.setPrefWidth(250);
-            valdymas_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(valdymas_field);
+            valdymas_field.setAlignment(Pos.CENTER_RIGHT);
+            valdymas_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(valdymas_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isApatinisDiametras()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Apatinis diam.:");
 
-            vbox.setSpacing(10);
-            apatinis_diametras_field.setLayoutX(60);
-            apatinis_diametras_field.setPrefWidth(250);
-            apatinis_diametras_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(apatinis_diametras_field);
+            apatinis_diametras_field.setAlignment(Pos.CENTER_RIGHT);
+            apatinis_diametras_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(apatinis_diametras_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isVirsutinisDiametras()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Viršutinis diam.:");
 
-            vbox.setSpacing(10);
-            virsutinis_diametras_field.setLayoutX(60);
-            virsutinis_diametras_field.setPrefWidth(250);
-            virsutinis_diametras_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(virsutinis_diametras_field);
+            virsutinis_diametras_field.setAlignment(Pos.CENTER_RIGHT);
+            virsutinis_diametras_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(virsutinis_diametras_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(10, 5, 10, 5));
+            vbox.getChildren().add(hboxField);
         }
         if (categoryParameters.isGembesDiametras()) {
             Label label = new Label();
-            label.setLayoutX(20);
-            label.setLayoutY(getformBoxY());
             label.setFont(new Font("Segoe UI Light", SIZE));
             label.setText("Gembės diam.:");
 
-            vbox.setSpacing(10);
-            gembes_diametras_field.setLayoutX(60);
-            gembes_diametras_field.setPrefWidth(250);
-            gembes_diametras_field.setLayoutY(getformBoxY());
-            vBox1.getChildren().add(label);
-            vBox2.getChildren().add(gembes_diametras_field);
+            gembes_diametras_field.setAlignment(Pos.CENTER_RIGHT);
+            gembes_diametras_field.setPrefWidth(255);
+
+            HBox hboxField =  new HBox();
+            hboxField.setMinWidth(440);
+            hboxField.getChildren().add(label);
+            hboxField.getChildren().add(gembes_diametras_field);
+            hboxField.setSpacing(12);
+            hboxField.setPadding(new Insets(5, 5, 5, 5));
+            vbox.getChildren().add(hboxField);
         }
 
-        Label imageLabel = new Label();
-        imageLabel.setLayoutX(20);
-        imageLabel.setLayoutY(getformBoxY());
-        imageLabel.setFont(new Font("Segoe UI Light", SIZE));
-        imageLabel.setText("Nuotraukos adresas:");
-
-        vbox.setSpacing(10);
-        image_url_field.setLayoutX(60);
-        image_url_field.setPrefWidth(250);
-        image_url_field.setLayoutY(getformBoxY());
-        vBox1.getChildren().add(imageLabel);
-        vBox2.getChildren().add(image_url_field);
 
 
 
@@ -1247,8 +1455,8 @@ public class ProductFormController extends Main implements Initializable {
 //         ^ DELETE AFTER TEST
 
 
-        hBox1.getChildren().add(vBox1);
-        hBox1.getChildren().add(vBox2);
+//        hBox1.getChildren().add(hBox1);
+//        hBox1.getChildren().add(hBox1);
         vbox.getChildren().add(hBox1);
     }
 

@@ -6,6 +6,7 @@ import sample.JPA.JPAUtil;
 import sample.JPA.ProductCatalog;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class UserDAO {
@@ -29,6 +30,8 @@ public class UserDAO {
             System.out.println("UserDAO.insert PersistenceException");
         }
     }
+
+
 
     public static User searchUserByEmail(String email) {
         try {
@@ -111,6 +114,36 @@ public class UserDAO {
         }
 
         return userList;
+    }
+
+    public static Timestamp getLastLogin(User holderUser){
+        EntityManager entityManager;
+        EntityTransaction entityTransaction;
+        Timestamp userLastLogin = null;
+        try {
+            entityManager = JPAUtil.getEntityManagerFactory().createEntityManager();
+            entityTransaction = entityManager.getTransaction();
+
+            entityTransaction.begin();
+            Query query = entityManager.createQuery(
+                            "SELECT a FROM User a WHERE a.email = :email2")
+                    .setParameter("email2", holderUser.getEmail());
+            User downloadedUser = (User) query.getSingleResult();
+            userLastLogin = downloadedUser.getLastLogin();
+
+            entityManager.getTransaction().commit();
+            entityManager.close();
+        } catch (IllegalStateException e) {
+            System.out.println("ProductCatalogDAO.updateUserTimeSpent IllegalStateException");
+        } catch (JDBCConnectionException e) {
+            System.out.println("ProductCatalogDAO.updateUserTimeSpent JDBCConnectionException");
+        } catch (ServiceException e) {
+            System.out.println("ProductCatalogDAO.updateUserTimeSpent ServiceException");
+        } catch (PersistenceException e) {
+            System.out.println("ProductCatalogDAO.updateUserTimeSpent PersistenceException");
+        }
+
+        return userLastLogin;
     }
 
     public static void updateUserTimeSpent(User holdedUser, int timeSpent) {

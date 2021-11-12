@@ -46,6 +46,7 @@ import sample.utils.Validation;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.prefs.Preferences;
 import java.io.FileWriter;
@@ -89,6 +90,8 @@ public class DashboardController extends Main implements Initializable {
     public static long loggedTimeEnd;
     public static long loggedTimeSpent;
     public static int spentTimeInSeconds;
+    public static long loggedTimePriceUpdateStart;
+    public static long loggedTimePriceUpdateEnd;
     List<Categories> categoryNamesForListView;
     ObservableList<Categories> observableCategoryList;
     ObservableList<ProductCatalog> observableProducts;
@@ -98,13 +101,20 @@ public class DashboardController extends Main implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        UserHolder userHolder = UserHolder.getInstance();
+        Timestamp today = new Timestamp(System.currentTimeMillis());
+        Timestamp userLastLogin = UserDAO.getLastLogin(userHolder.getUser());
         loadColumnToTable();
         loadCategoriesToListView();
         currentSessionUserData();
         reloadCategoryListView();
+        if ((today.getTime() - userLastLogin.getTime())/ 1000 / 3600 >= 24){setProductPrice(fullProductList);}
+        loggedTimePriceUpdateStart = System.currentTimeMillis();
         reloadProductTableView();
         firstFillDescriptionPanel();
-        UserHolder userHolder = UserHolder.getInstance();
+
+
+
         UserDAO.setLastLoginTime(userHolder.getUser());
         loggedTimeStart = System.currentTimeMillis();// Fiksuoja prisijungimo laiko pradžią
 
@@ -420,6 +430,7 @@ public class DashboardController extends Main implements Initializable {
 
                     double priceNet = ((cuPrice + (cuAmount * (price - cableType) / 100)) / 1000) / 0.8;
                     observableProduct.setPriceNet(priceNet);
+                    ProductCatalogDAO.updatePrice(priceNet, observableProduct.getId());
 
                     //Pakeisti šitą į metodą.
                     boolean ss = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
@@ -440,7 +451,12 @@ public class DashboardController extends Main implements Initializable {
                 fullCategoryList = CategoriesDAO.selectCategoryById(item.getId());
                 fullProductList = ProductCatalogDAO.displayAllItems();
                 observableProducts = FXCollections.observableList(createFilteredProductList(fullCategoryList, fullProductList));
-                setProductPrice(observableProducts);
+                loggedTimePriceUpdateEnd = System.currentTimeMillis();
+                if ((loggedTimePriceUpdateEnd - loggedTimePriceUpdateStart)/ 1000 / 3600 >= 2){
+                    setProductPrice(observableProducts);
+                    loggedTimePriceUpdateStart = System.currentTimeMillis();
+                }
+
                 countTableViewObservableProducts(observableProducts);
                 table.setItems(observableProducts);
 
@@ -837,8 +853,6 @@ public class DashboardController extends Main implements Initializable {
     // metodui perduodamas item'o katalogo numeris.
     public void mouseEventForTableView() {
         ProductCatalog tableItem;
-
-
         try {
             if (!table.getSelectionModel().isEmpty()) {
                 tableItem = table.getSelectionModel().getSelectedItem();

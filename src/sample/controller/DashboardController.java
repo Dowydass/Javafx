@@ -92,6 +92,8 @@ public class DashboardController extends Main implements Initializable {
     public static int spentTimeInSeconds;
     public static long loggedTimePriceUpdateStart;
     public static long loggedTimePriceUpdateEnd;
+    long today;
+    Timestamp userLastLogin;
     List<Categories> categoryNamesForListView;
     ObservableList<Categories> observableCategoryList;
     ObservableList<ProductCatalog> observableProducts;
@@ -102,16 +104,13 @@ public class DashboardController extends Main implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         UserHolder userHolder = UserHolder.getInstance();
-        Timestamp today = new Timestamp(System.currentTimeMillis());
-        Timestamp userLastLogin = UserDAO.getLastLogin(userHolder.getUser());
+        today = System.currentTimeMillis();
+        userLastLogin = UserDAO.getLastLogin(userHolder.getUser());
+        loggedTimePriceUpdateStart = System.currentTimeMillis();
         loadColumnToTable();
         loadCategoriesToListView();
         currentSessionUserData();
         reloadCategoryListView();
-        if ((today.getTime() - userLastLogin.getTime()) / 1000 / 3600 >= 24) {
-            setProductPrice(fullProductList);
-        }
-        loggedTimePriceUpdateStart = System.currentTimeMillis();
         reloadProductTableView();
         firstFillDescriptionPanel();
 
@@ -475,7 +474,6 @@ public class DashboardController extends Main implements Initializable {
                     setProductPrice(observableProducts);
                     loggedTimePriceUpdateStart = System.currentTimeMillis();
                 }
-
                 countTableViewObservableProducts(observableProducts);
                 table.setItems(observableProducts);
 
@@ -1623,10 +1621,16 @@ public class DashboardController extends Main implements Initializable {
 
     public void reloadProductTableView() {
         fullProductList = ProductCatalogDAO.displayAllItems();
-        fullCategoryList = CategoriesDAO.displayAllCategories();
-        observableProducts = createFilteredProductList(fullCategoryList, fullProductList);
-        countTableViewObservableProducts(observableProducts);
-        table.setItems(observableProducts);
+        ObservableList<ProductCatalog> fullProductObservableList = FXCollections.observableList(fullProductList);
+        if ((today - userLastLogin.getTime()) / 1000 / 3600 >= 24) {
+            setProductPrice(fullProductObservableList);
+        }
+        else if ( (loggedTimePriceUpdateEnd - loggedTimePriceUpdateStart) / 1000 / 3600 >= 2){
+            setProductPrice(fullProductObservableList);
+            loggedTimePriceUpdateStart = System.currentTimeMillis();
+        }
+        countTableViewObservableProducts(fullProductObservableList);
+        table.setItems(fullProductObservableList);
     }
 
 

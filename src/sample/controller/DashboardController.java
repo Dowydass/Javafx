@@ -1621,7 +1621,8 @@ public class DashboardController extends Main implements Initializable {
 
     public void reloadProductTableView() {
         fullProductList = ProductCatalogDAO.displayAllItems();
-        ObservableList<ProductCatalog> fullProductObservableList = FXCollections.observableList(fullProductList);
+        fullCategoryList = CategoriesDAO.displayAllCategories();
+        ObservableList<ProductCatalog> fullProductObservableList = FXCollections.observableList(createFilteredProductLists(fullCategoryList, fullProductList));
         if ((today - userLastLogin.getTime()) / 1000 / 3600 >= 24) {
             setProductPrice(fullProductObservableList);
         }

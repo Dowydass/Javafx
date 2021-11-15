@@ -627,6 +627,66 @@ public class CategoryParameters {
     @Override
     public String toString() {
         return "CategoryParameters{" +
+                "id=" + id +
+                ", cuAmount=" + cuAmount +
+                ", cuPrice=" + cuPrice +
+                ", gamintojas=" + gamintojas +
+                ", aukstis=" + aukstis +
+                ", plotis=" + plotis +
+                ", gylis=" + gylis +
+                ", skersmuo=" + skersmuo +
+                ", ilgis=" + ilgis +
+                ", apsaugos_laipsnis=" + apsaugos_laipsnis +
+                ", moduliu_skaicius=" + moduliu_skaicius +
+                ", vardine_srove=" + vardine_srove +
+                ", vardine_itampa=" + vardine_itampa +
+                ", mechaninis_atsparumas_IK=" + mechaninis_atsparumas_IK +
+                ", storis=" + storis +
+                ", spalva=" + spalva +
+                ", korpuso_medziaga=" + korpuso_medziaga +
+                ", izoliacija=" + izoliacija +
+                ", svoris=" + svoris +
+                ", galia=" + galia +
+                ", sviesos_srautas=" + sviesos_srautas +
+                ", sviesos_spalvos_temperatura=" + sviesos_spalvos_temperatura +
+                ", laidininkas=" + laidininkas +
+                ", laidininkoIzoliacija=" + laidininkoIzoliacija +
+                ", darbine_temperatura=" + darbine_temperatura +
+                ", max_darbine_temperatura=" + max_darbine_temperatura +
+                ", apsvieta=" + apsvieta +
+                ", apvalkalas=" + apvalkalas +
+                ", cpr_klase=" + cpr_klase +
+                ", isjungimo_geba=" + isjungimo_geba +
+                ", isjungimo_charakteristika=" + isjungimo_charakteristika +
+                ", mechaninis_atsparumas=" + mechaninis_atsparumas +
+                ", skerspjuvis_Al=" + skerspjuvis_Al +
+                ", skerspjuvis_Cu=" + skerspjuvis_Cu +
+                ", nuotekio_srove=" + nuotekio_srove +
+                ", dydis=" + dydis +
+                ", plotas=" + plotas +
+                ", aptikimoZona=" + aptikimoZona +
+                ", maksimaliDarbineItampa=" + maksimaliDarbineItampa +
+                ", iskrovimoSrove820=" + iskrovimoSrove820 +
+                ", iskrovimoSrove10350=" + iskrovimoSrove10350 +
+                ", itamposApsaugosLygis=" + itamposApsaugosLygis +
+                ", kategorija=" + kategorija +
+                ", CRI=" + CRI +
+                ", garantija=" + garantija +
+                ", sertifikatai=" + sertifikatai +
+                ", nemaJungtis=" + nemaJungtis +
+                ", virsitampiuApsauga=" + virsitampiuApsauga +
+                ", ilgaamziskumas=" + ilgaamziskumas +
+                ", korpusoAtidarymas=" + korpusoAtidarymas +
+                ", optinesIrElektrinesDaliesPertvara=" + optinesIrElektrinesDaliesPertvara +
+                ", valdymas=" + valdymas +
+                ", apatinisDiametras=" + apatinisDiametras +
+                ", virsutinisDiametras=" + virsutinisDiametras +
+                ", gembesDiametras=" + gembesDiametras +
+                '}';
+    }
+
+    public String toStringCompareCategoryParameters() {
+        return "CategoryParameters{" +
                 "cuAmount=" + cuAmount +
                 ", cuPrice=" + cuPrice +
                 ", gamintojas=" + gamintojas +

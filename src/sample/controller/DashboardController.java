@@ -662,7 +662,10 @@ public class DashboardController extends Main implements Initializable {
 
     //Lygina du categoryParameter objektus.
     public boolean compareCategoryParameters(CategoryParameters parameter, CategoryParameters parameter2) {
-        return !parameter.toString().equals(parameter2.toString());
+        if (parameter.toStringCompareCategoryParameters().equals(parameter2.toStringCompareCategoryParameters())){
+            return false;
+        }
+        return true;
     }
 
     //Sukuria categoryParameter objektą iš produkto esamų parametrų.

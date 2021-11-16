@@ -343,9 +343,15 @@ public class DashboardController extends Main implements Initializable {
     }
 
     public void SelectAllCategories(ActionEvent actionEvent) {
-        listView.scrollTo(0);
-        listView.getSelectionModel().select(0);
-
+        if (listViewSearchField.getText().isEmpty()) {
+            listView.scrollTo(0);
+            listView.getSelectionModel().select(0);
+        } else {
+            reloadCategoryListView();
+            listViewSearchField.clear();
+            listView.scrollTo(0);
+            listView.getSelectionModel().select(0);
+        }
     }
 
     public List<ProductCatalog> createFilteredProductLists(List<Categories> categories, List<ProductCatalog> products) {
@@ -635,7 +641,6 @@ public class DashboardController extends Main implements Initializable {
 
     //Ikelia categoryParameter objektą į duombazę patikrinus ar tokio objekto nėra duombazėje.
     public void insertCategoryParameter(CategoryParameters categoryParameter, List<CategoryParameters> allCategoryParameters, ProductCatalog product) {
-
         if (allCategoryParameters.size() == 0) {
             CategoryParametersDAO.createNewCategoryParametersField(categoryParameter);
             CategoryParameters parameter = CategoryParametersDAO.selectLastCategoryParameter();
@@ -643,7 +648,7 @@ public class DashboardController extends Main implements Initializable {
         } else {
             boolean newParameter = true;
             for (CategoryParameters allCategoryParameter : allCategoryParameters) {
-                if (compareCategoryParameters(allCategoryParameter, categoryParameter)) {
+                if (!compareCategoryParameters(allCategoryParameter, categoryParameter)) {
                     newParameter = false;
                     Categories category = CategoriesDAO.displayParentCategoryById(product.getGroupId());
                     if (allCategoryParameter.getId() != category.getCategory_parameter_id()) {
@@ -662,7 +667,7 @@ public class DashboardController extends Main implements Initializable {
 
     //Lygina du categoryParameter objektus.
     public boolean compareCategoryParameters(CategoryParameters parameter, CategoryParameters parameter2) {
-        if (parameter.toStringCompareCategoryParameters().equals(parameter2.toStringCompareCategoryParameters())){
+        if (parameter.toStringCompareCategoryParameters().equals(parameter2.toStringCompareCategoryParameters())) {
             return false;
         }
         return true;
@@ -1627,8 +1632,7 @@ public class DashboardController extends Main implements Initializable {
         observableProducts = FXCollections.observableList(fullProductList);
         if ((today - userLastLogin.getTime()) / 1000 / 3600 >= 24) {
             setProductPrice(observableProducts);
-        }
-        else if ( (loggedTimePriceUpdateEnd - loggedTimePriceUpdateStart) / 1000 / 3600 >= 2){
+        } else if ((loggedTimePriceUpdateEnd - loggedTimePriceUpdateStart) / 1000 / 3600 >= 2) {
             setProductPrice(observableProducts);
             loggedTimePriceUpdateStart = System.currentTimeMillis();
         }

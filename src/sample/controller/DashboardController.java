@@ -343,27 +343,12 @@ public class DashboardController extends Main implements Initializable {
     }
 
     public void SelectAllCategories(ActionEvent actionEvent) {
-        if (listViewSearchField.getText().isEmpty()) {
-            listView.scrollTo(0);
-            listView.getSelectionModel().select(0);
-        } else {
+        if (!listViewSearchField.getText().isEmpty()) {
             reloadCategoryListView();
             listViewSearchField.clear();
-            listView.scrollTo(0);
-            listView.getSelectionModel().select(0);
         }
-    }
-
-    public List<ProductCatalog> createFilteredProductLists(List<Categories> categories, List<ProductCatalog> products) {
-        List<ProductCatalog> filteredProduct = FXCollections.observableArrayList();
-        for (Categories category : categories) {
-            for (ProductCatalog product : products) {
-                if (category.getId() == product.getGroupId()) {
-                    filteredProduct.add(product);
-                }
-            }
-        }
-        return filteredProduct;
+        listView.scrollTo(0);
+        listView.getSelectionModel().select(0);
     }
 
     private Double callAPI() {

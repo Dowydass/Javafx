@@ -40,7 +40,7 @@
                   <Font name="Roboto Light" size="12.0" />
                </font>
             </Label>
-            <Label fx:id="stock_date" layoutX="133.0" layoutY="4.0" prefHeight="17.0" prefWidth="75.0" text="2015-05-15" textFill="#cdcdcd">
+            <Label fx:id="stock_date" layoutX="165.0" layoutY="4.0" prefHeight="17.0" prefWidth="88.0" text="YYYY-MM-DD" textFill="#cdcdcd">
                <font>
                   <Font name="Roboto Light" size="12.0" />
                </font>

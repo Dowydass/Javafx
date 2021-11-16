@@ -89,7 +89,7 @@ public class StocksRateController extends Main implements Initializable {
 
         clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date();
             stock_date.setText(formatter.format(date));
         }),

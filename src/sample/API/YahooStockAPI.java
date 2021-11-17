@@ -35,11 +35,11 @@ public class YahooStockAPI {
 
 
         StocksDto stocksDto = new StocksDto(symbol,currency, price, change, name);
-        getYeahooStockData();
+        getYeahooStockDataToSingleton();
         return stocksDto;
     }
 
-    public static void getYeahooStockData() throws IOException {
+    public static void getYeahooStockDataToSingleton() throws IOException {
 
         // Gaunamas vario kursas per svarą JAV rinkoje
         Stock cooperStock = YahooFinance.get("HG=F");

@@ -17,7 +17,6 @@ public class StocksDto {
 
     public StocksDto(String symbol, String currency, BigDecimal price, BigDecimal change, String name) {
         this.symbol = symbol;
-
         this.currency = currency;
         this.price = price;
         this.change = change;

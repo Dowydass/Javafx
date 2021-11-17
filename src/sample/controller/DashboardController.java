@@ -27,14 +27,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
 import javafx.stage.*;
-import javafx.stage.Popup;
 import javafx.util.Callback;
 import javafx.util.converter.DoubleStringConverter;
 import sample.API.Dto.StocksDto;
 import sample.API.YahooStockAPI;
 import sample.JPA.*;
+import sample.JPA.copper_price.CopperStockHolder;
+import sample.JPA.copper_price.CopperStock;
+import sample.JPA.copper_price.CopperStockDAO;
 import sample.JPA.user.User;
 import sample.JPA.user.UserDAO;
 import sample.JPA.user.UserHolder;
@@ -104,6 +105,13 @@ public class DashboardController extends Main implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         UserHolder userHolder = UserHolder.getInstance();
+
+        try {
+            catchCopperStockPrice();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         today = System.currentTimeMillis();
         userLastLogin = UserDAO.getLastLogin(userHolder.getUser());
         loggedTimePriceUpdateStart = System.currentTimeMillis();
@@ -140,6 +148,18 @@ public class DashboardController extends Main implements Initializable {
         preferencesPriceRate.put(STOCK_PRICE, String.valueOf(0));
         preferencesPriceRate.put(IS_NEW_SESSION, String.valueOf(false));
 
+    }
+
+    public void catchCopperStockPrice() throws IOException {
+        CopperStockHolder cph = CopperStockHolder.getInstance();
+        List<CopperStock> latestPrice = CopperStockDAO.getLatestPrice();
+        if (latestPrice.isEmpty()) {
+            YahooStockAPI.getYeahooStockDataToSingleton();
+        } else if ((System.currentTimeMillis() - latestPrice.get(0).getLogTime().getTime()) / 1000 / 3600 >= 2 ) {
+            YahooStockAPI.getYeahooStockDataToSingleton();
+        } else {
+            cph.setCopperStock(latestPrice.get(0));
+        }
     }
 
     public void setImageOnAllCategoriesButton() {
@@ -384,7 +404,9 @@ public class DashboardController extends Main implements Initializable {
 
                 Boolean session = true;
                 Boolean UPDATED_IN_DB = true;
-                double price = callAPI();
+                double price = CopperStockHolder.getInstance().getCopperStock().getCopperStockPrice();
+
+                //Nekeičiau, bet prasmės šitas neturi.
                 double change = callAPI();
 
                 preferencesPriceRate.put(STOCK_PRICE, String.valueOf(price));
@@ -400,8 +422,10 @@ public class DashboardController extends Main implements Initializable {
 
 
             double change = Double.parseDouble(preferencesPriceRate.get(CHANGE, ""));
-            double price = Double.parseDouble(preferencesPriceRate.get(STOCK_PRICE, ""));
-            price = (price * 100) / change;
+
+            // Metodas paima vario kainą per kilogramą pagal esamą euro kursą
+            double price = CopperStockHolder.getInstance().getCopperStock().getCopperStockPrice();
+            price = (price * 100);
 
             for (ProductCatalog observableProduct : observableProducts) {
 

@@ -70,7 +70,7 @@ public class StocksRateController extends Main implements Initializable {
         BigDecimal x = rateInfo.getPrice();
         df.setRoundingMode(RoundingMode.CEILING);
 
-        double sum = 3 * x.doubleValue() / (3 * 0.453592);
+        double sum = x.doubleValue();
 
         stock_closed.setText(String.valueOf(df.format(sum)));
         stock_dividend.setText(String.valueOf(rateInfo.getChange()));
@@ -89,7 +89,7 @@ public class StocksRateController extends Main implements Initializable {
 
         clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
 
-            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date();
             stock_date.setText(formatter.format(date));
         }),

@@ -144,9 +144,9 @@ public class DashboardController extends Main implements Initializable {
         }
         user_about.setVisible(true);
 
-
-        preferencesPriceRate.put(STOCK_PRICE, String.valueOf(0));
-        preferencesPriceRate.put(IS_NEW_SESSION, String.valueOf(false));
+//
+//        preferencesPriceRate.put(STOCK_PRICE, String.valueOf(0));
+//        preferencesPriceRate.put(IS_NEW_SESSION, String.valueOf(false));
 
     }
 
@@ -388,40 +388,40 @@ public class DashboardController extends Main implements Initializable {
     }
 
 
-    final String STOCK_PRICE = "PRICE";
-    final String CHANGE = "CHANGE";
-    final String IS_NEW_SESSION = "IS_NEW_SESSION";
-    final String IS_SESSION_UPDATED_IN_DB = "IS_SESSION_IN_DB";
-
-    Preferences preferencesPriceRate = Preferences.userNodeForPackage(DashboardController.class);
+//    final String STOCK_PRICE = "PRICE";
+//    final String CHANGE = "CHANGE";
+//    final String IS_NEW_SESSION = "IS_NEW_SESSION";
+//    final String IS_SESSION_UPDATED_IN_DB = "IS_SESSION_IN_DB";
+//
+//    Preferences preferencesPriceRate = Preferences.userNodeForPackage(DashboardController.class);
 
 
     public void setProductPrice(List<ProductCatalog> observableProducts) {
         if (observableProducts != null) {
 
-            boolean s = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
-            if (!s) {
+//            boolean s = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
+//            if (!s) {
+//
+//                Boolean session = true;
+//                Boolean UPDATED_IN_DB = true;
+//                double price = CopperStockHolder.getInstance().getCopperStock().getCopperStockPrice();
+//
+//                //Nekeičiau, bet prasmės šitas neturi.
+//                double change = callAPI();
+//
+//                preferencesPriceRate.put(STOCK_PRICE, String.valueOf(price));
+//                preferencesPriceRate.put(CHANGE, String.valueOf(change));
+//                preferencesPriceRate.put(IS_NEW_SESSION, String.valueOf(session));
+//
+//                System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
+//
+//            }
 
-                Boolean session = true;
-                Boolean UPDATED_IN_DB = true;
-                double price = CopperStockHolder.getInstance().getCopperStock().getCopperStockPrice();
-
-                //Nekeičiau, bet prasmės šitas neturi.
-                double change = callAPI();
-
-                preferencesPriceRate.put(STOCK_PRICE, String.valueOf(price));
-                preferencesPriceRate.put(CHANGE, String.valueOf(change));
-                preferencesPriceRate.put(IS_NEW_SESSION, String.valueOf(session));
-
-                System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
-
-            }
-
-            System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
-            System.out.println(preferencesPriceRate.get(STOCK_PRICE, ""));
+//            System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
+//            System.out.println(preferencesPriceRate.get(STOCK_PRICE, ""));
 
 
-            double change = Double.parseDouble(preferencesPriceRate.get(CHANGE, ""));
+//            double change = Double.parseDouble(preferencesPriceRate.get(CHANGE, ""));
 
             // Metodas paima vario kainą per kilogramą pagal esamą euro kursą
             double price = CopperStockHolder.getInstance().getCopperStock().getCopperStockPrice();
@@ -464,13 +464,13 @@ public class DashboardController extends Main implements Initializable {
 
                     }
 
-
-                    //Pakeisti šitą į metodą.
-                    boolean ss = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
-                    if (ss == false) {
-                        Boolean UPDATED_IN_DB = true;
-                        preferencesPriceRate.put(IS_SESSION_UPDATED_IN_DB, String.valueOf(UPDATED_IN_DB));
-                    }
+//
+//                    //Pakeisti šitą į metodą.
+//                    boolean ss = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
+//                    if (ss == false) {
+//                        Boolean UPDATED_IN_DB = true;
+//                        preferencesPriceRate.put(IS_SESSION_UPDATED_IN_DB, String.valueOf(UPDATED_IN_DB));
+//                    }
                 }
             }
         }

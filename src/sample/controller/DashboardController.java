@@ -985,10 +985,11 @@ public class DashboardController extends Main implements Initializable {
                 right_panel_main_vbox.getChildren().add(symbolProperty);
 
                 Label catalogNoDescription = new Label();
+                Label catalogNoProperty = new Label();
                 catalogNoDescription.setStyle("-fx-underline: true;");
                 catalogNoDescription.setLayoutX(20);
                 catalogNoDescription.setLayoutY(getRightPanelLabelY());
-                Label catalogNoProperty = new Label();
+
                 catalogNoProperty.setStyle("-fx-font-weight: bold;");
                 catalogNoProperty.setLayoutX(60);
                 catalogNoProperty.setLayoutY(getRightPanelLabelY());
@@ -999,221 +1000,147 @@ public class DashboardController extends Main implements Initializable {
 
                 Label priceNetDescription = new Label();
                 Label priceNetProperty = new Label();
-                priceNetDescription.setLayoutX(20);
-                priceNetDescription.setLayoutY(getRightPanelLabelY());
-                priceNetProperty.setLayoutX(60);
-                priceNetProperty.setLayoutY(getRightPanelLabelY());
-                priceNetProperty.setStyle("-fx-font-weight: bold;");
-                priceNetDescription.setText("Kaina: ");
-                priceNetProperty.setText(irasas.getPriceNet() + "€");
+                setDescriptionAndProperty(priceNetDescription, priceNetProperty, "Kaina: ", irasas.getPriceNet() + "€");
                 desciptionLabelVBox.getChildren().add(priceNetDescription);
                 propertyLabelVBox.getChildren().add(priceNetProperty);
 
+                if (irasas.getCuAmount() != 0) {
+                    Label cuAmountDescription = new Label();
+                    Label cuAmountProperty = new Label();
+                    setDescriptionAndProperty(cuAmountDescription, cuAmountProperty, "Vario kiekis: ", String.valueOf(irasas.getCuAmount()));
+                    desciptionLabelVBox.getChildren().add(cuAmountDescription);
+                    propertyLabelVBox.getChildren().add(cuAmountProperty);
+                }
+                if (irasas.getCuPrice() != 0) {
+                    Label cuPriceDescription = new Label();
+                    Label cuPriceProperty = new Label();
+                    setDescriptionAndProperty(cuPriceDescription, cuPriceProperty, "Vario kaina: ", String.valueOf(irasas.getCuPrice()));
+                    desciptionLabelVBox.getChildren().add(cuPriceDescription);
+                    propertyLabelVBox.getChildren().add(cuPriceProperty);
+                }
+                if (irasas.getGamintojas() != null && irasas.getGamintojas().isEmpty()) {
+                    Label  manufacturerDescription = new Label();
+                    Label manufacturerProperty = new Label();
+                    setDescriptionAndProperty(manufacturerDescription, manufacturerProperty, "Gamintojas: ", String.valueOf(irasas.getGamintojas()));
+                    desciptionLabelVBox.getChildren().add(manufacturerDescription);
+                    propertyLabelVBox.getChildren().add(manufacturerProperty);
+                }
                 if (irasas.getAukstis() != 0) {
                     Label heightDescription = new Label();
                     Label heightProperty = new Label();
-                    heightProperty.setStyle("-fx-font-weight: bold;");
-                    heightDescription.setLayoutX(20);
-                    heightDescription.setLayoutY(getRightPanelLabelY());
-                    heightProperty.setLayoutX(60);
-                    heightProperty.setLayoutY(getRightPanelLabelY());
-                    heightDescription.setText("Aukštis: ");
-                    heightProperty.setText(String.valueOf(irasas.getAukstis()));
+                    setDescriptionAndProperty(heightDescription, heightProperty, "Aukštis: ", String.valueOf(irasas.getAukstis()));
                     desciptionLabelVBox.getChildren().add(heightDescription);
                     propertyLabelVBox.getChildren().add(heightProperty);
                 }
                 if (irasas.getPlotis() != 0) {
                     Label widthDescription = new Label();
                     Label widthProperty = new Label();
-                    widthProperty.setStyle("-fx-font-weight: bold;");
-                    widthDescription.setLayoutX(20);
-                    widthDescription.setLayoutY(getRightPanelLabelY());
-                    widthProperty.setLayoutX(60);
-                    widthProperty.setLayoutY(getRightPanelLabelY());
-                    widthDescription.setText("Plotis: ");
-                    widthProperty.setText(String.valueOf(irasas.getPlotis()));
+                    setDescriptionAndProperty(widthDescription, widthProperty, "Plotis: ", String.valueOf(irasas.getPlotis()));
                     desciptionLabelVBox.getChildren().add(widthDescription);
                     propertyLabelVBox.getChildren().add(widthProperty);
                 }
                 if (irasas.getGylis() != 0) {
                     Label depthDescription = new Label();
                     Label depthProperty = new Label();
-                    depthProperty.setStyle("-fx-font-weight: bold;");
-                    depthDescription.setLayoutX(20);
-                    depthDescription.setLayoutY(getRightPanelLabelY());
-                    depthProperty.setLayoutX(60);
-                    depthProperty.setLayoutY(getRightPanelLabelY());
-                    depthDescription.setText("Gylis: ");
-                    depthProperty.setText(String.valueOf(irasas.getGylis()));
+                    setDescriptionAndProperty(depthDescription, depthProperty, "Gylis: ", String.valueOf(irasas.getGylis()));
                     desciptionLabelVBox.getChildren().add(depthDescription);
                     propertyLabelVBox.getChildren().add(depthProperty);
                 }
                 if (irasas.getSkersmuo() != 0) {
                     Label radiusDescription = new Label();
                     Label radiusProperty = new Label();
-                    radiusProperty.setStyle("-fx-font-weight: bold;");
-                    radiusDescription.setLayoutX(20);
-                    radiusDescription.setLayoutY(getRightPanelLabelY());
-                    radiusProperty.setLayoutX(60);
-                    radiusProperty.setLayoutY(getRightPanelLabelY());
-                    radiusDescription.setText("Skersmuo: ");
-                    radiusProperty.setText(String.valueOf(irasas.getSkersmuo()));
+                    setDescriptionAndProperty(radiusDescription, radiusProperty, "Skersmuo: ", String.valueOf(irasas.getSkersmuo()));
                     desciptionLabelVBox.getChildren().add(radiusDescription);
                     propertyLabelVBox.getChildren().add(radiusProperty);
                 }
                 if (irasas.getIlgis() != 0) {
                     Label lengthDescription = new Label();
                     Label lengthProperty = new Label();
-                    lengthProperty.setStyle("-fx-font-weight: bold;");
-                    lengthDescription.setLayoutX(20);
-                    lengthDescription.setLayoutY(getRightPanelLabelY());
-                    lengthProperty.setLayoutX(60);
-                    lengthProperty.setLayoutY(getRightPanelLabelY());
-                    lengthDescription.setText("Ilgis: ");
-                    lengthProperty.setText(String.valueOf(irasas.getIlgis()));
+                    setDescriptionAndProperty(lengthDescription, lengthProperty, "Ilgis: ", String.valueOf(irasas.getIlgis()));
                     desciptionLabelVBox.getChildren().add(lengthDescription);
                     propertyLabelVBox.getChildren().add(lengthProperty);
                 }
                 if (irasas.getApsaugos_laipsnis() != null && !irasas.getApsaugos_laipsnis().isEmpty()) {
                     Label securityLevelDescription = new Label();
                     Label securityLevelProperty = new Label();
-                    securityLevelProperty.setStyle("-fx-font-weight: bold;");
-                    securityLevelDescription.setLayoutX(20);
-                    securityLevelDescription.setLayoutY(getRightPanelLabelY());
-                    securityLevelProperty.setLayoutX(60);
-                    securityLevelProperty.setLayoutY(getRightPanelLabelY());
-                    securityLevelDescription.setText("Apsaugos laipsnis: ");
-                    securityLevelProperty.setText(irasas.getApsaugos_laipsnis());
+                    setDescriptionAndProperty(securityLevelDescription, securityLevelProperty, "Apsaugos laipsnis: ", String.valueOf(irasas.getApsaugos_laipsnis()));
                     desciptionLabelVBox.getChildren().add(securityLevelDescription);
                     propertyLabelVBox.getChildren().add(securityLevelProperty);
                 }
                 if (irasas.getModuliu_skaicius() != 0) {
                     Label modulesNumberDescription = new Label();
                     Label modulesNumberProperties = new Label();
-                    modulesNumberProperties.setStyle("-fx-font-weight: bold;");
-                    modulesNumberDescription.setLayoutX(20);
-                    modulesNumberDescription.setLayoutY(getRightPanelLabelY());
-                    modulesNumberProperties.setLayoutX(60);
-                    modulesNumberProperties.setLayoutY(getRightPanelLabelY());
-                    modulesNumberDescription.setText("Galia: ");
-                    modulesNumberProperties.setText(String.valueOf(irasas.getModuliu_skaicius()));
+                    setDescriptionAndProperty(modulesNumberDescription, modulesNumberProperties, "Galia: ", String.valueOf(irasas.getModuliu_skaicius()));
                     desciptionLabelVBox.getChildren().add(modulesNumberDescription);
                     propertyLabelVBox.getChildren().add(modulesNumberProperties);
                 }
                 if (irasas.getVardine_itampa() != null) {
                     Label voltageDescription = new Label();
                     Label voltageProperty = new Label();
-                    voltageProperty.setStyle("-fx-font-weight: bold;");
-                    voltageDescription.setLayoutX(20);
-                    voltageDescription.setLayoutY(getRightPanelLabelY());
-                    voltageProperty.setLayoutX(60);
-                    voltageProperty.setLayoutY(getRightPanelLabelY());
-                    voltageDescription.setText("Vardinė įtampa: ");
-                    voltageProperty.setText(String.valueOf(irasas.getVardine_itampa()));
+                    setDescriptionAndProperty(voltageDescription, voltageProperty, "Vardinė įtampa: ", String.valueOf(irasas.getVardine_itampa()));
                     desciptionLabelVBox.getChildren().add(voltageDescription);
                     propertyLabelVBox.getChildren().add(voltageProperty);
                 }
                 if (irasas.getVardine_srove() != null) {
                     Label voltageFlowDescription = new Label();
                     Label voltageFlowProperty = new Label();
-                    voltageFlowProperty.setStyle("-fx-font-weight: bold;");
-                    voltageFlowDescription.setLayoutX(20);
-                    voltageFlowDescription.setLayoutY(getRightPanelLabelY());
-                    voltageFlowProperty.setLayoutX(60);
-                    voltageFlowProperty.setLayoutY(getRightPanelLabelY());
-                    voltageFlowDescription.setText("Vardinė srovė: ");
-                    voltageFlowProperty.setText(String.valueOf(irasas.getVardine_srove()));
+                    setDescriptionAndProperty(voltageFlowDescription, voltageFlowProperty, "Vardinė srovė: ", String.valueOf(irasas.getVardine_srove()));
                     desciptionLabelVBox.getChildren().add(voltageFlowDescription);
                     propertyLabelVBox.getChildren().add(voltageFlowProperty);
                 }
                 if (irasas.getMechaninis_atsparumas_IK() != null && !irasas.getMechaninis_atsparumas_IK().isEmpty()) {
                     Label mechanicalResistanceIKDescription = new Label();
                     Label mechanicalResistanceIKProperty = new Label();
-                    mechanicalResistanceIKProperty.setStyle("-fx-font-weight: bold;");
-                    mechanicalResistanceIKDescription.setLayoutX(20);
-                    mechanicalResistanceIKDescription.setLayoutY(getRightPanelLabelY());
-                    mechanicalResistanceIKProperty.setLayoutX(60);
-                    mechanicalResistanceIKProperty.setLayoutY(getRightPanelLabelY());
-                    mechanicalResistanceIKDescription.setText("Mechaninis atsparumas: ");
-                    mechanicalResistanceIKProperty.setText(String.valueOf(irasas.getMechaninis_atsparumas_IK()));
+                    setDescriptionAndProperty(mechanicalResistanceIKDescription, mechanicalResistanceIKProperty, "Mechaninis atsparumas: ", String.valueOf(irasas.getMechaninis_atsparumas_IK()));
                     desciptionLabelVBox.getChildren().add(mechanicalResistanceIKDescription);
                     propertyLabelVBox.getChildren().add(mechanicalResistanceIKProperty);
+                }
+                if (irasas.getStoris() != 0) {
+                    Label  bulkDescription = new Label();
+                    Label bulkProperty = new Label();
+                    setDescriptionAndProperty(bulkDescription, bulkProperty, "Storis: ", String.valueOf(irasas.getStoris()));
+                    desciptionLabelVBox.getChildren().add(bulkDescription);
+                    propertyLabelVBox.getChildren().add(bulkProperty);
                 }
                 if (irasas.getSpalva() != null && !irasas.getSpalva().isEmpty()) {
                     Label colorDescription = new Label();
                     Label colorProperty = new Label();
-                    colorProperty.setStyle("-fx-font-weight: bold;");
-                    colorDescription.setLayoutX(20);
-                    colorDescription.setLayoutY(getRightPanelLabelY());
-                    colorProperty.setLayoutX(60);
-                    colorProperty.setLayoutY(getRightPanelLabelY());
-                    colorDescription.setText("Spalva: ");
-                    colorProperty.setText(irasas.getSpalva());
+                    setDescriptionAndProperty(colorDescription, colorProperty, "Spalva: ", String.valueOf(irasas.getSpalva()));
                     desciptionLabelVBox.getChildren().add(colorDescription);
                     propertyLabelVBox.getChildren().add(colorProperty);
                 }
                 if (irasas.getKorpuso_medziaga() != null && !irasas.getKorpuso_medziaga().isEmpty()) {
                     Label corpusMaterialDescription = new Label();
                     Label corpusMaterialProperty = new Label();
-                    corpusMaterialProperty.setStyle("-fx-font-weight: bold;");
-                    corpusMaterialDescription.setLayoutX(20);
-                    corpusMaterialDescription.setLayoutY(getRightPanelLabelY());
-                    corpusMaterialProperty.setLayoutX(60);
-                    corpusMaterialProperty.setLayoutY(getRightPanelLabelY());
-                    corpusMaterialDescription.setText("Korpuso medžiaga: ");
-                    corpusMaterialProperty.setText(String.valueOf(irasas.getKorpuso_medziaga()));
+                    setDescriptionAndProperty(corpusMaterialDescription, corpusMaterialProperty, "Korpuso medžiaga: ", String.valueOf(irasas.getKorpuso_medziaga()));
                     desciptionLabelVBox.getChildren().add(corpusMaterialDescription);
                     propertyLabelVBox.getChildren().add(corpusMaterialProperty);
                 }
                 if (irasas.getIzoliacija() != null && !irasas.getIzoliacija().isEmpty()) {
                     Label isolationDescription = new Label();
                     Label isolationProperty = new Label();
-                    isolationProperty.setStyle("-fx-font-weight: bold;");
-                    isolationDescription.setLayoutX(20);
-                    isolationDescription.setLayoutY(getRightPanelLabelY());
-                    isolationProperty.setLayoutX(60);
-                    isolationProperty.setLayoutY(getRightPanelLabelY());
-                    isolationDescription.setText("Izoliacija: ");
-                    isolationProperty.setText(String.valueOf(irasas.getIzoliacija()));
+                    setDescriptionAndProperty(isolationDescription, isolationProperty, "Izoliacija: ", String.valueOf(irasas.getIzoliacija()));
                     desciptionLabelVBox.getChildren().add(isolationDescription);
                     propertyLabelVBox.getChildren().add(isolationProperty);
                 }
                 if (irasas.getSvoris() != 0) {
                     Label weightDescription = new Label();
                     Label weightProperty = new Label();
-                    weightProperty.setStyle("-fx-font-weight: bold;");
-                    weightDescription.setLayoutX(20);
-                    weightDescription.setLayoutY(getRightPanelLabelY());
-                    weightProperty.setLayoutX(60);
-                    weightProperty.setLayoutY(getRightPanelLabelY());
-                    weightDescription.setText("Svoris: ");
-                    weightProperty.setText(String.valueOf(irasas.getSvoris()));
+                    setDescriptionAndProperty(weightDescription, weightProperty, "Svoris: ", String.valueOf(irasas.getSvoris()));
                     desciptionLabelVBox.getChildren().add(weightDescription);
                     propertyLabelVBox.getChildren().add(weightProperty);
                 }
                 if (irasas.getGalia() != null) {
                     Label powerDescription = new Label();
                     Label powerProperty = new Label();
-                    powerProperty.setStyle("-fx-font-weight: bold;");
-                    powerDescription.setLayoutX(20);
-                    powerDescription.setLayoutY(getRightPanelLabelY());
-                    powerProperty.setLayoutX(60);
-                    powerProperty.setLayoutY(getRightPanelLabelY());
-                    powerDescription.setText("Galia: ");
-                    powerProperty.setText(String.valueOf(irasas.getGalia()));
+                    setDescriptionAndProperty(powerDescription, powerProperty, "Galia: ", String.valueOf(irasas.getGalia()));
                     desciptionLabelVBox.getChildren().add(powerDescription);
                     propertyLabelVBox.getChildren().add(powerProperty);
                 }
                 if (irasas.getSviesos_srautas() != 0) {
                     Label lightStreamDescription = new Label();
                     Label lightStreamProperty = new Label();
-                    lightStreamProperty.setStyle("-fx-font-weight: bold;");
-                    lightStreamDescription.setLayoutX(20);
-                    lightStreamDescription.setLayoutY(getRightPanelLabelY());
-                    lightStreamProperty.setLayoutX(60);
-                    lightStreamProperty.setLayoutY(getRightPanelLabelY());
-                    lightStreamDescription.setText("Šviesos srautas: ");
-                    lightStreamProperty.setText(String.valueOf(irasas.getSviesos_srautas()));
+                    setDescriptionAndProperty(lightStreamDescription, lightStreamProperty, "Šviesos srautas: ", String.valueOf(irasas.getSviesos_srautas()));
                     desciptionLabelVBox.getChildren().add(lightStreamDescription);
                     propertyLabelVBox.getChildren().add(lightStreamProperty);
                 }
@@ -1221,197 +1148,241 @@ public class DashboardController extends Main implements Initializable {
                 if (irasas.getSviesos_spalvos_temperatura() != null && !irasas.getSviesos_spalvos_temperatura().isEmpty()) {
                     Label lightColorTemperatureDescription = new Label();
                     Label lightColorTemperatureProperty = new Label();
-                    lightColorTemperatureProperty.setStyle("-fx-font-weight: bold;");
-                    lightColorTemperatureDescription.setLayoutX(20);
-                    lightColorTemperatureDescription.setLayoutY(getRightPanelLabelY());
-                    lightColorTemperatureProperty.setLayoutX(60);
-                    lightColorTemperatureProperty.setLayoutY(getRightPanelLabelY());
-                    lightColorTemperatureDescription.setText("Spalvos temperatūra: ");
-                    lightColorTemperatureProperty.setText(String.valueOf(irasas.getSviesos_spalvos_temperatura()));
+                    setDescriptionAndProperty(lightColorTemperatureDescription, lightColorTemperatureProperty, "Spalvos temperatūra: ", String.valueOf(irasas.getSviesos_spalvos_temperatura()));
                     desciptionLabelVBox.getChildren().add(lightColorTemperatureDescription);
                     propertyLabelVBox.getChildren().add(lightColorTemperatureProperty);
                 }
                 if (irasas.getLaidininkas() != null && !irasas.getLaidininkas().isEmpty()) {
                     Label conductorDescription = new Label();
                     Label conductorProperty = new Label();
-                    conductorProperty.setStyle("-fx-font-weight: bold;");
-                    conductorDescription.setLayoutX(20);
-                    conductorDescription.setLayoutY(getRightPanelLabelY());
-                    conductorProperty.setLayoutX(60);
-                    conductorProperty.setLayoutY(getRightPanelLabelY());
-                    conductorDescription.setText("Laidininkas: ");
-                    conductorProperty.setText(String.valueOf(irasas.getLaidininkas()));
+                    setDescriptionAndProperty(conductorDescription, conductorProperty, "Laidininkas: ", String.valueOf(irasas.getLaidininkas()));
                     desciptionLabelVBox.getChildren().add(conductorDescription);
                     propertyLabelVBox.getChildren().add(conductorProperty);
                 }
-                if (irasas.getIzoliacija() != null && !irasas.getIzoliacija().isEmpty()) {
-                    Label isolationDescription = new Label();
-                    Label isolationProperty = new Label();
-                    isolationProperty.setStyle("-fx-font-weight: bold;");
-                    isolationDescription.setLayoutX(20);
-                    isolationDescription.setLayoutY(getRightPanelLabelY());
-                    isolationProperty.setLayoutX(60);
-                    isolationProperty.setLayoutY(getRightPanelLabelY());
-                    isolationDescription.setText("Izoliacija: ");
-                    isolationProperty.setText(String.valueOf(irasas.getIzoliacija()));
-                    desciptionLabelVBox.getChildren().add(isolationDescription);
-                    propertyLabelVBox.getChildren().add(isolationProperty);
+
+                if (irasas.getLaidininkoIzoliacija() != null && !irasas.getLaidininkoIzoliacija().isEmpty()) {
+                    Label conductorsIsolationDescription = new Label();
+                    Label conductorsIsolationProperty = new Label();
+                    setDescriptionAndProperty(conductorsIsolationDescription, conductorsIsolationProperty, "Laidininko izoliacija: ", String.valueOf(irasas.getLaidininkoIzoliacija()));
+                    desciptionLabelVBox.getChildren().add(conductorsIsolationDescription);
+                    propertyLabelVBox.getChildren().add(conductorsIsolationProperty);
                 }
                 if (irasas.getDarbine_temperatura() != null) {
                     Label workingTemperatureDescription = new Label();
                     Label workingTemperatureProperty = new Label();
-                    workingTemperatureProperty.setStyle("-fx-font-weight: bold;");
-                    workingTemperatureDescription.setLayoutX(20);
-                    workingTemperatureDescription.setLayoutY(getRightPanelLabelY());
-                    workingTemperatureProperty.setLayoutX(60);
-                    workingTemperatureProperty.setLayoutY(getRightPanelLabelY());
-                    workingTemperatureDescription.setText("Darbinė temperatūra:  ");
-                    workingTemperatureProperty.setText(String.valueOf(irasas.getDarbine_temperatura()));
+                    setDescriptionAndProperty(workingTemperatureDescription, workingTemperatureProperty, "Darbinė temperatūra:  ", String.valueOf(irasas.getDarbine_temperatura()));
                     desciptionLabelVBox.getChildren().add(workingTemperatureDescription);
                     propertyLabelVBox.getChildren().add(workingTemperatureProperty);
                 }
                 if (irasas.getMax_darbine_temperatura() != null) {
                     Label maxWorkTemperatureDescription = new Label();
                     Label maxWorkTemperatureProperty = new Label();
-                    maxWorkTemperatureProperty.setStyle("-fx-font-weight: bold;");
-                    maxWorkTemperatureDescription.setLayoutX(20);
-                    maxWorkTemperatureDescription.setLayoutY(getRightPanelLabelY());
-                    maxWorkTemperatureProperty.setLayoutX(60);
-                    maxWorkTemperatureProperty.setLayoutY(getRightPanelLabelY());
-                    maxWorkTemperatureDescription.setText("Maks. darb. temperatūra: ");
-                    maxWorkTemperatureProperty.setText(String.valueOf(irasas.getMax_darbine_temperatura()));
+                    setDescriptionAndProperty(maxWorkTemperatureDescription, maxWorkTemperatureProperty, "Maks. darb. temperatūra: ", String.valueOf(irasas.getMax_darbine_temperatura()));
                     desciptionLabelVBox.getChildren().add(maxWorkTemperatureDescription);
                     propertyLabelVBox.getChildren().add(maxWorkTemperatureProperty);
+                }
+                if (irasas.getApsvieta() != null) {
+                    Label illuminanceDescription = new Label();
+                    Label illuminanceProperty = new Label();
+                    setDescriptionAndProperty(illuminanceDescription, illuminanceProperty, "Apšvieta: ", String.valueOf(irasas.getApsvieta()));
+                    desciptionLabelVBox.getChildren().add(illuminanceDescription);
+                    propertyLabelVBox.getChildren().add(illuminanceProperty);
                 }
                 if (irasas.getApvalkalas() != null && !irasas.getApvalkalas().isEmpty()) {
                     Label membraneDescription = new Label();
                     Label membraneProperty = new Label();
-                    membraneProperty.setStyle("-fx-font-weight: bold;");
-                    membraneDescription.setLayoutX(20);
-                    membraneDescription.setLayoutY(getRightPanelLabelY());
-                    membraneProperty.setLayoutX(60);
-                    membraneProperty.setLayoutY(getRightPanelLabelY());
-                    membraneDescription.setText("Apvalkalas: ");
-                    membraneProperty.setText(String.valueOf(irasas.getApvalkalas()));
+                    setDescriptionAndProperty(membraneDescription, membraneProperty, "Apvalkalas: ", String.valueOf(irasas.getApvalkalas()));
                     desciptionLabelVBox.getChildren().add(membraneDescription);
                     propertyLabelVBox.getChildren().add(membraneProperty);
                 }
                 if (irasas.getCpr_klase() != null && !irasas.getCpr_klase().isEmpty()) {
                     Label cprClassDescription = new Label();
                     Label cprClassProperty = new Label();
-                    cprClassProperty.setStyle("-fx-font-weight: bold;");
-                    cprClassDescription.setLayoutX(20);
-                    cprClassDescription.setLayoutY(getRightPanelLabelY());
-                    cprClassProperty.setLayoutX(60);
-                    cprClassProperty.setLayoutY(getRightPanelLabelY());
-                    cprClassDescription.setText("CPR klasė: ");
-                    cprClassProperty.setText(String.valueOf(irasas.getCpr_klase()));
+                    setDescriptionAndProperty(cprClassDescription, cprClassProperty, "CPR klasė: ", String.valueOf(irasas.getCpr_klase()));
                     desciptionLabelVBox.getChildren().add(cprClassDescription);
                     propertyLabelVBox.getChildren().add(cprClassProperty);
                 }
                 if (irasas.getIsjungimo_geba() != null && !irasas.getIsjungimo_geba().isEmpty()) {
                     Label offCapacityDescription = new Label();
                     Label offCapacityProperty = new Label();
-                    offCapacityProperty.setStyle("-fx-font-weight: bold;");
-                    offCapacityDescription.setLayoutX(20);
-                    offCapacityDescription.setLayoutY(getRightPanelLabelY());
-                    offCapacityProperty.setLayoutX(60);
-                    offCapacityProperty.setLayoutY(getRightPanelLabelY());
-                    offCapacityDescription.setText("Išjungimo geba: ");
-                    offCapacityProperty.setText(String.valueOf(irasas.getIsjungimo_geba()));
+                    setDescriptionAndProperty(offCapacityDescription, offCapacityProperty, "Išjungimo geba: ", String.valueOf(irasas.getIsjungimo_geba()));
                     desciptionLabelVBox.getChildren().add(offCapacityDescription);
                     propertyLabelVBox.getChildren().add(offCapacityProperty);
                 }
                 if (irasas.getIsjungimo_charakteristika() != null && !irasas.getIsjungimo_charakteristika().isEmpty()) {
                     Label offCharDescription = new Label();
                     Label offCharProperty = new Label();
-                    offCharProperty.setStyle("-fx-font-weight: bold;");
-                    offCharDescription.setLayoutX(20);
-                    offCharDescription.setLayoutY(getRightPanelLabelY());
-                    offCharProperty.setLayoutX(60);
-                    offCharProperty.setLayoutY(getRightPanelLabelY());
-                    offCharDescription.setText("Išjungimo charakte.: ");
-                    offCharProperty.setText(String.valueOf(irasas.getIsjungimo_charakteristika()));
+                    setDescriptionAndProperty(offCharDescription, offCharProperty, "Išjungimo charakte.: ", String.valueOf(irasas.getIsjungimo_charakteristika()));
                     desciptionLabelVBox.getChildren().add(offCharDescription);
                     propertyLabelVBox.getChildren().add(offCharProperty);
                 }
                 if (irasas.getMechaninis_atsparumas() != null && !irasas.getMechaninis_atsparumas().isEmpty()) {
                     Label mechanicalResistanceDescription = new Label();
                     Label mechanicalResistanceProperty = new Label();
-                    mechanicalResistanceProperty.setStyle("-fx-font-weight: bold;");
-                    mechanicalResistanceDescription.setLayoutX(20);
-                    mechanicalResistanceDescription.setLayoutY(getRightPanelLabelY());
-                    mechanicalResistanceProperty.setLayoutX(60);
-                    mechanicalResistanceProperty.setLayoutY(getRightPanelLabelY());
-                    mechanicalResistanceDescription.setText("Mechaninis atspar.: ");
-                    mechanicalResistanceProperty.setText(String.valueOf(irasas.getMechaninis_atsparumas()));
+                    setDescriptionAndProperty(mechanicalResistanceDescription, mechanicalResistanceProperty, "Mechaninis atspar.: ", String.valueOf(irasas.getMechaninis_atsparumas()));
                     desciptionLabelVBox.getChildren().add(mechanicalResistanceDescription);
                     propertyLabelVBox.getChildren().add(mechanicalResistanceProperty);
                 }
                 if (irasas.getSkerspjuvis_Al() != null && !irasas.getSkerspjuvis_Al().isEmpty()) {
                     Label crosscutDescription = new Label();
                     Label crosscutProperty = new Label();
-                    crosscutProperty.setStyle("-fx-font-weight: bold;");
-                    crosscutDescription.setLayoutX(20);
-                    crosscutDescription.setLayoutY(getRightPanelLabelY());
-                    crosscutProperty.setLayoutX(60);
-                    crosscutProperty.setLayoutY(getRightPanelLabelY());
-                    crosscutDescription.setText("Skerspjūvis Al: ");
-                    crosscutProperty.setText(String.valueOf(irasas.getSkerspjuvis_Al()));
+                    setDescriptionAndProperty(crosscutDescription, crosscutProperty, "Skerspjūvis Al: ", String.valueOf(irasas.getSkerspjuvis_Al()));
                     desciptionLabelVBox.getChildren().add(crosscutDescription);
                     propertyLabelVBox.getChildren().add(crosscutProperty);
                 }
                 if (irasas.getSkerspjuvis_Cu() != null && !irasas.getSkerspjuvis_Cu().isEmpty()) {
                     Label crosscutDescription2 = new Label();
                     Label crosscutProperty2 = new Label();
-                    crosscutProperty2.setStyle("-fx-font-weight: bold;");
-                    crosscutDescription2.setLayoutX(20);
-                    crosscutDescription2.setLayoutY(getRightPanelLabelY());
-                    crosscutProperty2.setLayoutX(60);
-                    crosscutProperty2.setLayoutY(getRightPanelLabelY());
-                    crosscutDescription2.setText("Skerspjūvis Cu: ");
-                    crosscutProperty2.setText(String.valueOf(irasas.getSkerspjuvis_Cu()));
+                    setDescriptionAndProperty(crosscutDescription2, crosscutProperty2, "Skerspjūvis Cu: ", String.valueOf(irasas.getSkerspjuvis_Cu()));
                     desciptionLabelVBox.getChildren().add(crosscutDescription2);
                     propertyLabelVBox.getChildren().add(crosscutProperty2);
                 }
                 if (irasas.getNuotekio_srove() != null && !irasas.getNuotekio_srove().isEmpty()) {
                     Label currentDescription = new Label();
                     Label currentProperty = new Label();
-                    currentProperty.setStyle("-fx-font-weight: bold;");
-                    currentDescription.setLayoutX(20);
-                    currentDescription.setLayoutY(getRightPanelLabelY());
-                    currentProperty.setLayoutX(60);
-                    currentProperty.setLayoutY(getRightPanelLabelY());
-                    currentDescription.setText("Nuotėkio srovė: ");
-                    currentProperty.setText(String.valueOf(irasas.getNuotekio_srove()));
+                    setDescriptionAndProperty(currentDescription, currentProperty, "Nuotėkio srovė: ", String.valueOf(irasas.getNuotekio_srove()));//"Nuotėkio srovė: "
                     desciptionLabelVBox.getChildren().add(currentDescription);
                     propertyLabelVBox.getChildren().add(currentProperty);
                 }
                 if (irasas.getDydis() != null) {
                     Label sizeDescription = new Label();
                     Label sizeProperty = new Label();
-                    sizeProperty.setStyle("-fx-font-weight: bold;");
-                    sizeDescription.setLayoutX(20);
-                    sizeDescription.setLayoutY(getRightPanelLabelY());
-                    sizeProperty.setLayoutX(60);
-                    sizeProperty.setLayoutY(getRightPanelLabelY());
-                    sizeDescription.setText("Dydis: ");
-                    sizeProperty.setText(String.valueOf(irasas.getDydis()));
+                    setDescriptionAndProperty(sizeDescription, sizeProperty, "Dydis: ", String.valueOf(irasas.getDydis()));
                     desciptionLabelVBox.getChildren().add(sizeDescription);
                     propertyLabelVBox.getChildren().add(sizeProperty);
                 }
                 if (irasas.getPlotas() != null && !irasas.getPlotas().isEmpty()) {
                     Label spaceDescription = new Label();
                     Label spaceProperty = new Label();
-                    spaceProperty.setStyle("-fx-font-weight: bold;");
-                    spaceDescription.setLayoutX(20);
-                    spaceDescription.setLayoutY(getRightPanelLabelY());
-                    spaceProperty.setLayoutX(60);
-                    spaceProperty.setLayoutY(getRightPanelLabelY());
-                    spaceDescription.setText("Plotas: ");
-                    spaceProperty.setText(String.valueOf(irasas.getPlotas()));
+                    setDescriptionAndProperty(spaceDescription, spaceProperty, "Plotas: ", String.valueOf(irasas.getPlotas()));
                     desciptionLabelVBox.getChildren().add(spaceDescription);
                     propertyLabelVBox.getChildren().add(spaceProperty);
+                }
+                if (irasas.getAptikimoZona() != null && !irasas.getAptikimoZona().isEmpty()) {
+                    Label detectionZoneDescription = new Label();
+                    Label detectionZoneProperty = new Label();
+                    setDescriptionAndProperty(detectionZoneDescription, detectionZoneProperty, "Aptikimo zona: ", String.valueOf(irasas.getAptikimoZona()));
+                    desciptionLabelVBox.getChildren().add(detectionZoneDescription);
+                    propertyLabelVBox.getChildren().add(detectionZoneProperty);
+                }
+                if (irasas.getMaksimaliDarbineItampa() != null && !irasas.getMaksimaliDarbineItampa().isEmpty()) {
+                    Label maxWorkVoltageDescription = new Label();
+                    Label maxWorkVoltageProperty = new Label();
+                    setDescriptionAndProperty(maxWorkVoltageDescription, maxWorkVoltageProperty, "Maksimali darbinė temp.: ", String.valueOf(irasas.getMaksimaliDarbineItampa()));
+                    desciptionLabelVBox.getChildren().add(maxWorkVoltageDescription);
+                    propertyLabelVBox.getChildren().add(maxWorkVoltageProperty);
+                }
+                if (irasas.getIskrovimoSrove820() != null && !irasas.getIskrovimoSrove820().isEmpty()) {
+                    Label dischargeCurrent820Description = new Label();
+                    Label dischargeCurrent820Property = new Label();
+                    setDescriptionAndProperty(dischargeCurrent820Description, dischargeCurrent820Property, "Iškrovimo srovė 8_20: ", String.valueOf(irasas.getIskrovimoSrove820()));
+                    desciptionLabelVBox.getChildren().add(dischargeCurrent820Description);
+                    propertyLabelVBox.getChildren().add(dischargeCurrent820Property);
+                }
+                if (irasas.getIskrovimoSrove10350() != null && !irasas.getIskrovimoSrove10350().isEmpty()) {
+                    Label dischargeCurrent10350Description = new Label();
+                    Label dischargeCurrent10350Property = new Label();
+                    setDescriptionAndProperty(dischargeCurrent10350Description, dischargeCurrent10350Property, "Iškrovimo srovė 10_350: ", String.valueOf(irasas.getIskrovimoSrove10350()));
+                    desciptionLabelVBox.getChildren().add(dischargeCurrent10350Description);
+                    propertyLabelVBox.getChildren().add(dischargeCurrent10350Property);
+                }
+                if (irasas.getItamposApsaugosLygis() != null && !irasas.getItamposApsaugosLygis().isEmpty()) {
+                    Label voltageSecurityLevelDescription = new Label();
+                    Label voltageSecurityLevelProperty = new Label();
+                    setDescriptionAndProperty(voltageSecurityLevelDescription, voltageSecurityLevelProperty, "Itampos apsaugos lyg.: ", String.valueOf(irasas.getItamposApsaugosLygis()));
+                    desciptionLabelVBox.getChildren().add(voltageSecurityLevelDescription);
+                    propertyLabelVBox.getChildren().add(voltageSecurityLevelProperty);
+                }
+                if (irasas.getKategorija() != null && !irasas.getKategorija().isEmpty()) {
+                    Label categoryDescription = new Label();
+                    Label categoryProperty = new Label();
+                    setDescriptionAndProperty(categoryDescription, categoryProperty, "Kategorija: ", String.valueOf(irasas.getKategorija()));
+                    desciptionLabelVBox.getChildren().add(categoryDescription);
+                    propertyLabelVBox.getChildren().add(categoryProperty);
+                }
+                if (irasas.getCRI() != 0) {
+                    Label criDescription = new Label();
+                    Label criProperty = new Label();
+                    setDescriptionAndProperty(criDescription, criProperty, "CRI: ", String.valueOf(irasas.getCRI()));
+                    desciptionLabelVBox.getChildren().add(criDescription);
+                    propertyLabelVBox.getChildren().add(criProperty);
+                }
+                if (irasas.getGarantija() != null && !irasas.getGarantija().isEmpty()) {
+                    Label guaranteeDescription = new Label();
+                    Label guaranteeProperty = new Label();
+                    setDescriptionAndProperty(guaranteeDescription, guaranteeProperty, "Garantija: ", String.valueOf(irasas.getGarantija()));
+                    desciptionLabelVBox.getChildren().add(guaranteeDescription);
+                    propertyLabelVBox.getChildren().add(guaranteeProperty);
+                }
+                if (irasas.getSertifikatai() != null && !irasas.getSertifikatai().isEmpty()) {
+                    Label certificateDescription = new Label();
+                    Label certificateProperty = new Label();
+                    setDescriptionAndProperty(certificateDescription, certificateProperty, "Sertifikatas: ", String.valueOf(irasas.getSertifikatai()));
+                    desciptionLabelVBox.getChildren().add(certificateDescription);
+                    propertyLabelVBox.getChildren().add(certificateProperty);
+                }
+                if (irasas.getNemaJungtis() != null && !irasas.getNemaJungtis().isEmpty()) {
+                    Label nemaLinkDescription = new Label();
+                    Label nemaLinkProperty = new Label();
+                    setDescriptionAndProperty(nemaLinkDescription, nemaLinkProperty, "Nema jungtis: ", String.valueOf(irasas.getNemaJungtis()));
+                    desciptionLabelVBox.getChildren().add(nemaLinkDescription);
+                    propertyLabelVBox.getChildren().add(nemaLinkProperty);
+                }
+                if (irasas.getVirsitampiuApsauga() != null && !irasas.getVirsitampiuApsauga().isEmpty()) {
+                    Label surgeSecurityDescription = new Label();
+                    Label surgeSecurityProperty = new Label();
+                    setDescriptionAndProperty(surgeSecurityDescription, surgeSecurityProperty, "Viršįtampių apsauga: ", String.valueOf(irasas.getVirsitampiuApsauga()));
+                    desciptionLabelVBox.getChildren().add(surgeSecurityDescription);
+                    propertyLabelVBox.getChildren().add(surgeSecurityProperty);
+                }
+                if (irasas.getIlgaamziskumas() != null && !irasas.getIlgaamziskumas().isEmpty()) {
+                    Label longevityDescription = new Label();
+                    Label longevityProperty = new Label();
+                    setDescriptionAndProperty(longevityDescription, longevityProperty, "Ilgaamžiškumas: ", String.valueOf(irasas.getIlgaamziskumas()));
+                    desciptionLabelVBox.getChildren().add(longevityDescription);
+                    propertyLabelVBox.getChildren().add(longevityProperty);
+                }
+                if (irasas.getKorpusoAtidarymas() != null && !irasas.getKorpusoAtidarymas().isEmpty()) {
+                    Label frameOpeningDescription = new Label();
+                    Label frameOpeningProperty = new Label();
+                    setDescriptionAndProperty(frameOpeningDescription, frameOpeningProperty, "Korpuso atidarymas: ", String.valueOf(irasas.getKorpusoAtidarymas()));
+                    desciptionLabelVBox.getChildren().add(frameOpeningDescription);
+                    propertyLabelVBox.getChildren().add(frameOpeningProperty);
+                }
+                if (irasas.getOptinesIrElektrinesDaliesPertvara() != null && !irasas.getOptinesIrElektrinesDaliesPertvara().isEmpty()) {
+                    Label opticalAndElectricalPartitionDescription = new Label();
+                    Label opticalAndElectricalPartitionProperty = new Label();
+                    setDescriptionAndProperty(opticalAndElectricalPartitionDescription, opticalAndElectricalPartitionProperty, "Optines ir Elektr.: ", String.valueOf(irasas.getOptinesIrElektrinesDaliesPertvara()));
+                    desciptionLabelVBox.getChildren().add(opticalAndElectricalPartitionDescription);
+                    propertyLabelVBox.getChildren().add(opticalAndElectricalPartitionProperty);
+                }
+                if (irasas.getValdymas() != null && !irasas.getValdymas().isEmpty()) {
+                    Label controlDescription = new Label();
+                    Label controlProperty = new Label();
+                    setDescriptionAndProperty(controlDescription, controlProperty, "Valdymas: ", String.valueOf(irasas.getValdymas()));
+                    desciptionLabelVBox.getChildren().add(controlDescription);
+                    propertyLabelVBox.getChildren().add(controlProperty);
+                }
+                if (irasas.getApatinisDiametras() != 0) {
+                    Label lowerDiameterDescription = new Label();
+                    Label lowerDiameterProperty = new Label();
+                    setDescriptionAndProperty(lowerDiameterDescription, lowerDiameterProperty, "Apatinis diametras: ", String.valueOf(irasas.getApatinisDiametras()));
+                    desciptionLabelVBox.getChildren().add(lowerDiameterDescription);
+                    propertyLabelVBox.getChildren().add(lowerDiameterProperty);
+                }
+                if (irasas.getVirsutinisDiametras() != 0) {
+                    Label upperDiameterDescription = new Label();
+                    Label upperDiameterProperty = new Label();
+                    setDescriptionAndProperty(upperDiameterDescription, upperDiameterProperty, "Viršutinis diametras: ", String.valueOf(irasas.getVirsutinisDiametras()));
+                    desciptionLabelVBox.getChildren().add(upperDiameterDescription);
+                    propertyLabelVBox.getChildren().add(upperDiameterProperty);
+                }
+                if (irasas.getGembesDiametras() != 0) {
+                    Label bracketDiameterDescription = new Label();
+                    Label bracketDiameterProperty = new Label();
+                    setDescriptionAndProperty(bracketDiameterDescription, bracketDiameterProperty, "Gembės diametras: ", String.valueOf(irasas.getGembesDiametras()));
+                    desciptionLabelVBox.getChildren().add(bracketDiameterDescription);
+                    propertyLabelVBox.getChildren().add(bracketDiameterProperty);
                 }
 
                 if (irasas.getImage_url() != null && !irasas.getImage_url().isEmpty()) {
@@ -1453,7 +1424,18 @@ public class DashboardController extends Main implements Initializable {
         right_panel_main_vbox.getChildren().add(informationPanelHBox);
     }
 
+    public void setDescriptionAndProperty(Label description, Label property, String descriptionText, String propertyText){
+        property.setStyle("-fx-font-weight: bold;");
+        description.setLayoutX(20);
+        description.setLayoutY(getRightPanelLabelY());
+        property.setLayoutX(60);
+        property.setLayoutY(getRightPanelLabelY());
+        description.setText(descriptionText);
+        property.setText(propertyText);
+    }
+
     private void currentSessionUserData() {
+
 
         //Getting data from the last scene calling a class UserHolder
         UserHolder holder = UserHolder.getInstance();

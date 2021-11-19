@@ -155,11 +155,20 @@ public class DashboardController extends Main implements Initializable {
         List<CopperStock> latestPrice = CopperStockDAO.getLatestPrice();
         if (latestPrice.isEmpty()) {
             YahooStockAPI.getYeahooStockDataToSingleton();
-        } else if ((System.currentTimeMillis() - latestPrice.get(0).getLogTime().getTime()) / 1000 / 3600 >= 2 ) {
+            collectObservableCablesAndUpdatePrice();
+        } else if ((System.currentTimeMillis() - latestPrice.get(0).getLogTime().getTime()) / 1000 / 3600 >= 2) {
             YahooStockAPI.getYeahooStockDataToSingleton();
+            collectObservableCablesAndUpdatePrice();
         } else {
             cph.setCopperStock(latestPrice.get(0));
         }
+    }
+
+    public void collectObservableCablesAndUpdatePrice() {
+        fullCategoryList = CategoriesDAO.selectCategoryById(40);
+        fullProductList = ProductCatalogDAO.displayAllItems();
+        observableProducts = FXCollections.observableList(createFilteredProductList(fullCategoryList, fullProductList));
+        setProductPrice(observableProducts);
     }
 
     public void setImageOnAllCategoriesButton() {
@@ -459,7 +468,7 @@ public class DashboardController extends Main implements Initializable {
 
                     double priceNet = ((cuPrice + (cuAmount * (price - cableType) / 100)) / 1000) / 0.8;
                     if (observableProduct.getPriceNet() != priceNet) {
-                        observableProduct.setPriceNet(priceNet);
+//                        observableProduct.setPriceNet(priceNet); // NETURI PRASMĖS -M
                         ProductCatalogDAO.updatePrice(priceNet, observableProduct.getId());
 
                     }

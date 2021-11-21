@@ -1407,7 +1407,7 @@ public class DashboardController extends Main implements Initializable {
             JPAUtil.setScene(scene);
             statsStage.setMinWidth(400);
             statsStage.setMinHeight(400);
-            statsStage.setTitle("Registruoti vario kainos įrašai");
+            statsStage.setTitle("Vario kainų statistika");
             statsStage.setScene(scene);
             statsStage.setResizable(true);
             statsStage.initModality(Modality.APPLICATION_MODAL);

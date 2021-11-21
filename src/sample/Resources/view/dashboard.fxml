@@ -51,6 +51,7 @@
                 <Menu fx:id="more_menu_bar" mnemonicParsing="false" text="Kita">
                     <items>
                         <MenuItem fx:id="user_list" mnemonicParsing="false" onAction="#openUserStats" text="Vartotojų sąrašas" />
+                        <MenuItem fx:id="copper_stock_log" mnemonicParsing="false" onAction="#openCopperPricesLogWindow" text="Vario kainų statistika" />
                         <MenuItem mnemonicParsing="false" onAction="#openStocks" text="Vario kursas" />
                         <MenuItem fx:id="user_about" mnemonicParsing="false" onAction="#aboutInfo" text="Apie" />
                     </items>

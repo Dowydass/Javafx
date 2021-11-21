@@ -77,6 +77,8 @@ public class DashboardController extends Main implements Initializable {
     @FXML
     public MenuItem user_list;
     @FXML
+    public MenuItem copper_stock_log;
+    @FXML
     public MenuItem user_about;
     @FXML
     private Menu file_menu_bar;
@@ -136,12 +138,14 @@ public class DashboardController extends Main implements Initializable {
             add_menu_bar.setVisible(true);
             more_menu_bar.setVisible(true);
             user_list.setVisible(true);
+            copper_stock_log.setVisible(true);
 
         } else {
             file_menu_bar.setVisible(false);
             add_menu_bar.setVisible(false);
             more_menu_bar.setVisible(true);
             user_list.setVisible(false);
+            copper_stock_log.setVisible(false);
 
         }
         user_about.setVisible(true);
@@ -1382,6 +1386,28 @@ public class DashboardController extends Main implements Initializable {
             statsStage.setMinWidth(500);
             statsStage.setMinHeight(400);
             statsStage.setTitle("Registruotų vartotojų sąrašas");
+            statsStage.setScene(scene);
+            statsStage.setResizable(true);
+            statsStage.initModality(Modality.APPLICATION_MODAL);
+            statsStage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getCause();
+        }
+
+    }
+
+    // Atidaro langą su vario kurso įrašais
+    public void openCopperPricesLogWindow() {
+        try {
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(Constants.COPPER_STATS_VIEW_PATH));
+            Stage statsStage = new Stage();
+            Scene scene = new Scene(root);
+            JPAUtil.setScene(scene);
+            statsStage.setMinWidth(400);
+            statsStage.setMinHeight(400);
+            statsStage.setTitle("Vario kainų statistika");
             statsStage.setScene(scene);
             statsStage.setResizable(true);
             statsStage.initModality(Modality.APPLICATION_MODAL);

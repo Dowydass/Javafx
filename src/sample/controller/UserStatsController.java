@@ -47,7 +47,6 @@ public class UserStatsController extends Main implements Initializable {
     }
 
 
-    //
     private void fillUserTable() {
 
         login_count.setSortable(false);

@@ -108,14 +108,6 @@ public class DashboardController extends Main implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         UserHolder userHolder = UserHolder.getInstance();
 
-        Platform.runLater(() -> {
-                    try {
-                        catchCopperStockPrice();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-
         today = System.currentTimeMillis();
         userLastLogin = UserDAO.getLastLogin(userHolder.getUser());
         loggedTimePriceUpdateStart = System.currentTimeMillis();
@@ -123,7 +115,14 @@ public class DashboardController extends Main implements Initializable {
         loadCategoriesToListView();
         currentSessionUserData();
         reloadCategoryListView();
-        reloadProductTableView();
+        Platform.runLater(() -> {
+            try {
+                catchCopperStockPrice();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+//        reloadProductTableView();
         firstFillDescriptionPanel();
 
 
@@ -168,6 +167,7 @@ public class DashboardController extends Main implements Initializable {
         } else {
             cph.setCopperStock(latestPrice.get(0));
         }
+        reloadProductTableView();
     }
 
     public void collectObservableCablesAndUpdatePrice() {
@@ -518,8 +518,6 @@ public class DashboardController extends Main implements Initializable {
     //Paspaudus ant listview elemento tableview panelyje pavaizduoja visus produktus priklausančius šiam kategorija.
     public void mouseEventForListView(MouseEvent mouseEvent) {
         getSelectionModel();
-
-
     }
 
     //Iš excel failo pasiema produktus.
@@ -533,7 +531,14 @@ public class DashboardController extends Main implements Initializable {
 //            loadProgress.setVisible(false); // Loading Spinner ends.
         }
 //        loadProgress.setVisible(false);
-        reloadProductTableView();
+        Platform.runLater(() -> {
+            try {
+                catchCopperStockPrice();
+                reloadProductTableView();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     //Konfiguriuoja failo pasirinkimus
@@ -639,6 +644,11 @@ public class DashboardController extends Main implements Initializable {
                 {
                     loadProgress.setVisible(false);
                     reloadProductTableView();
+                    try {
+                        catchCopperStockPrice();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 });
             }
 
@@ -1000,24 +1010,11 @@ public class DashboardController extends Main implements Initializable {
                 symbolProperty.setText(irasas.getSymbol());
                 right_panel_main_vbox.getChildren().add(symbolProperty);
 
-                Label catalogNoDescription = new Label();
-                Label catalogNoProperty = new Label();
-                catalogNoDescription.setStyle("-fx-underline: true;");
-                catalogNoDescription.setLayoutX(20);
-                catalogNoDescription.setLayoutY(getRightPanelLabelY());
 
-                catalogNoProperty.setStyle("-fx-font-weight: bold;");
-                catalogNoProperty.setLayoutX(60);
-                catalogNoProperty.setLayoutY(getRightPanelLabelY());
-                catalogNoDescription.setText("Katalogo kodas:");
-                catalogNoProperty.setText(irasas.getCatalogNo());
-
+                HBox catalogNoProperty = setCatalogDescriptionAndProperty(String.valueOf(irasas.getCatalogNo()));
                 propertyLabelVBox.getChildren().add(catalogNoProperty);
 
-//                Label priceNetDescription = new Label();
-                Label priceNetProperty = new Label();
-//                setDescriptionAndProperty(priceNetDescription, priceNetProperty, "Kaina: ", irasas.getPriceNet() + "€");
-//                desciptionLabelVBox.getChildren().add(priceNetDescription);
+                HBox priceNetProperty = setPriceDescriptionAndProperty(String.valueOf(irasas.getPriceNet()));
                 propertyLabelVBox.getChildren().add(priceNetProperty);
 
                 if (irasas.getCuAmount() > 0) {
@@ -1356,6 +1353,56 @@ public class DashboardController extends Main implements Initializable {
         return descriptionAntProperty;
     }
 
+    public HBox setCatalogDescriptionAndProperty(String propertyText) {
+        Label descriptionLabel = new Label();
+        Label propertyLabel = new Label();
+
+        descriptionLabel.setWrapText(true);
+        propertyLabel.setWrapText(true);
+
+        VBox description = new VBox();
+        VBox property = new VBox();
+        HBox descriptionAntProperty = new HBox();
+
+        propertyLabel.setStyle("-fx-font-weight: bold;");
+
+        descriptionLabel.setText("Katalogo kodas:");
+        descriptionLabel.setStyle("-fx-underline: true;");
+        propertyLabel.setText(" " + propertyText);
+
+        description.getChildren().add(descriptionLabel);
+        property.getChildren().add(propertyLabel);
+        descriptionAntProperty.getChildren().add(description);
+        descriptionAntProperty.getChildren().add(property);
+
+        return descriptionAntProperty;
+    }
+
+    public HBox setPriceDescriptionAndProperty(String propertyText) {
+
+        Label descriptionLabel = new Label();
+        Label propertyLabel = new Label();
+
+        descriptionLabel.setWrapText(true);
+        propertyLabel.setWrapText(true);
+
+        VBox description = new VBox();
+        VBox property = new VBox();
+        HBox descriptionAntProperty = new HBox();
+
+        propertyLabel.setStyle("-fx-font-weight: bold;");
+
+        descriptionLabel.setText("Kaina: ");
+        propertyLabel.setText(propertyText + " EUR");
+
+        description.getChildren().add(descriptionLabel);
+        property.getChildren().add(propertyLabel);
+        descriptionAntProperty.getChildren().add(description);
+        descriptionAntProperty.getChildren().add(property);
+
+        return descriptionAntProperty;
+    }
+
     private void currentSessionUserData() {
 
 
@@ -1565,12 +1612,12 @@ public class DashboardController extends Main implements Initializable {
     public void reloadProductTableView() {
         fullProductList = ProductCatalogDAO.displayAllItems();
         observableProducts = FXCollections.observableList(fullProductList);
-        if ((today - userLastLogin.getTime()) / 1000 / 3600 >= 24) {
-            setProductPrice(observableProducts);
-        } else if ((loggedTimePriceUpdateEnd - loggedTimePriceUpdateStart) / 1000 / 3600 >= 2) {
-            setProductPrice(observableProducts);
-            loggedTimePriceUpdateStart = System.currentTimeMillis();
-        }
+//        if ((today - userLastLogin.getTime()) / 1000 / 3600 >= 24) {
+//            setProductPrice(observableProducts);
+//        } else if ((loggedTimePriceUpdateEnd - loggedTimePriceUpdateStart) / 1000 / 3600 >= 2) {
+//            setProductPrice(observableProducts);
+//            loggedTimePriceUpdateStart = System.currentTimeMillis();
+//        }
         countTableViewObservableProducts(observableProducts);
         table.setItems(observableProducts);
     }

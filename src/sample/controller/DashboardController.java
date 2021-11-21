@@ -106,11 +106,13 @@ public class DashboardController extends Main implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         UserHolder userHolder = UserHolder.getInstance();
 
-        try {
-            catchCopperStockPrice();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Platform.runLater(() -> {
+                    try {
+                        catchCopperStockPrice();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
 
         today = System.currentTimeMillis();
         userLastLogin = UserDAO.getLastLogin(userHolder.getUser());
@@ -965,15 +967,16 @@ public class DashboardController extends Main implements Initializable {
         right_panel_anchor_pane.getChildren().add(right_panel_main_vbox);
 
 
-        VBox desciptionLabelVBox = new VBox();
+//        VBox desciptionLabelVBox = new VBox();
         VBox propertyLabelVBox = new VBox();
         HBox informationPanelHBox = new HBox();
         VBox imageVBox = new VBox();
 
-        propertyLabelVBox.setPadding(new Insets(0, 5, 2, 5));
-        desciptionLabelVBox.setPadding(new Insets(0, 5, 10, 5));
-        desciptionLabelVBox.setMinWidth(130);
-        propertyLabelVBox.setMinWidth(130);
+        propertyLabelVBox.setPadding(new Insets(5, 15, 5, 15));
+
+//        desciptionLabelVBox.setPadding(new Insets(0, 5, 10, 5));
+//        desciptionLabelVBox.setMinWidth(130);
+        propertyLabelVBox.setMinWidth(260);
         imageVBox.setPadding(new Insets(5, 5, 5, 0));
         imageVBox.setAlignment(Pos.TOP_CENTER);
         setRightPanelLabelY(40);
@@ -988,7 +991,7 @@ public class DashboardController extends Main implements Initializable {
                 symbolProperty.setMaxHeight(50);
                 symbolProperty.setMaxWidth(410);
                 symbolProperty.setAlignment(Pos.CENTER_LEFT);
-                symbolProperty.setPadding(new Insets(3, 3, 3, 3));
+                symbolProperty.setPadding(new Insets(3, 5, 3, 3));
                 symbolProperty.setStyle("-fx-font-weight: bold; -fx-background-color: linear-gradient(to top, #D9D9D9, #EDEDED); -fx-border-width: 1; -fx-border-color: #c8c8c8; -fx-border-radius: 1;");
                 symbolProperty.setText(irasas.getSymbol());
                 right_panel_main_vbox.getChildren().add(symbolProperty);
@@ -1004,394 +1007,286 @@ public class DashboardController extends Main implements Initializable {
                 catalogNoProperty.setLayoutY(getRightPanelLabelY());
                 catalogNoDescription.setText("Katalogo kodas:");
                 catalogNoProperty.setText(irasas.getCatalogNo());
-                desciptionLabelVBox.getChildren().add(catalogNoDescription);
+
                 propertyLabelVBox.getChildren().add(catalogNoProperty);
 
-                Label priceNetDescription = new Label();
+//                Label priceNetDescription = new Label();
                 Label priceNetProperty = new Label();
-                setDescriptionAndProperty(priceNetDescription, priceNetProperty, "Kaina: ", irasas.getPriceNet() + "€");
-                desciptionLabelVBox.getChildren().add(priceNetDescription);
+//                setDescriptionAndProperty(priceNetDescription, priceNetProperty, "Kaina: ", irasas.getPriceNet() + "€");
+//                desciptionLabelVBox.getChildren().add(priceNetDescription);
                 propertyLabelVBox.getChildren().add(priceNetProperty);
 
-                if (irasas.getCuAmount() != 0) {
-                    Label cuAmountDescription = new Label();
-                    Label cuAmountProperty = new Label();
-                    setDescriptionAndProperty(cuAmountDescription, cuAmountProperty, "Vario kiekis: ", String.valueOf(irasas.getCuAmount()));
-                    desciptionLabelVBox.getChildren().add(cuAmountDescription);
-                    propertyLabelVBox.getChildren().add(cuAmountProperty);
+                if (irasas.getCuAmount() > 0) {
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Vario kiekis: ", String.valueOf(irasas.getCuAmount()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
-                if (irasas.getCuPrice() != 0) {
-                    Label cuPriceDescription = new Label();
-                    Label cuPriceProperty = new Label();
-                    setDescriptionAndProperty(cuPriceDescription, cuPriceProperty, "Vario kaina: ", String.valueOf(irasas.getCuPrice()));
-                    desciptionLabelVBox.getChildren().add(cuPriceDescription);
-                    propertyLabelVBox.getChildren().add(cuPriceProperty);
+                if (irasas.getCuPrice() > 0) {
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Vario kaina: ", String.valueOf(irasas.getCuPrice()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getGamintojas() != null && irasas.getGamintojas().isEmpty()) {
-                    Label  manufacturerDescription = new Label();
-                    Label manufacturerProperty = new Label();
-                    setDescriptionAndProperty(manufacturerDescription, manufacturerProperty, "Gamintojas: ", String.valueOf(irasas.getGamintojas()));
-                    desciptionLabelVBox.getChildren().add(manufacturerDescription);
-                    propertyLabelVBox.getChildren().add(manufacturerProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Gamintojas: ", String.valueOf(irasas.getGamintojas()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
-                if (irasas.getAukstis() != 0) {
-                    Label heightDescription = new Label();
-                    Label heightProperty = new Label();
-                    setDescriptionAndProperty(heightDescription, heightProperty, "Aukštis: ", String.valueOf(irasas.getAukstis()));
-                    desciptionLabelVBox.getChildren().add(heightDescription);
-                    propertyLabelVBox.getChildren().add(heightProperty);
+                if (irasas.getAukstis() > 0) {
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Aukštis: ", String.valueOf(irasas.getAukstis()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
-                if (irasas.getPlotis() != 0) {
-                    Label widthDescription = new Label();
-                    Label widthProperty = new Label();
-                    setDescriptionAndProperty(widthDescription, widthProperty, "Plotis: ", String.valueOf(irasas.getPlotis()));
-                    desciptionLabelVBox.getChildren().add(widthDescription);
-                    propertyLabelVBox.getChildren().add(widthProperty);
+                if (irasas.getPlotis() > 0) {
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Plotis: ", String.valueOf(irasas.getPlotis()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
-                if (irasas.getGylis() != 0) {
-                    Label depthDescription = new Label();
-                    Label depthProperty = new Label();
-                    setDescriptionAndProperty(depthDescription, depthProperty, "Gylis: ", String.valueOf(irasas.getGylis()));
-                    desciptionLabelVBox.getChildren().add(depthDescription);
-                    propertyLabelVBox.getChildren().add(depthProperty);
+                if (irasas.getGylis() > 0) {
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Gylis: ", String.valueOf(irasas.getGylis()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getSkersmuo() != 0) {
-                    Label radiusDescription = new Label();
-                    Label radiusProperty = new Label();
-                    setDescriptionAndProperty(radiusDescription, radiusProperty, "Skersmuo: ", String.valueOf(irasas.getSkersmuo()));
-                    desciptionLabelVBox.getChildren().add(radiusDescription);
-                    propertyLabelVBox.getChildren().add(radiusProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Skersmuo: ", String.valueOf(irasas.getSkersmuo()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
-                if (irasas.getIlgis() != 0) {
-                    Label lengthDescription = new Label();
-                    Label lengthProperty = new Label();
-                    setDescriptionAndProperty(lengthDescription, lengthProperty, "Ilgis: ", String.valueOf(irasas.getIlgis()));
-                    desciptionLabelVBox.getChildren().add(lengthDescription);
-                    propertyLabelVBox.getChildren().add(lengthProperty);
+                if (irasas.getIlgis() > 0) {
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Ilgis: ", String.valueOf(irasas.getIlgis()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getApsaugos_laipsnis() != null && !irasas.getApsaugos_laipsnis().isEmpty()) {
-                    Label securityLevelDescription = new Label();
-                    Label securityLevelProperty = new Label();
-                    setDescriptionAndProperty(securityLevelDescription, securityLevelProperty, "Apsaugos laipsnis: ", String.valueOf(irasas.getApsaugos_laipsnis()));
-                    desciptionLabelVBox.getChildren().add(securityLevelDescription);
-                    propertyLabelVBox.getChildren().add(securityLevelProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Apsaugos laipsnis: ", String.valueOf(irasas.getApsaugos_laipsnis()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
-                if (irasas.getModuliu_skaicius() != 0) {
-                    Label modulesNumberDescription = new Label();
-                    Label modulesNumberProperties = new Label();
-                    setDescriptionAndProperty(modulesNumberDescription, modulesNumberProperties, "Galia: ", String.valueOf(irasas.getModuliu_skaicius()));
-                    desciptionLabelVBox.getChildren().add(modulesNumberDescription);
-                    propertyLabelVBox.getChildren().add(modulesNumberProperties);
+                if (irasas.getModuliu_skaicius() > 0) {
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Modulių skaičius: ", String.valueOf(irasas.getModuliu_skaicius()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getVardine_itampa() != null) {
-                    Label voltageDescription = new Label();
-                    Label voltageProperty = new Label();
-                    setDescriptionAndProperty(voltageDescription, voltageProperty, "Vardinė įtampa: ", String.valueOf(irasas.getVardine_itampa()));
-                    desciptionLabelVBox.getChildren().add(voltageDescription);
-                    propertyLabelVBox.getChildren().add(voltageProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Vardinė įtampa: ", String.valueOf(irasas.getVardine_itampa()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getVardine_srove() != null) {
-                    Label voltageFlowDescription = new Label();
-                    Label voltageFlowProperty = new Label();
-                    setDescriptionAndProperty(voltageFlowDescription, voltageFlowProperty, "Vardinė srovė: ", String.valueOf(irasas.getVardine_srove()));
-                    desciptionLabelVBox.getChildren().add(voltageFlowDescription);
-                    propertyLabelVBox.getChildren().add(voltageFlowProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Vardinė srovė: ", String.valueOf(irasas.getVardine_srove()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getMechaninis_atsparumas_IK() != null && !irasas.getMechaninis_atsparumas_IK().isEmpty()) {
-                    Label mechanicalResistanceIKDescription = new Label();
-                    Label mechanicalResistanceIKProperty = new Label();
-                    setDescriptionAndProperty(mechanicalResistanceIKDescription, mechanicalResistanceIKProperty, "Mechaninis atsparumas: ", String.valueOf(irasas.getMechaninis_atsparumas_IK()));
-                    desciptionLabelVBox.getChildren().add(mechanicalResistanceIKDescription);
-                    propertyLabelVBox.getChildren().add(mechanicalResistanceIKProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Mechaninis atsparumas IK: ", String.valueOf(irasas.getMechaninis_atsparumas_IK()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
-                if (irasas.getStoris() != 0) {
-                    Label  bulkDescription = new Label();
-                    Label bulkProperty = new Label();
-                    setDescriptionAndProperty(bulkDescription, bulkProperty, "Storis: ", String.valueOf(irasas.getStoris()));
-                    desciptionLabelVBox.getChildren().add(bulkDescription);
-                    propertyLabelVBox.getChildren().add(bulkProperty);
+                if (irasas.getStoris() > 0) {
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Storis: ", String.valueOf(irasas.getStoris()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getSpalva() != null && !irasas.getSpalva().isEmpty()) {
-                    Label colorDescription = new Label();
-                    Label colorProperty = new Label();
-                    setDescriptionAndProperty(colorDescription, colorProperty, "Spalva: ", String.valueOf(irasas.getSpalva()));
-                    desciptionLabelVBox.getChildren().add(colorDescription);
-                    propertyLabelVBox.getChildren().add(colorProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Spalva: ", String.valueOf(irasas.getSpalva()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getKorpuso_medziaga() != null && !irasas.getKorpuso_medziaga().isEmpty()) {
-                    Label corpusMaterialDescription = new Label();
-                    Label corpusMaterialProperty = new Label();
-                    setDescriptionAndProperty(corpusMaterialDescription, corpusMaterialProperty, "Korpuso medžiaga: ", String.valueOf(irasas.getKorpuso_medziaga()));
-                    desciptionLabelVBox.getChildren().add(corpusMaterialDescription);
-                    propertyLabelVBox.getChildren().add(corpusMaterialProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Korpuso medžiaga: ", String.valueOf(irasas.getKorpuso_medziaga()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getIzoliacija() != null && !irasas.getIzoliacija().isEmpty()) {
-                    Label isolationDescription = new Label();
-                    Label isolationProperty = new Label();
-                    setDescriptionAndProperty(isolationDescription, isolationProperty, "Izoliacija: ", String.valueOf(irasas.getIzoliacija()));
-                    desciptionLabelVBox.getChildren().add(isolationDescription);
-                    propertyLabelVBox.getChildren().add(isolationProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Izoliacija: ", String.valueOf(irasas.getIzoliacija()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getSvoris() != 0) {
-                    Label weightDescription = new Label();
-                    Label weightProperty = new Label();
-                    setDescriptionAndProperty(weightDescription, weightProperty, "Svoris: ", String.valueOf(irasas.getSvoris()));
-                    desciptionLabelVBox.getChildren().add(weightDescription);
-                    propertyLabelVBox.getChildren().add(weightProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Svoris: ", String.valueOf(irasas.getSvoris()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getGalia() != null) {
-                    Label powerDescription = new Label();
-                    Label powerProperty = new Label();
-                    setDescriptionAndProperty(powerDescription, powerProperty, "Galia: ", String.valueOf(irasas.getGalia()));
-                    desciptionLabelVBox.getChildren().add(powerDescription);
-                    propertyLabelVBox.getChildren().add(powerProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Galia: ", String.valueOf(irasas.getGalia()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
-                if (irasas.getSviesos_srautas() != 0) {
-                    Label lightStreamDescription = new Label();
-                    Label lightStreamProperty = new Label();
-                    setDescriptionAndProperty(lightStreamDescription, lightStreamProperty, "Šviesos srautas: ", String.valueOf(irasas.getSviesos_srautas()));
-                    desciptionLabelVBox.getChildren().add(lightStreamDescription);
-                    propertyLabelVBox.getChildren().add(lightStreamProperty);
+                if (irasas.getSviesos_srautas() > 0) {
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Šviesos srautas: ", String.valueOf(irasas.getSviesos_srautas()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
 
                 if (irasas.getSviesos_spalvos_temperatura() != null && !irasas.getSviesos_spalvos_temperatura().isEmpty()) {
-                    Label lightColorTemperatureDescription = new Label();
-                    Label lightColorTemperatureProperty = new Label();
-                    setDescriptionAndProperty(lightColorTemperatureDescription, lightColorTemperatureProperty, "Spalvos temperatūra: ", String.valueOf(irasas.getSviesos_spalvos_temperatura()));
-                    desciptionLabelVBox.getChildren().add(lightColorTemperatureDescription);
-                    propertyLabelVBox.getChildren().add(lightColorTemperatureProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Spalvos temperatūra: ", String.valueOf(irasas.getSviesos_spalvos_temperatura()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getLaidininkas() != null && !irasas.getLaidininkas().isEmpty()) {
-                    Label conductorDescription = new Label();
-                    Label conductorProperty = new Label();
-                    setDescriptionAndProperty(conductorDescription, conductorProperty, "Laidininkas: ", String.valueOf(irasas.getLaidininkas()));
-                    desciptionLabelVBox.getChildren().add(conductorDescription);
-                    propertyLabelVBox.getChildren().add(conductorProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Laidininkas: ", String.valueOf(irasas.getLaidininkas()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
 
                 if (irasas.getLaidininkoIzoliacija() != null && !irasas.getLaidininkoIzoliacija().isEmpty()) {
-                    Label conductorsIsolationDescription = new Label();
-                    Label conductorsIsolationProperty = new Label();
-                    setDescriptionAndProperty(conductorsIsolationDescription, conductorsIsolationProperty, "Laidininko izoliacija: ", String.valueOf(irasas.getLaidininkoIzoliacija()));
-                    desciptionLabelVBox.getChildren().add(conductorsIsolationDescription);
-                    propertyLabelVBox.getChildren().add(conductorsIsolationProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Laidininko izoliacija: ", String.valueOf(irasas.getLaidininkoIzoliacija()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getDarbine_temperatura() != null) {
-                    Label workingTemperatureDescription = new Label();
-                    Label workingTemperatureProperty = new Label();
-                    setDescriptionAndProperty(workingTemperatureDescription, workingTemperatureProperty, "Darbinė temperatūra:  ", String.valueOf(irasas.getDarbine_temperatura()));
-                    desciptionLabelVBox.getChildren().add(workingTemperatureDescription);
-                    propertyLabelVBox.getChildren().add(workingTemperatureProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Darbinė temperatūra: ", String.valueOf(irasas.getDarbine_temperatura()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getMax_darbine_temperatura() != null) {
-                    Label maxWorkTemperatureDescription = new Label();
-                    Label maxWorkTemperatureProperty = new Label();
-                    setDescriptionAndProperty(maxWorkTemperatureDescription, maxWorkTemperatureProperty, "Maks. darb. temperatūra: ", String.valueOf(irasas.getMax_darbine_temperatura()));
-                    desciptionLabelVBox.getChildren().add(maxWorkTemperatureDescription);
-                    propertyLabelVBox.getChildren().add(maxWorkTemperatureProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Maks. darbinė temperatūra: ", String.valueOf(irasas.getMax_darbine_temperatura()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getApsvieta() != null) {
-                    Label illuminanceDescription = new Label();
-                    Label illuminanceProperty = new Label();
-                    setDescriptionAndProperty(illuminanceDescription, illuminanceProperty, "Apšvieta: ", String.valueOf(irasas.getApsvieta()));
-                    desciptionLabelVBox.getChildren().add(illuminanceDescription);
-                    propertyLabelVBox.getChildren().add(illuminanceProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Apšvieta: ", String.valueOf(irasas.getApsvieta()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getApvalkalas() != null && !irasas.getApvalkalas().isEmpty()) {
-                    Label membraneDescription = new Label();
-                    Label membraneProperty = new Label();
-                    setDescriptionAndProperty(membraneDescription, membraneProperty, "Apvalkalas: ", String.valueOf(irasas.getApvalkalas()));
-                    desciptionLabelVBox.getChildren().add(membraneDescription);
-                    propertyLabelVBox.getChildren().add(membraneProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Apvalkalas: ", String.valueOf(irasas.getCuAmount()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getCpr_klase() != null && !irasas.getCpr_klase().isEmpty()) {
-                    Label cprClassDescription = new Label();
-                    Label cprClassProperty = new Label();
-                    setDescriptionAndProperty(cprClassDescription, cprClassProperty, "CPR klasė: ", String.valueOf(irasas.getCpr_klase()));
-                    desciptionLabelVBox.getChildren().add(cprClassDescription);
-                    propertyLabelVBox.getChildren().add(cprClassProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("CPR klasė: ", String.valueOf(irasas.getCpr_klase()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getIsjungimo_geba() != null && !irasas.getIsjungimo_geba().isEmpty()) {
-                    Label offCapacityDescription = new Label();
-                    Label offCapacityProperty = new Label();
-                    setDescriptionAndProperty(offCapacityDescription, offCapacityProperty, "Išjungimo geba: ", String.valueOf(irasas.getIsjungimo_geba()));
-                    desciptionLabelVBox.getChildren().add(offCapacityDescription);
-                    propertyLabelVBox.getChildren().add(offCapacityProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Išjungimo geba: ", String.valueOf(irasas.getIsjungimo_geba()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getIsjungimo_charakteristika() != null && !irasas.getIsjungimo_charakteristika().isEmpty()) {
-                    Label offCharDescription = new Label();
-                    Label offCharProperty = new Label();
-                    setDescriptionAndProperty(offCharDescription, offCharProperty, "Išjungimo charakte.: ", String.valueOf(irasas.getIsjungimo_charakteristika()));
-                    desciptionLabelVBox.getChildren().add(offCharDescription);
-                    propertyLabelVBox.getChildren().add(offCharProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Išjungimo charakteristika: ", String.valueOf(irasas.getIsjungimo_charakteristika()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getMechaninis_atsparumas() != null && !irasas.getMechaninis_atsparumas().isEmpty()) {
-                    Label mechanicalResistanceDescription = new Label();
-                    Label mechanicalResistanceProperty = new Label();
-                    setDescriptionAndProperty(mechanicalResistanceDescription, mechanicalResistanceProperty, "Mechaninis atspar.: ", String.valueOf(irasas.getMechaninis_atsparumas()));
-                    desciptionLabelVBox.getChildren().add(mechanicalResistanceDescription);
-                    propertyLabelVBox.getChildren().add(mechanicalResistanceProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Mechaninis atsparumas: ", String.valueOf(irasas.getMechaninis_atsparumas()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getSkerspjuvis_Al() != null && !irasas.getSkerspjuvis_Al().isEmpty()) {
-                    Label crosscutDescription = new Label();
-                    Label crosscutProperty = new Label();
-                    setDescriptionAndProperty(crosscutDescription, crosscutProperty, "Skerspjūvis Al: ", String.valueOf(irasas.getSkerspjuvis_Al()));
-                    desciptionLabelVBox.getChildren().add(crosscutDescription);
-                    propertyLabelVBox.getChildren().add(crosscutProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Skerspjūvis AL: ", String.valueOf(irasas.getSkerspjuvis_Al()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getSkerspjuvis_Cu() != null && !irasas.getSkerspjuvis_Cu().isEmpty()) {
-                    Label crosscutDescription2 = new Label();
-                    Label crosscutProperty2 = new Label();
-                    setDescriptionAndProperty(crosscutDescription2, crosscutProperty2, "Skerspjūvis Cu: ", String.valueOf(irasas.getSkerspjuvis_Cu()));
-                    desciptionLabelVBox.getChildren().add(crosscutDescription2);
-                    propertyLabelVBox.getChildren().add(crosscutProperty2);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Skerspjūvis CU: ", String.valueOf(irasas.getSkerspjuvis_Cu()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getNuotekio_srove() != null && !irasas.getNuotekio_srove().isEmpty()) {
-                    Label currentDescription = new Label();
-                    Label currentProperty = new Label();
-                    setDescriptionAndProperty(currentDescription, currentProperty, "Nuotėkio srovė: ", String.valueOf(irasas.getNuotekio_srove()));//"Nuotėkio srovė: "
-                    desciptionLabelVBox.getChildren().add(currentDescription);
-                    propertyLabelVBox.getChildren().add(currentProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Nuotėkio srovė: ", String.valueOf(irasas.getNuotekio_srove()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getDydis() != null) {
-                    Label sizeDescription = new Label();
-                    Label sizeProperty = new Label();
-                    setDescriptionAndProperty(sizeDescription, sizeProperty, "Dydis: ", String.valueOf(irasas.getDydis()));
-                    desciptionLabelVBox.getChildren().add(sizeDescription);
-                    propertyLabelVBox.getChildren().add(sizeProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Dydis: ", String.valueOf(irasas.getDydis()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getPlotas() != null && !irasas.getPlotas().isEmpty()) {
-                    Label spaceDescription = new Label();
-                    Label spaceProperty = new Label();
-                    setDescriptionAndProperty(spaceDescription, spaceProperty, "Plotas: ", String.valueOf(irasas.getPlotas()));
-                    desciptionLabelVBox.getChildren().add(spaceDescription);
-                    propertyLabelVBox.getChildren().add(spaceProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Plotas: ", String.valueOf(irasas.getPlotas()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getAptikimoZona() != null && !irasas.getAptikimoZona().isEmpty()) {
-                    Label detectionZoneDescription = new Label();
-                    Label detectionZoneProperty = new Label();
-                    setDescriptionAndProperty(detectionZoneDescription, detectionZoneProperty, "Aptikimo zona: ", String.valueOf(irasas.getAptikimoZona()));
-                    desciptionLabelVBox.getChildren().add(detectionZoneDescription);
-                    propertyLabelVBox.getChildren().add(detectionZoneProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Aptikimo zona: ", String.valueOf(irasas.getAptikimoZona()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getMaksimaliDarbineItampa() != null && !irasas.getMaksimaliDarbineItampa().isEmpty()) {
-                    Label maxWorkVoltageDescription = new Label();
-                    Label maxWorkVoltageProperty = new Label();
-                    setDescriptionAndProperty(maxWorkVoltageDescription, maxWorkVoltageProperty, "Maksimali darbinė temp.: ", String.valueOf(irasas.getMaksimaliDarbineItampa()));
-                    desciptionLabelVBox.getChildren().add(maxWorkVoltageDescription);
-                    propertyLabelVBox.getChildren().add(maxWorkVoltageProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Maksimali darbinė temp.: ", String.valueOf(irasas.getDarbine_temperatura()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getIskrovimoSrove820() != null && !irasas.getIskrovimoSrove820().isEmpty()) {
-                    Label dischargeCurrent820Description = new Label();
-                    Label dischargeCurrent820Property = new Label();
-                    setDescriptionAndProperty(dischargeCurrent820Description, dischargeCurrent820Property, "Iškrovimo srovė 8_20: ", String.valueOf(irasas.getIskrovimoSrove820()));
-                    desciptionLabelVBox.getChildren().add(dischargeCurrent820Description);
-                    propertyLabelVBox.getChildren().add(dischargeCurrent820Property);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Iškrovimo srovė 8.20: ", String.valueOf(irasas.getIskrovimoSrove820()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getIskrovimoSrove10350() != null && !irasas.getIskrovimoSrove10350().isEmpty()) {
-                    Label dischargeCurrent10350Description = new Label();
-                    Label dischargeCurrent10350Property = new Label();
-                    setDescriptionAndProperty(dischargeCurrent10350Description, dischargeCurrent10350Property, "Iškrovimo srovė 10_350: ", String.valueOf(irasas.getIskrovimoSrove10350()));
-                    desciptionLabelVBox.getChildren().add(dischargeCurrent10350Description);
-                    propertyLabelVBox.getChildren().add(dischargeCurrent10350Property);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Iškrovimo srovė 10.350: ", String.valueOf(irasas.getIskrovimoSrove10350()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getItamposApsaugosLygis() != null && !irasas.getItamposApsaugosLygis().isEmpty()) {
-                    Label voltageSecurityLevelDescription = new Label();
-                    Label voltageSecurityLevelProperty = new Label();
-                    setDescriptionAndProperty(voltageSecurityLevelDescription, voltageSecurityLevelProperty, "Itampos apsaugos lyg.: ", String.valueOf(irasas.getItamposApsaugosLygis()));
-                    desciptionLabelVBox.getChildren().add(voltageSecurityLevelDescription);
-                    propertyLabelVBox.getChildren().add(voltageSecurityLevelProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Įtampos apsaugos lygis: ", String.valueOf(irasas.getItamposApsaugosLygis()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getKategorija() != null && !irasas.getKategorija().isEmpty()) {
-                    Label categoryDescription = new Label();
-                    Label categoryProperty = new Label();
-                    setDescriptionAndProperty(categoryDescription, categoryProperty, "Kategorija: ", String.valueOf(irasas.getKategorija()));
-                    desciptionLabelVBox.getChildren().add(categoryDescription);
-                    propertyLabelVBox.getChildren().add(categoryProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Kategorija: ", String.valueOf(irasas.getKategorija()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
-                if (irasas.getCRI() != 0) {
-                    Label criDescription = new Label();
-                    Label criProperty = new Label();
-                    setDescriptionAndProperty(criDescription, criProperty, "CRI: ", String.valueOf(irasas.getCRI()));
-                    desciptionLabelVBox.getChildren().add(criDescription);
-                    propertyLabelVBox.getChildren().add(criProperty);
+                if (irasas.getCRI() > 0) {
+                    HBox descriptionAntProperty = setDescriptionAndProperty("CRI: ", String.valueOf(irasas.getCRI()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getGarantija() != null && !irasas.getGarantija().isEmpty()) {
-                    Label guaranteeDescription = new Label();
-                    Label guaranteeProperty = new Label();
-                    setDescriptionAndProperty(guaranteeDescription, guaranteeProperty, "Garantija: ", String.valueOf(irasas.getGarantija()));
-                    desciptionLabelVBox.getChildren().add(guaranteeDescription);
-                    propertyLabelVBox.getChildren().add(guaranteeProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Garantija: ", String.valueOf(irasas.getGarantija()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getSertifikatai() != null && !irasas.getSertifikatai().isEmpty()) {
-                    Label certificateDescription = new Label();
-                    Label certificateProperty = new Label();
-                    setDescriptionAndProperty(certificateDescription, certificateProperty, "Sertifikatas: ", String.valueOf(irasas.getSertifikatai()));
-                    desciptionLabelVBox.getChildren().add(certificateDescription);
-                    propertyLabelVBox.getChildren().add(certificateProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Sertifikatas: ", String.valueOf(irasas.getSertifikatai()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getNemaJungtis() != null && !irasas.getNemaJungtis().isEmpty()) {
-                    Label nemaLinkDescription = new Label();
-                    Label nemaLinkProperty = new Label();
-                    setDescriptionAndProperty(nemaLinkDescription, nemaLinkProperty, "Nema jungtis: ", String.valueOf(irasas.getNemaJungtis()));
-                    desciptionLabelVBox.getChildren().add(nemaLinkDescription);
-                    propertyLabelVBox.getChildren().add(nemaLinkProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Nema jungtis: ", String.valueOf(irasas.getNemaJungtis()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getVirsitampiuApsauga() != null && !irasas.getVirsitampiuApsauga().isEmpty()) {
-                    Label surgeSecurityDescription = new Label();
-                    Label surgeSecurityProperty = new Label();
-                    setDescriptionAndProperty(surgeSecurityDescription, surgeSecurityProperty, "Viršįtampių apsauga: ", String.valueOf(irasas.getVirsitampiuApsauga()));
-                    desciptionLabelVBox.getChildren().add(surgeSecurityDescription);
-                    propertyLabelVBox.getChildren().add(surgeSecurityProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Viršįtampių apsauga: ", String.valueOf(irasas.getVirsitampiuApsauga()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getIlgaamziskumas() != null && !irasas.getIlgaamziskumas().isEmpty()) {
-                    Label longevityDescription = new Label();
-                    Label longevityProperty = new Label();
-                    setDescriptionAndProperty(longevityDescription, longevityProperty, "Ilgaamžiškumas: ", String.valueOf(irasas.getIlgaamziskumas()));
-                    desciptionLabelVBox.getChildren().add(longevityDescription);
-                    propertyLabelVBox.getChildren().add(longevityProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Ilgaamžiškumas: ", String.valueOf(irasas.getIlgaamziskumas()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getKorpusoAtidarymas() != null && !irasas.getKorpusoAtidarymas().isEmpty()) {
-                    Label frameOpeningDescription = new Label();
-                    Label frameOpeningProperty = new Label();
-                    setDescriptionAndProperty(frameOpeningDescription, frameOpeningProperty, "Korpuso atidarymas: ", String.valueOf(irasas.getKorpusoAtidarymas()));
-                    desciptionLabelVBox.getChildren().add(frameOpeningDescription);
-                    propertyLabelVBox.getChildren().add(frameOpeningProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Korpuso atidarymas: ", String.valueOf(irasas.getKorpusoAtidarymas()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getOptinesIrElektrinesDaliesPertvara() != null && !irasas.getOptinesIrElektrinesDaliesPertvara().isEmpty()) {
-                    Label opticalAndElectricalPartitionDescription = new Label();
-                    Label opticalAndElectricalPartitionProperty = new Label();
-                    setDescriptionAndProperty(opticalAndElectricalPartitionDescription, opticalAndElectricalPartitionProperty, "Optines ir Elektr.: ", String.valueOf(irasas.getOptinesIrElektrinesDaliesPertvara()));
-                    desciptionLabelVBox.getChildren().add(opticalAndElectricalPartitionDescription);
-                    propertyLabelVBox.getChildren().add(opticalAndElectricalPartitionProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Optinės ir elektrinės dalies pertvara: ", String.valueOf(irasas.getOptinesIrElektrinesDaliesPertvara()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
                 if (irasas.getValdymas() != null && !irasas.getValdymas().isEmpty()) {
-                    Label controlDescription = new Label();
-                    Label controlProperty = new Label();
-                    setDescriptionAndProperty(controlDescription, controlProperty, "Valdymas: ", String.valueOf(irasas.getValdymas()));
-                    desciptionLabelVBox.getChildren().add(controlDescription);
-                    propertyLabelVBox.getChildren().add(controlProperty);
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Valdymas: ", String.valueOf(irasas.getValdymas()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
-                if (irasas.getApatinisDiametras() != 0) {
-                    Label lowerDiameterDescription = new Label();
-                    Label lowerDiameterProperty = new Label();
-                    setDescriptionAndProperty(lowerDiameterDescription, lowerDiameterProperty, "Apatinis diametras: ", String.valueOf(irasas.getApatinisDiametras()));
-                    desciptionLabelVBox.getChildren().add(lowerDiameterDescription);
-                    propertyLabelVBox.getChildren().add(lowerDiameterProperty);
+                if (irasas.getApatinisDiametras() > 0) {
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Apatinis diametras: ", String.valueOf(irasas.getApatinisDiametras()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
-                if (irasas.getVirsutinisDiametras() != 0) {
-                    Label upperDiameterDescription = new Label();
-                    Label upperDiameterProperty = new Label();
-                    setDescriptionAndProperty(upperDiameterDescription, upperDiameterProperty, "Viršutinis diametras: ", String.valueOf(irasas.getVirsutinisDiametras()));
-                    desciptionLabelVBox.getChildren().add(upperDiameterDescription);
-                    propertyLabelVBox.getChildren().add(upperDiameterProperty);
+                if (irasas.getVirsutinisDiametras() > 0) {
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Viršutinis diametras: ", String.valueOf(irasas.getVirsutinisDiametras()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
-                if (irasas.getGembesDiametras() != 0) {
-                    Label bracketDiameterDescription = new Label();
-                    Label bracketDiameterProperty = new Label();
-                    setDescriptionAndProperty(bracketDiameterDescription, bracketDiameterProperty, "Gembės diametras: ", String.valueOf(irasas.getGembesDiametras()));
-                    desciptionLabelVBox.getChildren().add(bracketDiameterDescription);
-                    propertyLabelVBox.getChildren().add(bracketDiameterProperty);
+                if (irasas.getGembesDiametras() > 0) {
+                    HBox descriptionAntProperty = setDescriptionAndProperty("Gembės diametras: ", String.valueOf(irasas.getGembesDiametras()));
+
+                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
                 }
 
                 if (irasas.getImage_url() != null && !irasas.getImage_url().isEmpty()) {
@@ -1425,7 +1320,6 @@ public class DashboardController extends Main implements Initializable {
             }
         });
 
-        joinedInformationPanelWithImageHBox.getChildren().add(desciptionLabelVBox);
         joinedInformationPanelWithImageHBox.getChildren().add(propertyLabelVBox);
         informationPanelHBox.getChildren().add(joinedInformationPanelWithImageHBox);
         informationPanelHBox.getChildren().add(imageVBox);
@@ -1433,14 +1327,29 @@ public class DashboardController extends Main implements Initializable {
         right_panel_main_vbox.getChildren().add(informationPanelHBox);
     }
 
-    public void setDescriptionAndProperty(Label description, Label property, String descriptionText, String propertyText){
-        property.setStyle("-fx-font-weight: bold;");
-        description.setLayoutX(20);
-        description.setLayoutY(getRightPanelLabelY());
-        property.setLayoutX(60);
-        property.setLayoutY(getRightPanelLabelY());
-        description.setText(descriptionText);
-        property.setText(propertyText);
+    public HBox setDescriptionAndProperty(String descriptionText, String propertyText) {
+
+        Label descriptionLabel = new Label();
+        Label propertyLabel = new Label();
+
+        descriptionLabel.setWrapText(true);
+        propertyLabel.setWrapText(true);
+
+        VBox description = new VBox();
+        VBox property = new VBox();
+        HBox descriptionAntProperty = new HBox();
+
+        propertyLabel.setStyle("-fx-font-weight: bold;");
+
+        descriptionLabel.setText(descriptionText);
+        propertyLabel.setText(propertyText);
+
+        description.getChildren().add(descriptionLabel);
+        property.getChildren().add(propertyLabel);
+        descriptionAntProperty.getChildren().add(description);
+        descriptionAntProperty.getChildren().add(property);
+
+        return descriptionAntProperty;
     }
 
     private void currentSessionUserData() {

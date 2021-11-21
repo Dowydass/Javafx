@@ -21,6 +21,7 @@ public class Constants {
     public static final String DASHBOARD_VIEW_DIRECTORY_PATH = "sample/Resources/view/dashboard.fxml";
     public static final String LOGIN_VIEW_DIRECTORY_PATH = "sample/Resources/view/login.fxml";
     public static final String USER_STATS_VIEW_PATH = "sample/Resources/view/user_stats.fxml";
+    public static final String COPPER_STATS_VIEW_PATH = "sample/Resources/view/copper_stock_log.fxml";
     public static final String PRODUCT_FORM_VIEW_PATH = "sample/Resources/view/productForm.fxml";
     public static final String CATEGORY_FORM_VIEW_PATH = "sample/Resources/view/categoryForm.fxml";
     public static final String CSS_DIRECTORY_PATH = "sample/Resources/view/CSS.css";

@@ -106,11 +106,13 @@ public class DashboardController extends Main implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         UserHolder userHolder = UserHolder.getInstance();
 
-        try {
-            catchCopperStockPrice();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Platform.runLater(() -> {
+                    try {
+                        catchCopperStockPrice();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
 
         today = System.currentTimeMillis();
         userLastLogin = UserDAO.getLastLogin(userHolder.getUser());

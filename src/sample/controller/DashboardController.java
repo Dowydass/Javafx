@@ -122,7 +122,7 @@ public class DashboardController extends Main implements Initializable {
                 e.printStackTrace();
             }
         });
-//        reloadProductTableView();
+        //reloadProductTableView();
         firstFillDescriptionPanel();
 
 
@@ -474,11 +474,9 @@ public class DashboardController extends Main implements Initializable {
 
                     double priceNet = ((cuPrice + (cuAmount * (price - cableType) / 100)) / 1000) / 0.8;
                     if (observableProduct.getPriceNet() != priceNet) {
-//                        observableProduct.setPriceNet(priceNet); // NETURI PRASMĖS -M
+                        observableProduct.setPriceNet(priceNet); // NETURI PRASMĖS -M
                         ProductCatalogDAO.updatePrice(priceNet, observableProduct.getId());
-
                     }
-
 //
 //                    //Pakeisti šitą į metodą.
 //                    boolean ss = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
@@ -567,6 +565,7 @@ public class DashboardController extends Main implements Initializable {
 
                 try {
                     excelProducts = ReadExcelWithProductCatalog.readFileUsingPOI(file);
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -1612,12 +1611,7 @@ public class DashboardController extends Main implements Initializable {
     public void reloadProductTableView() {
         fullProductList = ProductCatalogDAO.displayAllItems();
         observableProducts = FXCollections.observableList(fullProductList);
-//        if ((today - userLastLogin.getTime()) / 1000 / 3600 >= 24) {
-//            setProductPrice(observableProducts);
-//        } else if ((loggedTimePriceUpdateEnd - loggedTimePriceUpdateStart) / 1000 / 3600 >= 2) {
-//            setProductPrice(observableProducts);
-//            loggedTimePriceUpdateStart = System.currentTimeMillis();
-//        }
+        setProductPrice(observableProducts);
         countTableViewObservableProducts(observableProducts);
         table.setItems(observableProducts);
     }

@@ -46,6 +46,8 @@ import sample.utils.Validation;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.*;
@@ -92,9 +94,6 @@ public class DashboardController extends Main implements Initializable {
     public static long loggedTimeEnd;
     public static long loggedTimeSpent;
     public static int spentTimeInSeconds;
-    public static long loggedTimePriceUpdateStart;
-    public static long loggedTimePriceUpdateEnd;
-    long today;
     Timestamp userLastLogin;
     List<Categories> categoryNamesForListView;
     ObservableList<Categories> observableCategoryList;
@@ -107,23 +106,17 @@ public class DashboardController extends Main implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         UserHolder userHolder = UserHolder.getInstance();
 
-        today = System.currentTimeMillis();
         userLastLogin = UserDAO.getLastLogin(userHolder.getUser());
-        loggedTimePriceUpdateStart = System.currentTimeMillis();
         loadColumnToTable();
         loadCategoriesToListView();
         currentSessionUserData();
         reloadCategoryListView();
-        Platform.runLater(() -> {
-            try {
-                catchAndStoreLatestCopperStockPrice();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        //reloadProductTableView();
+        try {
+            catchAndStoreLatestCopperStockPrice();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         firstFillDescriptionPanel();
-
 
         UserDAO.setLastLoginTime(userHolder.getUser());
         loggedTimeStart = System.currentTimeMillis();// Fiksuoja prisijungimo laiko pradžią
@@ -148,10 +141,6 @@ public class DashboardController extends Main implements Initializable {
         }
         user_about.setVisible(true);
 
-//
-//        preferencesPriceRate.put(STOCK_PRICE, String.valueOf(0));
-//        preferencesPriceRate.put(IS_NEW_SESSION, String.valueOf(false));
-
     }
 
     public void catchAndStoreLatestCopperStockPrice() throws IOException {
@@ -165,19 +154,19 @@ public class DashboardController extends Main implements Initializable {
             collectObservableCablesAndUpdatePrice();
         } else {
             csh.setCopperStock(latestPrice.get(0));
+            reloadProductTableView();
         }
     }
 
 
     public void collectObservableCablesAndUpdatePrice() {
-        fullCategoryList = CategoriesDAO.selectCategoryById(40);
-        fullProductList = ProductCatalogDAO.displayAllItems();
-        observableProducts = FXCollections.observableList(createFilteredProductList(fullCategoryList, fullProductList));
+        observableProducts = FXCollections.observableList(ProductCatalogDAO.displayAllItems());
         setProductPrice(observableProducts);
+        countTableViewObservableProducts(observableProducts);
+        table.setItems(observableProducts);
     }
 
     public void setImageOnAllCategoriesButton() {
-
         Image all_Categories_Button_picture = new Image("pictures/all_Categories_Button_picture.jpg");
         ImageView imageView = new ImageView(all_Categories_Button_picture);
         imageView.setFitHeight(13);//13
@@ -385,60 +374,8 @@ public class DashboardController extends Main implements Initializable {
         listView.getSelectionModel().select(0);
     }
 
-    private Double callAPI() {
-
-
-        YahooStockAPI yahooStockAPI = new YahooStockAPI();
-
-        StocksDto rateInfo = null;
-        try {
-            rateInfo = yahooStockAPI.getRealTimeRate();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
-        double price = rateInfo.getPrice().doubleValue();
-
-        return price;
-    }
-
-
-//    final String STOCK_PRICE = "PRICE";
-//    final String CHANGE = "CHANGE";
-//    final String IS_NEW_SESSION = "IS_NEW_SESSION";
-//    final String IS_SESSION_UPDATED_IN_DB = "IS_SESSION_IN_DB";
-//
-//    Preferences preferencesPriceRate = Preferences.userNodeForPackage(DashboardController.class);
-
-
     public void setProductPrice(List<ProductCatalog> observableProducts) {
-
         if (observableProducts != null) {
-
-//            boolean s = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
-//            if (!s) {
-//
-//                Boolean session = true;
-//                Boolean UPDATED_IN_DB = true;
-//                double price = CopperStockHolder.getInstance().getCopperStock().getCopperStockPrice();
-//
-//                //Nekeičiau, bet prasmės šitas neturi.
-//                double change = callAPI();
-//
-//                preferencesPriceRate.put(STOCK_PRICE, String.valueOf(price));
-//                preferencesPriceRate.put(CHANGE, String.valueOf(change));
-//                preferencesPriceRate.put(IS_NEW_SESSION, String.valueOf(session));
-//
-//                System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
-//
-//            }
-
-//            System.out.println("User button event. Is API called at session, state = " + preferencesPriceRate.get(IS_NEW_SESSION, ""));
-//            System.out.println(preferencesPriceRate.get(STOCK_PRICE, ""));
-
-
-//            double change = Double.parseDouble(preferencesPriceRate.get(CHANGE, ""));
-
-            // Metodas paima vario kainą per kilogramą pagal esamą euro kursą
             double price = CopperStockHolder.getInstance().getCopperStock().getCopperStockPrice();
             price = (price * 100);
 
@@ -470,24 +407,15 @@ public class DashboardController extends Main implements Initializable {
                     if (observableProduct.getSymbol().toLowerCase().contains("ugniai atsparus kabelis")) {
                         cableType = Constants.KABELIS300;
                     }
-
-
                     double priceNet = ((cuPrice + (cuAmount * (price - cableType) / 100)) / 1000) / 0.8;
-                    if (observableProduct.getPriceNet() != priceNet) {
-                        observableProduct.setPriceNet(priceNet); // NETURI PRASMĖS -M
+                    BigDecimal roundedPrice = new BigDecimal(priceNet).setScale(2, RoundingMode.HALF_UP);
+                    if (observableProduct.getPriceNet() != roundedPrice.doubleValue()) {
+                        observableProduct.setPriceNet(priceNet);
                         ProductCatalogDAO.updatePrice(priceNet, observableProduct.getId());
                     }
-//
-//                    //Pakeisti šitą į metodą.
-//                    boolean ss = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
-//                    if (ss == false) {
-//                        Boolean UPDATED_IN_DB = true;
-//                        preferencesPriceRate.put(IS_SESSION_UPDATED_IN_DB, String.valueOf(UPDATED_IN_DB));
-//                    }
                 }
             }
         }
-        reloadProductTableView();
     }
 
     public void getSelectionModel() {
@@ -498,11 +426,7 @@ public class DashboardController extends Main implements Initializable {
                 fullCategoryList = CategoriesDAO.selectCategoryById(item.getId());
                 fullProductList = ProductCatalogDAO.displayAllItems();
                 observableProducts = FXCollections.observableList(createFilteredProductList(fullCategoryList, fullProductList));
-                loggedTimePriceUpdateEnd = System.currentTimeMillis();
-                if ((loggedTimePriceUpdateEnd - loggedTimePriceUpdateStart) / 1000 / 3600 >= 20) {
-                    setProductPrice(observableProducts);
-                    loggedTimePriceUpdateStart = System.currentTimeMillis();
-                }
+                setProductPrice(observableProducts);
                 countTableViewObservableProducts(observableProducts);
                 table.setItems(observableProducts);
 
@@ -614,7 +538,6 @@ public class DashboardController extends Main implements Initializable {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
 
 
                 if (countEveryProductUpdated == 0 && countEveryNewProduct == 0 && countEveryProductInExcel == 0) {
@@ -1390,7 +1313,6 @@ public class DashboardController extends Main implements Initializable {
     }
 
 
-
     // Atidaro langą su vartotojų sąrašu
     public void openUserStats() {
         try {
@@ -1516,7 +1438,7 @@ public class DashboardController extends Main implements Initializable {
             createNewProductStage.setMinHeight(300);
 
             createNewProductStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, event -> {
-                reloadProductTableView();
+                collectObservableCablesAndUpdatePrice();
             });
 
 
@@ -1580,7 +1502,6 @@ public class DashboardController extends Main implements Initializable {
     public void reloadProductTableView() {
         fullProductList = ProductCatalogDAO.displayAllItems();
         observableProducts = FXCollections.observableList(fullProductList);
-//        setProductPrice(observableProducts);
         countTableViewObservableProducts(observableProducts);
         table.setItems(observableProducts);
     }

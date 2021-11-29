@@ -10,7 +10,7 @@
                 <TableColumn fx:id="number" maxWidth="35.0" minWidth="35.0" prefWidth="35.0" resizable="false" style="-fx-alignment: center;" text="#" />
                 <TableColumn fx:id="creation_date" maxWidth="500.0"  prefWidth="181.33331680297852" resizable="false" style="-fx-alignment: center;" text="Įrašo data" />
                 <TableColumn fx:id="copper_stock_price" maxWidth="500.0" prefWidth="335.3333282470703" resizable="false" style="-fx-alignment: center;" text="Vario kaina COMEX (JAV) biržojė (EUR už Kg)" />
-                <TableColumn fx:id="usd_to_eur_rate" maxWidth="500.0" prefWidth="146.66668701171875" resizable="false" style="-fx-alignment: center;" text="USD į EUR kursas" />
+                <TableColumn fx:id="usd_to_eur_rate" maxWidth="500.0" prefWidth="146.66668701171875" resizable="false" style="-fx-alignment: center;" text="USD/EUR kursas" />
             </columns>
         </TableView>
     </children>

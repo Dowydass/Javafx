@@ -116,7 +116,7 @@ public class DashboardController extends Main implements Initializable {
         reloadCategoryListView();
         Platform.runLater(() -> {
             try {
-                catchCopperStockPrice();
+                catchAndStoreLatestCopperStockPrice();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -154,20 +154,20 @@ public class DashboardController extends Main implements Initializable {
 
     }
 
-    public void catchCopperStockPrice() throws IOException {
-        CopperStockHolder cph = CopperStockHolder.getInstance();
+    public void catchAndStoreLatestCopperStockPrice() throws IOException {
+        CopperStockHolder csh = CopperStockHolder.getInstance();
         List<CopperStock> latestPrice = CopperStockDAO.getLatestPrice();
         if (latestPrice.isEmpty()) {
             YahooStockAPI.getYeahooStockDataToSingleton();
             collectObservableCablesAndUpdatePrice();
-        } else if ((System.currentTimeMillis() - latestPrice.get(0).getLogTime().getTime()) / 1000 / 3600 >= 2) {
+        } else if ((System.currentTimeMillis() - latestPrice.get(0).getLogTime().getTime()) / 1000 / 3600 >= 20) {
             YahooStockAPI.getYeahooStockDataToSingleton();
             collectObservableCablesAndUpdatePrice();
         } else {
-            cph.setCopperStock(latestPrice.get(0));
+            csh.setCopperStock(latestPrice.get(0));
         }
-        reloadProductTableView();
     }
+
 
     public void collectObservableCablesAndUpdatePrice() {
         fullCategoryList = CategoriesDAO.selectCategoryById(40);
@@ -411,6 +411,7 @@ public class DashboardController extends Main implements Initializable {
 
 
     public void setProductPrice(List<ProductCatalog> observableProducts) {
+
         if (observableProducts != null) {
 
 //            boolean s = Boolean.parseBoolean(preferencesPriceRate.get(IS_NEW_SESSION, ""));
@@ -486,6 +487,7 @@ public class DashboardController extends Main implements Initializable {
                 }
             }
         }
+        reloadProductTableView();
     }
 
     public void getSelectionModel() {
@@ -497,7 +499,7 @@ public class DashboardController extends Main implements Initializable {
                 fullProductList = ProductCatalogDAO.displayAllItems();
                 observableProducts = FXCollections.observableList(createFilteredProductList(fullCategoryList, fullProductList));
                 loggedTimePriceUpdateEnd = System.currentTimeMillis();
-                if ((loggedTimePriceUpdateEnd - loggedTimePriceUpdateStart) / 1000 / 3600 >= 2) {
+                if ((loggedTimePriceUpdateEnd - loggedTimePriceUpdateStart) / 1000 / 3600 >= 20) {
                     setProductPrice(observableProducts);
                     loggedTimePriceUpdateStart = System.currentTimeMillis();
                 }
@@ -528,14 +530,14 @@ public class DashboardController extends Main implements Initializable {
 //            loadProgress.setVisible(false); // Loading Spinner ends.
         }
 //        loadProgress.setVisible(false);
-        Platform.runLater(() -> {
-            try {
-                catchCopperStockPrice();
-                reloadProductTableView();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+//        Platform.runLater(() -> {
+//            try {
+//                collectObservableCablesAndUpdatePrice();
+//                reloadProductTableView();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
     }
 
     //Konfiguriuoja failo pasirinkimus
@@ -604,6 +606,7 @@ public class DashboardController extends Main implements Initializable {
 
                     }
                     dublicateWriter(dublicatedProducts);
+
                 } catch (NullPointerException e) {
                     System.out.println("openFile(" + e + " )");
                 } catch (RuntimeException e) {
@@ -612,8 +615,11 @@ public class DashboardController extends Main implements Initializable {
                     e.printStackTrace();
                 }
 
+
+
                 if (countEveryProductUpdated == 0 && countEveryNewProduct == 0 && countEveryProductInExcel == 0) {
                     Platform.runLater(() -> {
+                        collectObservableCablesAndUpdatePrice();
                         showErrorPopupWindow("Klaida!", "Failas nebuvo nuskaitytas dėl blogo lentelių formato, \npatikrinkite ar dokumente nepalikote klaidų. \n\nFailo pavadinimas: " + file.getName(), 500, 200);
                         loadProgress.setVisible(false);
                     });
@@ -623,6 +629,7 @@ public class DashboardController extends Main implements Initializable {
                             countEveryDublicateProduct + "\n - Dublikatų katalogo ID išsaugoti faile:\n  \"dublikatai.txt\" ";
 
                     Platform.runLater(() -> {
+                        collectObservableCablesAndUpdatePrice();
                         showInformationPopupWindow("Failas sėkmingai įkeltas", successToPopup, 500, 250);
                         loadProgress.setVisible(false);
 
@@ -632,22 +639,13 @@ public class DashboardController extends Main implements Initializable {
                     String successToPopup = "Faile rasta produktų: " + countEveryProductInExcel + "\nPakeista produktų: " + countEveryProductUpdated + "\nPridėti nauji produktai: " + countEveryNewProduct + "\nRasta dublikatų: " + countEveryDublicateProduct;
 
                     Platform.runLater(() -> {
+                        collectObservableCablesAndUpdatePrice();
                         showInformationPopupWindow("Failas sėkmingai įkeltas", successToPopup, 500, 200);
                         loadProgress.setVisible(false);
 
                     });
                 }
-                Platform.runLater(() ->
 
-                {
-                    loadProgress.setVisible(false);
-                    reloadProductTableView();
-                    try {
-                        catchCopperStockPrice();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
             }
 
         });
@@ -1582,7 +1580,7 @@ public class DashboardController extends Main implements Initializable {
     public void reloadProductTableView() {
         fullProductList = ProductCatalogDAO.displayAllItems();
         observableProducts = FXCollections.observableList(fullProductList);
-        setProductPrice(observableProducts);
+//        setProductPrice(observableProducts);
         countTableViewObservableProducts(observableProducts);
         table.setItems(observableProducts);
     }

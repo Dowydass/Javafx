@@ -121,7 +121,7 @@ public class DashboardController extends Main implements Initializable {
                 e.printStackTrace();
             }
         });
-        //reloadProductTableView();
+        reloadProductTableView();
         firstFillDescriptionPanel();
 
 

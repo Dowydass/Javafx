@@ -20,14 +20,7 @@
                 <ListView fx:id="listView" editable="true" onMouseClicked="#mouseEventForListView" prefHeight="200.0" prefWidth="200.0" />
             </content></TitledPane>
         <Label layoutX="954.0" layoutY="40.0" text="Statusas:" AnchorPane.rightAnchor="341.0" AnchorPane.topAnchor="40.0" />
-        <Pane layoutX="928.0" layoutY="113.0" prefHeight="443.0" prefWidth="409.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="85.99999999999994">
-            <AnchorPane fx:id="right_panel_anchor_pane" minHeight="0.0" minWidth="0.0" prefHeight="443.0" prefWidth="407.0">
-<!--                <children>-->
-<!--                    <VBox fx:id="right_panel_title_vbox" layoutX="1.0" prefHeight="50.0" prefWidth="409.0" AnchorPane.topAnchor="0.0" />-->
-<!--                    <VBox fx:id="right_panel_main_vbox" layoutX="1.0" layoutY="49.0" prefHeight="397.0" prefWidth="409.0" AnchorPane.bottomAnchor="0.0" />-->
-<!--                </children>-->
-            </AnchorPane>
-        </Pane>
+        <Pane fx:id="right_panel_pane" layoutX="928.0" layoutY="113.0" prefWidth="409.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="85.99999999999994" />
         <Label fx:id="current_session_user_email" layoutX="1012.0" layoutY="59.0" prefHeight="17.0" prefWidth="195.0" style="-fx-font-weight: bold;" text="Example@example.com" AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="59.0" />
         <Label fx:id="countAll" alignment="CENTER" layoutX="389.0" layoutY="519.0" prefHeight="17.0" prefWidth="537.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="389.0" AnchorPane.rightAnchor="416.0" />
         <TextField fx:id="tableViewSearchField" layoutX="387.0" layoutY="29.0" onKeyPressed="#tableViewSearchFunction" prefHeight="25.0" prefWidth="537.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="418.0" AnchorPane.topAnchor="29.0" />

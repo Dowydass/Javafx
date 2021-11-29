@@ -24,8 +24,8 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.*;
 import javafx.util.Callback;
@@ -49,7 +49,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.*;
-import java.util.prefs.Preferences;
 import java.io.FileWriter;
 
 
@@ -71,7 +70,7 @@ public class DashboardController extends Main implements Initializable {
 
     // Dešinės panelės label
     @FXML
-    public AnchorPane right_panel_anchor_pane;
+    public Pane right_panel_pane;
     @FXML
     public ProgressIndicator loadProgress;
     @FXML
@@ -960,37 +959,52 @@ public class DashboardController extends Main implements Initializable {
         infoLabel.setStyle("-fx-font-style: italic; -fx-font-size: 14;");
         infoLabel.setText("Pasirinkite produktą iš sąrašo,\nkad detali informacija būtų atvaizduota...");
         mainHBox.getChildren().add(infoLabel);
-        right_panel_anchor_pane.getChildren().add(infoLabel);
+        right_panel_pane.getChildren().add(infoLabel);
+//        propertyLabelVBox = new VBox();
+
     }
 
-    public void fillDescriptionPanel(String catalogNoImported) {
+    VBox right_panel_main_vbox = new VBox();
+    VBox smallerPropertyLabelVBox = new VBox();
+    VBox largerPropertyLabelVBox = new VBox();
+    ScrollPane sc = new ScrollPane();
 
-        right_panel_anchor_pane.getChildren().clear();
-        right_panel_anchor_pane.autosize();
+    int guiLineCounter;
+
+    public void fillDescriptionPanel(String catalogNoImported) {
+        guiLineCounter = 0;
+        right_panel_pane.getChildren().clear();
+        right_panel_pane.setMinWidth(410);
+        right_panel_pane.prefHeight(397);
+        right_panel_pane.prefWidth(410);
+        right_panel_pane.setMaxWidth(410);
+
+        right_panel_main_vbox.getChildren().clear();
+        smallerPropertyLabelVBox.getChildren().clear();
+        largerPropertyLabelVBox.getChildren().clear();
 
         HBox joinedInformationPanelWithImageHBox = new HBox();
+        HBox seperateLargerInformationHBox = new HBox();
 //        joinedInformationPanelWithImageHBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7;");
         joinedInformationPanelWithImageHBox.setPadding(new Insets(5, 3, 2, 3));
 
-        VBox right_panel_main_vbox = new VBox();
-        right_panel_main_vbox.setMinWidth(410);
-        right_panel_main_vbox.prefHeight(397);
-        right_panel_main_vbox.prefWidth(410);
-        right_panel_main_vbox.setMaxWidth(410);
-        right_panel_anchor_pane.getChildren().add(right_panel_main_vbox);
+//        right_panel_main_vbox.setMinWidth(410);
+//        right_panel_main_vbox.prefHeight(397);
+//        right_panel_main_vbox.prefWidth(410);
+//        right_panel_main_vbox.setMaxWidth(410);
 
+        right_panel_pane.getChildren().add(right_panel_main_vbox);
 
-//        VBox desciptionLabelVBox = new VBox();
-        VBox propertyLabelVBox = new VBox();
-        HBox informationPanelHBox = new HBox();
+        sc.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+
+        VBox informationPanelVBox = new VBox();
         VBox imageVBox = new VBox();
 
-        propertyLabelVBox.setPadding(new Insets(5, 15, 5, 15));
+        smallerPropertyLabelVBox.setPadding(new Insets(5, 15, 0, 15));
+        largerPropertyLabelVBox.setPadding(new Insets(0, 15, 5, 18));
 
-//        desciptionLabelVBox.setPadding(new Insets(0, 5, 10, 5));
-//        desciptionLabelVBox.setMinWidth(130);
-        propertyLabelVBox.setMinWidth(260);
-        imageVBox.setPadding(new Insets(5, 5, 5, 0));
+        smallerPropertyLabelVBox.setMinWidth(260);
+        imageVBox.setPadding(new Insets(7, 7, 7, 15));
         imageVBox.setAlignment(Pos.TOP_CENTER);
         setRightPanelLabelY(40);
 
@@ -1004,302 +1018,198 @@ public class DashboardController extends Main implements Initializable {
                 symbolProperty.setMaxHeight(50);
                 symbolProperty.setMaxWidth(410);
                 symbolProperty.setAlignment(Pos.CENTER_LEFT);
-                symbolProperty.setPadding(new Insets(3, 5, 3, 3));
-                symbolProperty.setStyle("-fx-font-weight: bold; -fx-background-color: linear-gradient(to top, #D9D9D9, #EDEDED); -fx-border-width: 1; -fx-border-color: #c8c8c8; -fx-border-radius: 1;");
+                symbolProperty.setPadding(new Insets(3, 5, 3, 5));
+                symbolProperty.setStyle("-fx-font-size: 12; -fx-font-weight: bold; -fx-background-color: linear-gradient(to top, #D9D9D9, #EDEDED); -fx-border-width: 1; -fx-border-color: #c8c8c8; -fx-border-radius: 1;");
                 symbolProperty.setText(irasas.getSymbol());
                 right_panel_main_vbox.getChildren().add(symbolProperty);
 
 
                 HBox catalogNoProperty = setCatalogDescriptionAndProperty(String.valueOf(irasas.getCatalogNo()));
-                propertyLabelVBox.getChildren().add(catalogNoProperty);
+                smallerPropertyLabelVBox.getChildren().add(catalogNoProperty);
 
                 HBox priceNetProperty = setPriceDescriptionAndProperty(String.valueOf(irasas.getPriceNet()));
-                propertyLabelVBox.getChildren().add(priceNetProperty);
+                smallerPropertyLabelVBox.getChildren().add(priceNetProperty);
 
                 if (irasas.getCuAmount() > 0) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Vario kiekis: ", String.valueOf(irasas.getCuAmount()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Vario kiekis: ", String.valueOf(irasas.getCuAmount()));
                 }
                 if (irasas.getCuPrice() > 0) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Vario kaina: ", String.valueOf(irasas.getCuPrice()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Vario kaina: ", String.valueOf(irasas.getCuPrice()));
                 }
                 if (irasas.getGamintojas() != null && irasas.getGamintojas().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Gamintojas: ", String.valueOf(irasas.getGamintojas()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Gamintojas: ", String.valueOf(irasas.getGamintojas()));
                 }
                 if (irasas.getAukstis() > 0) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Aukštis: ", String.valueOf(irasas.getAukstis()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Aukštis: ", String.valueOf(irasas.getAukstis()));
                 }
                 if (irasas.getPlotis() > 0) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Plotis: ", String.valueOf(irasas.getPlotis()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Plotis: ", String.valueOf(irasas.getPlotis()));
                 }
                 if (irasas.getGylis() > 0) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Gylis: ", String.valueOf(irasas.getGylis()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Gylis: ", String.valueOf(irasas.getGylis()));
                 }
                 if (irasas.getSkersmuo() != 0) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Skersmuo: ", String.valueOf(irasas.getSkersmuo()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Skersmuo: ", String.valueOf(irasas.getSkersmuo()));
                 }
                 if (irasas.getIlgis() > 0) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Ilgis: ", String.valueOf(irasas.getIlgis()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Ilgis: ", String.valueOf(irasas.getIlgis()));
                 }
                 if (irasas.getApsaugos_laipsnis() != null && !irasas.getApsaugos_laipsnis().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Apsaugos laipsnis: ", String.valueOf(irasas.getApsaugos_laipsnis()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Apsaugos laipsnis: ", String.valueOf(irasas.getApsaugos_laipsnis()));
                 }
                 if (irasas.getModuliu_skaicius() > 0) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Modulių skaičius: ", String.valueOf(irasas.getModuliu_skaicius()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Modulių skaičius: ", String.valueOf(irasas.getModuliu_skaicius()));
                 }
                 if (irasas.getVardine_itampa() != null) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Vardinė įtampa: ", String.valueOf(irasas.getVardine_itampa()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Vardinė įtampa: ", String.valueOf(irasas.getVardine_itampa()));
                 }
                 if (irasas.getVardine_srove() != null) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Vardinė srovė: ", String.valueOf(irasas.getVardine_srove()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Vardinė srovė: ", String.valueOf(irasas.getVardine_srove()));
                 }
                 if (irasas.getMechaninis_atsparumas_IK() != null && !irasas.getMechaninis_atsparumas_IK().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Mechaninis atsparumas IK: ", String.valueOf(irasas.getMechaninis_atsparumas_IK()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Mechaninis atsparumas IK: ", String.valueOf(irasas.getMechaninis_atsparumas_IK()));
                 }
                 if (irasas.getStoris() > 0) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Storis: ", String.valueOf(irasas.getStoris()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setSmallerPartOfGuiTextElements("Storis: ", String.valueOf(irasas.getStoris()));
                 }
                 if (irasas.getSpalva() != null && !irasas.getSpalva().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Spalva: ", String.valueOf(irasas.getSpalva()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Spalva: ", String.valueOf(irasas.getSpalva()));
                 }
                 if (irasas.getKorpuso_medziaga() != null && !irasas.getKorpuso_medziaga().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Korpuso medžiaga: ", String.valueOf(irasas.getKorpuso_medziaga()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Korpuso medžiaga: ", String.valueOf(irasas.getKorpuso_medziaga()));
                 }
                 if (irasas.getIzoliacija() != null && !irasas.getIzoliacija().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Izoliacija: ", String.valueOf(irasas.getIzoliacija()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Izoliacija: ", String.valueOf(irasas.getIzoliacija()));
                 }
                 if (irasas.getSvoris() != 0) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Svoris: ", String.valueOf(irasas.getSvoris()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Svoris: ", String.valueOf(irasas.getSvoris()));
                 }
                 if (irasas.getGalia() != null) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Galia: ", String.valueOf(irasas.getGalia()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Galia: ", String.valueOf(irasas.getGalia()));
                 }
                 if (irasas.getSviesos_srautas() > 0) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Šviesos srautas: ", String.valueOf(irasas.getSviesos_srautas()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Šviesos srautas: ", String.valueOf(irasas.getSviesos_srautas()));
                 }
 
                 if (irasas.getSviesos_spalvos_temperatura() != null && !irasas.getSviesos_spalvos_temperatura().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Spalvos temperatūra: ", String.valueOf(irasas.getSviesos_spalvos_temperatura()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Spalvos temperatūra: ", String.valueOf(irasas.getSviesos_spalvos_temperatura()));
                 }
                 if (irasas.getLaidininkas() != null && !irasas.getLaidininkas().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Laidininkas: ", String.valueOf(irasas.getLaidininkas()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Laidininkas: ", String.valueOf(irasas.getLaidininkas()));
                 }
-
                 if (irasas.getLaidininkoIzoliacija() != null && !irasas.getLaidininkoIzoliacija().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Laidininko izoliacija: ", String.valueOf(irasas.getLaidininkoIzoliacija()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Laidininko izoliacija: ", String.valueOf(irasas.getLaidininkoIzoliacija()));
                 }
                 if (irasas.getDarbine_temperatura() != null) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Darbinė temperatūra: ", String.valueOf(irasas.getDarbine_temperatura()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Darbinė temperatūra: ", String.valueOf(irasas.getDarbine_temperatura()));
                 }
                 if (irasas.getMax_darbine_temperatura() != null) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Maks. darbinė temperatūra: ", String.valueOf(irasas.getMax_darbine_temperatura()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Maks. darbinė temperatūra: ", String.valueOf(irasas.getMax_darbine_temperatura()));
                 }
                 if (irasas.getApsvieta() != null) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Apšvieta: ", String.valueOf(irasas.getApsvieta()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Apšvieta: ", String.valueOf(irasas.getApsvieta()));
                 }
                 if (irasas.getApvalkalas() != null && !irasas.getApvalkalas().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Apvalkalas: ", String.valueOf(irasas.getCuAmount()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Apvalkalas: ", String.valueOf(irasas.getCuAmount()));
                 }
                 if (irasas.getCpr_klase() != null && !irasas.getCpr_klase().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("CPR klasė: ", String.valueOf(irasas.getCpr_klase()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("CPR klasė: ", String.valueOf(irasas.getCpr_klase()));
                 }
                 if (irasas.getIsjungimo_geba() != null && !irasas.getIsjungimo_geba().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Išjungimo geba: ", String.valueOf(irasas.getIsjungimo_geba()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Išjungimo geba: ", String.valueOf(irasas.getIsjungimo_geba()));
                 }
                 if (irasas.getIsjungimo_charakteristika() != null && !irasas.getIsjungimo_charakteristika().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Išjungimo charakteristika: ", String.valueOf(irasas.getIsjungimo_charakteristika()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Išjungimo charakteristika: ", String.valueOf(irasas.getIsjungimo_charakteristika()));
                 }
                 if (irasas.getMechaninis_atsparumas() != null && !irasas.getMechaninis_atsparumas().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Mechaninis atsparumas: ", String.valueOf(irasas.getMechaninis_atsparumas()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Mechaninis atsparumas: ", String.valueOf(irasas.getMechaninis_atsparumas()));
                 }
                 if (irasas.getSkerspjuvis_Al() != null && !irasas.getSkerspjuvis_Al().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Skerspjūvis AL: ", String.valueOf(irasas.getSkerspjuvis_Al()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Skerspjūvis AL: ", String.valueOf(irasas.getSkerspjuvis_Al()));
                 }
                 if (irasas.getSkerspjuvis_Cu() != null && !irasas.getSkerspjuvis_Cu().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Skerspjūvis CU: ", String.valueOf(irasas.getSkerspjuvis_Cu()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Skerspjūvis CU: ", String.valueOf(irasas.getSkerspjuvis_Cu()));
                 }
                 if (irasas.getNuotekio_srove() != null && !irasas.getNuotekio_srove().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Nuotėkio srovė: ", String.valueOf(irasas.getNuotekio_srove()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Nuotėkio srovė: ", String.valueOf(irasas.getNuotekio_srove()));
                 }
                 if (irasas.getDydis() != null) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Dydis: ", String.valueOf(irasas.getDydis()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Dydis: ", String.valueOf(irasas.getDydis()));
                 }
                 if (irasas.getPlotas() != null && !irasas.getPlotas().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Plotas: ", String.valueOf(irasas.getPlotas()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Plotas: ", String.valueOf(irasas.getPlotas()));
                 }
                 if (irasas.getAptikimoZona() != null && !irasas.getAptikimoZona().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Aptikimo zona: ", String.valueOf(irasas.getAptikimoZona()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Aptikimo zona: ", String.valueOf(irasas.getAptikimoZona()));
                 }
                 if (irasas.getMaksimaliDarbineItampa() != null && !irasas.getMaksimaliDarbineItampa().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Maksimali darbinė temp.: ", String.valueOf(irasas.getDarbine_temperatura()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Maksimali darbinė temp.: ", String.valueOf(irasas.getDarbine_temperatura()));
                 }
                 if (irasas.getIskrovimoSrove820() != null && !irasas.getIskrovimoSrove820().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Iškrovimo srovė 8.20: ", String.valueOf(irasas.getIskrovimoSrove820()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Iškrovimo srovė 8.20: ", String.valueOf(irasas.getIskrovimoSrove820()));
                 }
                 if (irasas.getIskrovimoSrove10350() != null && !irasas.getIskrovimoSrove10350().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Iškrovimo srovė 10.350: ", String.valueOf(irasas.getIskrovimoSrove10350()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Iškrovimo srovė 10.350: ", String.valueOf(irasas.getIskrovimoSrove10350()));
                 }
                 if (irasas.getItamposApsaugosLygis() != null && !irasas.getItamposApsaugosLygis().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Įtampos apsaugos lygis: ", String.valueOf(irasas.getItamposApsaugosLygis()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Įtampos apsaugos lygis: ", String.valueOf(irasas.getItamposApsaugosLygis()));
                 }
                 if (irasas.getKategorija() != null && !irasas.getKategorija().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Kategorija: ", String.valueOf(irasas.getKategorija()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Kategorija: ", String.valueOf(irasas.getKategorija()));
                 }
                 if (irasas.getCRI() > 0) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("CRI: ", String.valueOf(irasas.getCRI()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("CRI: ", String.valueOf(irasas.getCRI()));
                 }
                 if (irasas.getGarantija() != null && !irasas.getGarantija().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Garantija: ", String.valueOf(irasas.getGarantija()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setSmallerPartOfGuiTextElements("Garantija: ", String.valueOf(irasas.getGarantija()));
                 }
                 if (irasas.getSertifikatai() != null && !irasas.getSertifikatai().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Sertifikatas: ", String.valueOf(irasas.getSertifikatai()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Sertifikatas: ", String.valueOf(irasas.getSertifikatai()));
                 }
                 if (irasas.getNemaJungtis() != null && !irasas.getNemaJungtis().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Nema jungtis: ", String.valueOf(irasas.getNemaJungtis()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Nema jungtis: ", String.valueOf(irasas.getNemaJungtis()));
                 }
                 if (irasas.getVirsitampiuApsauga() != null && !irasas.getVirsitampiuApsauga().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Viršįtampių apsauga: ", String.valueOf(irasas.getVirsitampiuApsauga()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Viršįtampių apsauga: ", String.valueOf(irasas.getVirsitampiuApsauga()));
                 }
                 if (irasas.getIlgaamziskumas() != null && !irasas.getIlgaamziskumas().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Ilgaamžiškumas: ", String.valueOf(irasas.getIlgaamziskumas()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Ilgaamžiškumas: ", String.valueOf(irasas.getIlgaamziskumas()));
                 }
                 if (irasas.getKorpusoAtidarymas() != null && !irasas.getKorpusoAtidarymas().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Korpuso atidarymas: ", String.valueOf(irasas.getKorpusoAtidarymas()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Korpuso atidarymas: ", String.valueOf(irasas.getKorpusoAtidarymas()));
                 }
                 if (irasas.getOptinesIrElektrinesDaliesPertvara() != null && !irasas.getOptinesIrElektrinesDaliesPertvara().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Optinės ir elektrinės dalies pertvara: ", String.valueOf(irasas.getOptinesIrElektrinesDaliesPertvara()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Optinės ir elektrinės dalies pertvara: ", String.valueOf(irasas.getOptinesIrElektrinesDaliesPertvara()));
                 }
                 if (irasas.getValdymas() != null && !irasas.getValdymas().isEmpty()) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Valdymas: ", String.valueOf(irasas.getValdymas()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Valdymas: ", String.valueOf(irasas.getValdymas()));
                 }
                 if (irasas.getApatinisDiametras() > 0) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Apatinis diametras: ", String.valueOf(irasas.getApatinisDiametras()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Apatinis diametras: ", String.valueOf(irasas.getApatinisDiametras()));
                 }
                 if (irasas.getVirsutinisDiametras() > 0) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Viršutinis diametras: ", String.valueOf(irasas.getVirsutinisDiametras()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Viršutinis diametras: ", String.valueOf(irasas.getVirsutinisDiametras()));
                 }
                 if (irasas.getGembesDiametras() > 0) {
-                    HBox descriptionAntProperty = setDescriptionAndProperty("Gembės diametras: ", String.valueOf(irasas.getGembesDiametras()));
-
-                    propertyLabelVBox.getChildren().add(descriptionAntProperty);
+                    setLargerPartOfGuiTextElements("Gembės diametras: ", String.valueOf(irasas.getGembesDiametras()));
                 }
 
                 if (irasas.getImage_url() != null && !irasas.getImage_url().isEmpty()) {
                     Image imageFromUrl = new Image(irasas.getImage_url());
                     ImageView imageView = new ImageView();
                     imageView.setImage(imageFromUrl);
-                    imageView.setFitWidth(125);
+//                    imageView.setFitWidth(125);
+                    imageView.setFitHeight(70);
+                    imageView.setFitWidth(90);
                     imageView.setPreserveRatio(true);
 //                    imageView.setLayoutX(20);
 //                    imageView.setLayoutY(40);
                     VBox boundryImageVBox = new VBox();
+                    boundryImageVBox.setPrefWidth(95);
+                    boundryImageVBox.setPrefHeight(75);
+                    boundryImageVBox.setAlignment(Pos.CENTER);
                     boundryImageVBox.getChildren().add(imageView);
-                    boundryImageVBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7;");
+                    boundryImageVBox.setStyle("-fx-border-width: 2; -fx-border-color: #B7B7B7;");
                     imageVBox.getChildren().add(boundryImageVBox);
                     System.out.println("Image has been downloaded and loaded.");
 
@@ -1307,27 +1217,46 @@ public class DashboardController extends Main implements Initializable {
                     Image imageFromUrl = new Image("/pictures/unavailable_product_picture.png");
                     ImageView imageView = new ImageView();
                     imageView.setImage(imageFromUrl);
-                    imageView.setFitWidth(125);
+                    imageView.setFitWidth(90);
                     imageView.setPreserveRatio(true);
 //                    imageView.setLayoutX(20);
 //                    imageView.setLayoutY(40);
                     VBox boundryImageVBox = new VBox();
                     boundryImageVBox.getChildren().add(imageView);
-                    boundryImageVBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7;");
+                    boundryImageVBox.setStyle("-fx-border-width: 2; -fx-border-color: #B7B7B7;");
                     imageVBox.getChildren().add(boundryImageVBox);
                     System.out.println("Default image has been loaded.");
                 }
             }
         });
 
-        joinedInformationPanelWithImageHBox.getChildren().add(propertyLabelVBox);
-        informationPanelHBox.getChildren().add(joinedInformationPanelWithImageHBox);
-        informationPanelHBox.getChildren().add(imageVBox);
-        informationPanelHBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7;");
-        right_panel_main_vbox.getChildren().add(informationPanelHBox);
+        joinedInformationPanelWithImageHBox.getChildren().add(imageVBox);
+        joinedInformationPanelWithImageHBox.getChildren().add(smallerPropertyLabelVBox);
+        seperateLargerInformationHBox.getChildren().add(largerPropertyLabelVBox);
+        informationPanelVBox.getChildren().addAll(joinedInformationPanelWithImageHBox, seperateLargerInformationHBox);
+
+        informationPanelVBox.setStyle("-fx-border-width: 2, 0, 2, 2; -fx-border-insets: 3, 3, 3, 3; -fx-border-color: #B7B7B7;");
+        sc.setContent(informationPanelVBox);
+
+//        right_panel_main_vbox.setPrefHeight(445);
+        right_panel_main_vbox.getChildren().add(sc);
     }
 
-    public HBox setDescriptionAndProperty(String descriptionText, String propertyText) {
+
+    // Info panelė yra padalinti į dvi dalis. Viršutinę - kuri eina su iš dešinės paveikslėliu
+    // Ir apatine kuri išnaudoja visą plotį. Metodas skaičiuoja eilutes ir pagal skaičių
+    // Mato į kurią dalį kelti label'ius
+//    public void guiFillerTypePicker(String descriptionText, String propertyText) {
+//        if (guiLineCounter < 3) {
+//            setSmallerPartOfGuiTextElements(descriptionText, propertyText);
+//        } else {
+//            setLargerPartOfGuiTextElements(descriptionText, propertyText);
+//        }
+//    }
+
+
+    public void setLargerPartOfGuiTextElements(String descriptionText, String propertyText) {
+//        guiLineCounter++;
 
         Label descriptionLabel = new Label();
         Label propertyLabel = new Label();
@@ -1339,7 +1268,10 @@ public class DashboardController extends Main implements Initializable {
         VBox property = new VBox();
         HBox descriptionAntProperty = new HBox();
 
-        propertyLabel.setStyle("-fx-font-weight: bold;");
+
+        descriptionAntProperty.setPadding(new Insets(1, 1, 1, 1));
+        descriptionLabel.setStyle("-fx-font-size: 12;");
+        propertyLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 12;");
 
         descriptionLabel.setText(descriptionText);
         propertyLabel.setText(propertyText);
@@ -1349,7 +1281,40 @@ public class DashboardController extends Main implements Initializable {
         descriptionAntProperty.getChildren().add(description);
         descriptionAntProperty.getChildren().add(property);
 
-        return descriptionAntProperty;
+        largerPropertyLabelVBox.getChildren().add(descriptionAntProperty);
+    }
+
+    public void setSmallerPartOfGuiTextElements(String descriptionText, String propertyText) {
+        guiLineCounter++;
+
+        if (guiLineCounter < 3) {
+            Label descriptionLabel = new Label();
+            Label propertyLabel = new Label();
+
+            descriptionLabel.setWrapText(true);
+            propertyLabel.setWrapText(true);
+
+            VBox description = new VBox();
+            VBox property = new VBox();
+            HBox descriptionAntProperty = new HBox();
+
+            descriptionLabel.setStyle("-fx-font-size: 14;");
+            propertyLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14;");
+            descriptionAntProperty.setPadding(new Insets(1, 1, 1, 1));
+
+
+            descriptionLabel.setText(descriptionText);
+            propertyLabel.setText(propertyText);
+
+            description.getChildren().add(descriptionLabel);
+            property.getChildren().add(propertyLabel);
+            descriptionAntProperty.getChildren().add(description);
+            descriptionAntProperty.getChildren().add(property);
+
+            smallerPropertyLabelVBox.getChildren().add(descriptionAntProperty);
+        } else {
+            setLargerPartOfGuiTextElements(descriptionText, propertyText);
+        }
     }
 
     public HBox setCatalogDescriptionAndProperty(String propertyText) {
@@ -1361,20 +1326,22 @@ public class DashboardController extends Main implements Initializable {
 
         VBox description = new VBox();
         VBox property = new VBox();
-        HBox descriptionAntProperty = new HBox();
+        HBox descriptionAndProperty = new HBox();
 
-        propertyLabel.setStyle("-fx-font-weight: bold;");
+        propertyLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14;");
 
         descriptionLabel.setText("Katalogo kodas:");
-        descriptionLabel.setStyle("-fx-underline: true;");
+        descriptionLabel.setStyle("-fx-underline: true; -fx-font-size: 14;");
         propertyLabel.setText(" " + propertyText);
 
         description.getChildren().add(descriptionLabel);
         property.getChildren().add(propertyLabel);
-        descriptionAntProperty.getChildren().add(description);
-        descriptionAntProperty.getChildren().add(property);
+        descriptionAndProperty.getChildren().add(description);
+        descriptionAndProperty.getChildren().add(property);
+        descriptionAndProperty.setPadding(new Insets(1, 1, 1, 1));
 
-        return descriptionAntProperty;
+
+        return descriptionAndProperty;
     }
 
     public HBox setPriceDescriptionAndProperty(String propertyText) {
@@ -1387,19 +1354,22 @@ public class DashboardController extends Main implements Initializable {
 
         VBox description = new VBox();
         VBox property = new VBox();
-        HBox descriptionAntProperty = new HBox();
+        HBox descriptionAndProperty = new HBox();
 
-        propertyLabel.setStyle("-fx-font-weight: bold;");
+        propertyLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14;");
+        descriptionLabel.setStyle("-fx-font-size: 14;");
 
         descriptionLabel.setText("Kaina: ");
         propertyLabel.setText(propertyText + " EUR");
 
         description.getChildren().add(descriptionLabel);
         property.getChildren().add(propertyLabel);
-        descriptionAntProperty.getChildren().add(description);
-        descriptionAntProperty.getChildren().add(property);
+        descriptionAndProperty.getChildren().add(description);
+        descriptionAndProperty.getChildren().add(property);
+        descriptionAndProperty.setPadding(new Insets(1, 1, 1, 1));
 
-        return descriptionAntProperty;
+
+        return descriptionAndProperty;
     }
 
     private void currentSessionUserData() {
@@ -1420,6 +1390,7 @@ public class DashboardController extends Main implements Initializable {
 
         current_session_user_email.setText(email);
     }
+
 
 
     // Atidaro langą su vartotojų sąrašu

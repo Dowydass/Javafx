@@ -1117,22 +1117,37 @@ public class DashboardController extends Main implements Initializable {
 
                 if (irasas.getImage_url() != null && !irasas.getImage_url().isEmpty()) {
                     Image imageFromUrl = new Image(irasas.getImage_url());
-                    ImageView imageView = new ImageView();
-                    imageView.setImage(imageFromUrl);
+                    if (imageFromUrl.getProgress() == 1 && !imageFromUrl.isError()) {
+                        ImageView imageView = new ImageView();
+                        imageView.setImage(imageFromUrl);
 //                    imageView.setFitWidth(125);
-                    imageView.setFitHeight(70);
-                    imageView.setFitWidth(90);
-                    imageView.setPreserveRatio(true);
+                        imageView.setFitHeight(70);
+                        imageView.setFitWidth(90);
+                        imageView.setPreserveRatio(true);
 //                    imageView.setLayoutX(20);
 //                    imageView.setLayoutY(40);
-                    VBox boundryImageVBox = new VBox();
-                    boundryImageVBox.setPrefWidth(95);
-                    boundryImageVBox.setPrefHeight(75);
-                    boundryImageVBox.setAlignment(Pos.CENTER);
-                    boundryImageVBox.getChildren().add(imageView);
-                    boundryImageVBox.setStyle("-fx-border-width: 2; -fx-border-color: #B7B7B7;");
-                    imageVBox.getChildren().add(boundryImageVBox);
-                    System.out.println("Image has been downloaded and loaded.");
+                        VBox boundryImageVBox = new VBox();
+                        boundryImageVBox.setPrefWidth(95);
+                        boundryImageVBox.setPrefHeight(75);
+                        boundryImageVBox.setAlignment(Pos.CENTER);
+                        boundryImageVBox.getChildren().add(imageView);
+                        boundryImageVBox.setStyle("-fx-border-width: 2; -fx-border-color: #B7B7B7;");
+                        imageVBox.getChildren().add(boundryImageVBox);
+                        System.out.println("Image has been downloaded and loaded.");
+                    } else {
+                        imageFromUrl = new Image("/pictures/unavailable_product_picture.png");
+                        ImageView imageView = new ImageView();
+                        imageView.setImage(imageFromUrl);
+                        imageView.setFitWidth(90);
+                        imageView.setPreserveRatio(true);
+//                    imageView.setLayoutX(20);
+//                    imageView.setLayoutY(40);
+                        VBox boundryImageVBox = new VBox();
+                        boundryImageVBox.getChildren().add(imageView);
+                        boundryImageVBox.setStyle("-fx-border-width: 2; -fx-border-color: #B7B7B7;");
+                        imageVBox.getChildren().add(boundryImageVBox);
+                        System.out.println("Default image has been loaded.");
+                    }
 
                 } else {
                     Image imageFromUrl = new Image("/pictures/unavailable_product_picture.png");

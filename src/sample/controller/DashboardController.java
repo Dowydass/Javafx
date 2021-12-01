@@ -1102,32 +1102,29 @@ public class DashboardController extends Main implements Initializable {
                     if (imageFromUrl.getProgress() == 1 && !imageFromUrl.isError()) {
                         ImageView imageView = new ImageView();
                         imageView.setImage(imageFromUrl);
-//                    imageView.setFitWidth(125);
-                        imageView.setFitHeight(70);
-                        imageView.setFitWidth(90);
+                        imageView.setFitWidth(110);
+                        imageView.setFitHeight(110);
                         imageView.setPreserveRatio(true);
-//                    imageView.setLayoutX(20);
-//                    imageView.setLayoutY(40);
                         VBox boundryImageVBox = new VBox();
-                        boundryImageVBox.setPrefWidth(95);
-                        boundryImageVBox.setPrefHeight(75);
-                        boundryImageVBox.setAlignment(Pos.CENTER);
                         boundryImageVBox.getChildren().add(imageView);
-                        boundryImageVBox.setStyle("-fx-border-width: 2; -fx-border-color: #B7B7B7;");
+                        boundryImageVBox.setAlignment(Pos.TOP_CENTER);
+                        boundryImageVBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7; -fx-background-color: #FFFFFF;");
                         imageVBox.getChildren().add(boundryImageVBox);
+                        imageVBox.setPrefWidth(110);
                         System.out.println("Image has been downloaded and loaded.");
                     } else {
                         imageFromUrl = new Image("/pictures/unavailable_product_picture.png");
                         ImageView imageView = new ImageView();
                         imageView.setImage(imageFromUrl);
-                        imageView.setFitWidth(90);
+                        imageView.setFitWidth(110);
+                        imageView.setFitHeight(110);
                         imageView.setPreserveRatio(true);
-//                    imageView.setLayoutX(20);
-//                    imageView.setLayoutY(40);
                         VBox boundryImageVBox = new VBox();
                         boundryImageVBox.getChildren().add(imageView);
-                        boundryImageVBox.setStyle("-fx-border-width: 2; -fx-border-color: #B7B7B7;");
+                        boundryImageVBox.setAlignment(Pos.TOP_CENTER);
+                        boundryImageVBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7; -fx-background-color: #FFFFFF;");
                         imageVBox.getChildren().add(boundryImageVBox);
+                        imageVBox.setPrefWidth(110);
                         System.out.println("Default image has been loaded.");
                     }
 
@@ -1140,8 +1137,10 @@ public class DashboardController extends Main implements Initializable {
                     imageView.setPreserveRatio(true);
                     VBox boundryImageVBox = new VBox();
                     boundryImageVBox.getChildren().add(imageView);
-                    boundryImageVBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7;");
+                    boundryImageVBox.setAlignment(Pos.TOP_CENTER);
+                    boundryImageVBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7; -fx-background-color: #FFFFFF;");
                     imageVBox.getChildren().add(boundryImageVBox);
+                    imageVBox.setPrefWidth(110);
                     System.out.println("Default image has been loaded.");
                 }
             }

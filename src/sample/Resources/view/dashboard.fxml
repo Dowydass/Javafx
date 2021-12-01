@@ -20,7 +20,11 @@
                 <ListView fx:id="listView" editable="true" onMouseClicked="#mouseEventForListView" prefHeight="200.0" prefWidth="200.0" />
             </content></TitledPane>
         <Label layoutX="954.0" layoutY="40.0" text="Statusas:" AnchorPane.rightAnchor="341.0" AnchorPane.topAnchor="40.0" />
-        <Pane fx:id="right_panel_pane" layoutX="928.0" layoutY="113.0" prefWidth="409.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="85.99999999999994" />
+      <ScrollPane fx:id="right_panel_root_scroll_pane" hbarPolicy="NEVER" layoutX="928.0" layoutY="85.0" prefHeight="446.0" prefWidth="410.0" vbarPolicy="ALWAYS" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="85.0">
+         <content>
+              <Pane fx:id="right_panel_pane" prefWidth="409.0" />
+         </content>
+      </ScrollPane>
         <Label fx:id="current_session_user_email" layoutX="1012.0" layoutY="59.0" prefHeight="17.0" prefWidth="195.0" style="-fx-font-weight: bold;" text="Example@example.com" AnchorPane.rightAnchor="135.0" AnchorPane.topAnchor="59.0" />
         <Label fx:id="countAll" alignment="CENTER" layoutX="389.0" layoutY="519.0" prefHeight="17.0" prefWidth="537.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="389.0" AnchorPane.rightAnchor="416.0" />
         <TextField fx:id="tableViewSearchField" layoutX="387.0" layoutY="29.0" onKeyPressed="#tableViewSearchFunction" prefHeight="25.0" prefWidth="537.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="418.0" AnchorPane.topAnchor="29.0" />

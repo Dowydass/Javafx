@@ -72,6 +72,8 @@ public class DashboardController extends Main implements Initializable {
 
     // Dešinės panelės label
     @FXML
+    public ScrollPane right_panel_root_scroll_pane;
+    @FXML
     public Pane right_panel_pane;
     @FXML
     public ProgressIndicator loadProgress;
@@ -871,248 +873,228 @@ public class DashboardController extends Main implements Initializable {
     // Jei egzistuoja, ištraukiami visi duomenys ir užpildoma dešinė panelė.
 
     public void firstFillDescriptionPanel() {
-        HBox mainHBox = new HBox();
-        mainHBox.setAlignment(Pos.CENTER);
         Label infoLabel = new Label();
         infoLabel.setAlignment(Pos.CENTER);
         infoLabel.setLayoutY(140);
         infoLabel.setLayoutX(70);
         infoLabel.setStyle("-fx-font-style: italic; -fx-font-size: 14;");
         infoLabel.setText("Pasirinkite produktą iš sąrašo,\nkad detali informacija būtų atvaizduota...");
-        mainHBox.getChildren().add(infoLabel);
+
+        right_panel_pane.setMinWidth(399);
+        right_panel_pane.prefHeight(397);
+        right_panel_pane.prefWidth(399);
+        right_panel_pane.setMaxWidth(399);
+
         right_panel_pane.getChildren().add(infoLabel);
-//        propertyLabelVBox = new VBox();
+        right_panel_root_scroll_pane.setContent(right_panel_pane);
+        right_panel_root_scroll_pane.setStyle("-fx-border-width: 2, 2, 2, 2; -fx-border-color: #B7B7B7;");
 
     }
 
     VBox right_panel_main_vbox = new VBox();
     VBox smallerPropertyLabelVBox = new VBox();
     VBox largerPropertyLabelVBox = new VBox();
-    ScrollPane sc = new ScrollPane();
-
     int guiLineCounter;
 
-    public void fillDescriptionPanel(String catalogNoImported) {
-        guiLineCounter = 0;
+    private void clearElementsFromDescriptionPanel() {
         right_panel_pane.getChildren().clear();
-        right_panel_pane.setMinWidth(410);
-        right_panel_pane.prefHeight(397);
-        right_panel_pane.prefWidth(410);
-        right_panel_pane.setMaxWidth(410);
-
         right_panel_main_vbox.getChildren().clear();
         smallerPropertyLabelVBox.getChildren().clear();
         largerPropertyLabelVBox.getChildren().clear();
+    }
+
+    public void fillDescriptionPanel(String catalogNoImported) {
+        guiLineCounter = 0;
+        clearElementsFromDescriptionPanel();
 
         HBox joinedInformationPanelWithImageHBox = new HBox();
         HBox seperateLargerInformationHBox = new HBox();
-//        joinedInformationPanelWithImageHBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7;");
-        joinedInformationPanelWithImageHBox.setPadding(new Insets(5, 3, 2, 3));
-
-//        right_panel_main_vbox.setMinWidth(410);
-//        right_panel_main_vbox.prefHeight(397);
-//        right_panel_main_vbox.prefWidth(410);
-//        right_panel_main_vbox.setMaxWidth(410);
 
         right_panel_pane.getChildren().add(right_panel_main_vbox);
-
-        sc.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 
         VBox informationPanelVBox = new VBox();
         VBox imageVBox = new VBox();
 
-        smallerPropertyLabelVBox.setPadding(new Insets(5, 15, 0, 15));
-        largerPropertyLabelVBox.setPadding(new Insets(0, 15, 5, 18));
+        smallerPropertyLabelVBox.setPadding(new Insets(10, 5, 0, 15));
+        largerPropertyLabelVBox.setPadding(new Insets(0, 5, 5, 15));
 
+        right_panel_main_vbox.setMaxWidth(399);
         smallerPropertyLabelVBox.setMinWidth(260);
-        imageVBox.setPadding(new Insets(7, 7, 7, 15));
-        imageVBox.setAlignment(Pos.TOP_CENTER);
+        smallerPropertyLabelVBox.setMaxWidth(260);
+        imageVBox.setPadding(new Insets(15, 0, 5, 5));
+        imageVBox.setAlignment(Pos.TOP_RIGHT);
         setRightPanelLabelY(40);
 
         fullProductList.forEach(irasas -> {
             if (irasas.getCatalogNo() == catalogNoImported) {
-                Label symbolProperty = new Label();
-                symbolProperty.setWrapText(true);
-                symbolProperty.setMinWidth(410);
-                symbolProperty.prefWidth(412);
-                symbolProperty.setMinHeight(24);
-                symbolProperty.setMaxHeight(50);
-                symbolProperty.setMaxWidth(410);
-                symbolProperty.setAlignment(Pos.CENTER_LEFT);
-                symbolProperty.setPadding(new Insets(3, 5, 3, 5));
-                symbolProperty.setStyle("-fx-font-size: 12; -fx-font-weight: bold; -fx-background-color: linear-gradient(to top, #D9D9D9, #EDEDED); -fx-border-width: 1; -fx-border-color: #c8c8c8; -fx-border-radius: 1;");
-                symbolProperty.setText(irasas.getSymbol());
-                right_panel_main_vbox.getChildren().add(symbolProperty);
 
+                setItemDescriptionTab(irasas.getSymbol());
 
-                HBox catalogNoProperty = setCatalogDescriptionAndProperty(String.valueOf(irasas.getCatalogNo()));
-                smallerPropertyLabelVBox.getChildren().add(catalogNoProperty);
+                setCatalogDescriptionAndProperty(String.valueOf(irasas.getCatalogNo()));
 
-                HBox priceNetProperty = setPriceDescriptionAndProperty(String.valueOf(irasas.getPriceNet()));
-                smallerPropertyLabelVBox.getChildren().add(priceNetProperty);
+                setPriceDescriptionAndProperty(String.valueOf(irasas.getPriceNet()));
 
                 if (irasas.getCuAmount() > 0) {
-                    setLargerPartOfGuiTextElements("Vario kiekis: ", String.valueOf(irasas.getCuAmount()));
+                    guiFillerTypePicker("Vario kiekis: ", String.valueOf(irasas.getCuAmount()));
                 }
                 if (irasas.getCuPrice() > 0) {
-                    setLargerPartOfGuiTextElements("Vario kaina: ", String.valueOf(irasas.getCuPrice()));
+                    guiFillerTypePicker("Vario kaina: ", String.valueOf(irasas.getCuPrice()));
                 }
                 if (irasas.getGamintojas() != null && irasas.getGamintojas().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Gamintojas: ", String.valueOf(irasas.getGamintojas()));
+                    guiFillerTypePicker("Gamintojas: ", String.valueOf(irasas.getGamintojas()));
                 }
                 if (irasas.getAukstis() > 0) {
-                    setLargerPartOfGuiTextElements("Aukštis: ", String.valueOf(irasas.getAukstis()));
+                    guiFillerTypePicker("Aukštis: ", String.valueOf(irasas.getAukstis()));
                 }
                 if (irasas.getPlotis() > 0) {
-                    setLargerPartOfGuiTextElements("Plotis: ", String.valueOf(irasas.getPlotis()));
+                    guiFillerTypePicker("Plotis: ", String.valueOf(irasas.getPlotis()));
                 }
                 if (irasas.getGylis() > 0) {
-                    setLargerPartOfGuiTextElements("Gylis: ", String.valueOf(irasas.getGylis()));
+                    guiFillerTypePicker("Gylis: ", String.valueOf(irasas.getGylis()));
                 }
                 if (irasas.getSkersmuo() != 0) {
-                    setLargerPartOfGuiTextElements("Skersmuo: ", String.valueOf(irasas.getSkersmuo()));
+                    guiFillerTypePicker("Skersmuo: ", String.valueOf(irasas.getSkersmuo()));
                 }
                 if (irasas.getIlgis() > 0) {
-                    setLargerPartOfGuiTextElements("Ilgis: ", String.valueOf(irasas.getIlgis()));
-                }
-                if (irasas.getApsaugos_laipsnis() != null && !irasas.getApsaugos_laipsnis().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Apsaugos laipsnis: ", String.valueOf(irasas.getApsaugos_laipsnis()));
+                    guiFillerTypePicker("Ilgis: ", String.valueOf(irasas.getIlgis()));
                 }
                 if (irasas.getModuliu_skaicius() > 0) {
-                    setLargerPartOfGuiTextElements("Modulių skaičius: ", String.valueOf(irasas.getModuliu_skaicius()));
+                    guiFillerTypePicker("Modulių skaičius: ", String.valueOf(irasas.getModuliu_skaicius()));
                 }
                 if (irasas.getVardine_itampa() != null) {
-                    setLargerPartOfGuiTextElements("Vardinė įtampa: ", String.valueOf(irasas.getVardine_itampa()));
+                    guiFillerTypePicker("Vardinė įtampa: ", String.valueOf(irasas.getVardine_itampa()));
                 }
                 if (irasas.getVardine_srove() != null) {
-                    setLargerPartOfGuiTextElements("Vardinė srovė: ", String.valueOf(irasas.getVardine_srove()));
-                }
-                if (irasas.getMechaninis_atsparumas_IK() != null && !irasas.getMechaninis_atsparumas_IK().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Mechaninis atsparumas IK: ", String.valueOf(irasas.getMechaninis_atsparumas_IK()));
+                    guiFillerTypePicker("Vardinė srovė: ", String.valueOf(irasas.getVardine_srove()));
                 }
                 if (irasas.getStoris() > 0) {
-                    setSmallerPartOfGuiTextElements("Storis: ", String.valueOf(irasas.getStoris()));
-                }
-                if (irasas.getSpalva() != null && !irasas.getSpalva().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Spalva: ", String.valueOf(irasas.getSpalva()));
-                }
-                if (irasas.getKorpuso_medziaga() != null && !irasas.getKorpuso_medziaga().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Korpuso medžiaga: ", String.valueOf(irasas.getKorpuso_medziaga()));
-                }
-                if (irasas.getIzoliacija() != null && !irasas.getIzoliacija().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Izoliacija: ", String.valueOf(irasas.getIzoliacija()));
+                    guiFillerTypePicker("Storis: ", String.valueOf(irasas.getStoris()));
                 }
                 if (irasas.getSvoris() != 0) {
-                    setLargerPartOfGuiTextElements("Svoris: ", String.valueOf(irasas.getSvoris()));
+                    guiFillerTypePicker("Svoris: ", String.valueOf(irasas.getSvoris()));
                 }
                 if (irasas.getGalia() != null) {
-                    setLargerPartOfGuiTextElements("Galia: ", String.valueOf(irasas.getGalia()));
-                }
-                if (irasas.getSviesos_srautas() > 0) {
-                    setLargerPartOfGuiTextElements("Šviesos srautas: ", String.valueOf(irasas.getSviesos_srautas()));
-                }
-
-                if (irasas.getSviesos_spalvos_temperatura() != null && !irasas.getSviesos_spalvos_temperatura().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Spalvos temperatūra: ", String.valueOf(irasas.getSviesos_spalvos_temperatura()));
-                }
-                if (irasas.getLaidininkas() != null && !irasas.getLaidininkas().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Laidininkas: ", String.valueOf(irasas.getLaidininkas()));
-                }
-                if (irasas.getLaidininkoIzoliacija() != null && !irasas.getLaidininkoIzoliacija().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Laidininko izoliacija: ", String.valueOf(irasas.getLaidininkoIzoliacija()));
+                    guiFillerTypePicker("Galia: ", String.valueOf(irasas.getGalia()));
                 }
                 if (irasas.getDarbine_temperatura() != null) {
-                    setLargerPartOfGuiTextElements("Darbinė temperatūra: ", String.valueOf(irasas.getDarbine_temperatura()));
-                }
-                if (irasas.getMax_darbine_temperatura() != null) {
-                    setLargerPartOfGuiTextElements("Maks. darbinė temperatūra: ", String.valueOf(irasas.getMax_darbine_temperatura()));
-                }
-                if (irasas.getApsvieta() != null) {
-                    setLargerPartOfGuiTextElements("Apšvieta: ", String.valueOf(irasas.getApsvieta()));
-                }
-                if (irasas.getApvalkalas() != null && !irasas.getApvalkalas().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Apvalkalas: ", String.valueOf(irasas.getCuAmount()));
-                }
-                if (irasas.getCpr_klase() != null && !irasas.getCpr_klase().isEmpty()) {
-                    setLargerPartOfGuiTextElements("CPR klasė: ", String.valueOf(irasas.getCpr_klase()));
+                    guiFillerTypePicker("Darbinė temperatūra: ", String.valueOf(irasas.getDarbine_temperatura()));
                 }
                 if (irasas.getIsjungimo_geba() != null && !irasas.getIsjungimo_geba().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Išjungimo geba: ", String.valueOf(irasas.getIsjungimo_geba()));
-                }
-                if (irasas.getIsjungimo_charakteristika() != null && !irasas.getIsjungimo_charakteristika().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Išjungimo charakteristika: ", String.valueOf(irasas.getIsjungimo_charakteristika()));
-                }
-                if (irasas.getMechaninis_atsparumas() != null && !irasas.getMechaninis_atsparumas().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Mechaninis atsparumas: ", String.valueOf(irasas.getMechaninis_atsparumas()));
-                }
-                if (irasas.getSkerspjuvis_Al() != null && !irasas.getSkerspjuvis_Al().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Skerspjūvis AL: ", String.valueOf(irasas.getSkerspjuvis_Al()));
-                }
-                if (irasas.getSkerspjuvis_Cu() != null && !irasas.getSkerspjuvis_Cu().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Skerspjūvis CU: ", String.valueOf(irasas.getSkerspjuvis_Cu()));
+                    guiFillerTypePicker("Išjungimo geba: ", String.valueOf(irasas.getIsjungimo_geba()));
                 }
                 if (irasas.getNuotekio_srove() != null && !irasas.getNuotekio_srove().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Nuotėkio srovė: ", String.valueOf(irasas.getNuotekio_srove()));
+                    guiFillerTypePicker("Nuotėkio srovė: ", String.valueOf(irasas.getNuotekio_srove()));
                 }
                 if (irasas.getDydis() != null) {
-                    setLargerPartOfGuiTextElements("Dydis: ", String.valueOf(irasas.getDydis()));
+                    guiFillerTypePicker("Dydis: ", String.valueOf(irasas.getDydis()));
                 }
                 if (irasas.getPlotas() != null && !irasas.getPlotas().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Plotas: ", String.valueOf(irasas.getPlotas()));
-                }
-                if (irasas.getAptikimoZona() != null && !irasas.getAptikimoZona().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Aptikimo zona: ", String.valueOf(irasas.getAptikimoZona()));
-                }
-                if (irasas.getMaksimaliDarbineItampa() != null && !irasas.getMaksimaliDarbineItampa().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Maksimali darbinė temp.: ", String.valueOf(irasas.getDarbine_temperatura()));
-                }
-                if (irasas.getIskrovimoSrove820() != null && !irasas.getIskrovimoSrove820().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Iškrovimo srovė 8.20: ", String.valueOf(irasas.getIskrovimoSrove820()));
-                }
-                if (irasas.getIskrovimoSrove10350() != null && !irasas.getIskrovimoSrove10350().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Iškrovimo srovė 10.350: ", String.valueOf(irasas.getIskrovimoSrove10350()));
-                }
-                if (irasas.getItamposApsaugosLygis() != null && !irasas.getItamposApsaugosLygis().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Įtampos apsaugos lygis: ", String.valueOf(irasas.getItamposApsaugosLygis()));
-                }
-                if (irasas.getKategorija() != null && !irasas.getKategorija().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Kategorija: ", String.valueOf(irasas.getKategorija()));
+                    guiFillerTypePicker("Plotas: ", String.valueOf(irasas.getPlotas()));
                 }
                 if (irasas.getCRI() > 0) {
-                    setLargerPartOfGuiTextElements("CRI: ", String.valueOf(irasas.getCRI()));
+                    guiFillerTypePicker("CRI: ", String.valueOf(irasas.getCRI()));
                 }
                 if (irasas.getGarantija() != null && !irasas.getGarantija().isEmpty()) {
-                    setSmallerPartOfGuiTextElements("Garantija: ", String.valueOf(irasas.getGarantija()));
-                }
-                if (irasas.getSertifikatai() != null && !irasas.getSertifikatai().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Sertifikatas: ", String.valueOf(irasas.getSertifikatai()));
-                }
-                if (irasas.getNemaJungtis() != null && !irasas.getNemaJungtis().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Nema jungtis: ", String.valueOf(irasas.getNemaJungtis()));
-                }
-                if (irasas.getVirsitampiuApsauga() != null && !irasas.getVirsitampiuApsauga().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Viršįtampių apsauga: ", String.valueOf(irasas.getVirsitampiuApsauga()));
-                }
-                if (irasas.getIlgaamziskumas() != null && !irasas.getIlgaamziskumas().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Ilgaamžiškumas: ", String.valueOf(irasas.getIlgaamziskumas()));
-                }
-                if (irasas.getKorpusoAtidarymas() != null && !irasas.getKorpusoAtidarymas().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Korpuso atidarymas: ", String.valueOf(irasas.getKorpusoAtidarymas()));
-                }
-                if (irasas.getOptinesIrElektrinesDaliesPertvara() != null && !irasas.getOptinesIrElektrinesDaliesPertvara().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Optinės ir elektrinės dalies pertvara: ", String.valueOf(irasas.getOptinesIrElektrinesDaliesPertvara()));
-                }
-                if (irasas.getValdymas() != null && !irasas.getValdymas().isEmpty()) {
-                    setLargerPartOfGuiTextElements("Valdymas: ", String.valueOf(irasas.getValdymas()));
+                    guiFillerTypePicker("Garantija: ", String.valueOf(irasas.getGarantija()));
                 }
                 if (irasas.getApatinisDiametras() > 0) {
-                    setLargerPartOfGuiTextElements("Apatinis diametras: ", String.valueOf(irasas.getApatinisDiametras()));
+                    guiFillerTypePicker("Apatinis diametras: ", String.valueOf(irasas.getApatinisDiametras()));
                 }
                 if (irasas.getVirsutinisDiametras() > 0) {
-                    setLargerPartOfGuiTextElements("Viršutinis diametras: ", String.valueOf(irasas.getVirsutinisDiametras()));
+                    guiFillerTypePicker("Viršutinis diametras: ", String.valueOf(irasas.getVirsutinisDiametras()));
                 }
                 if (irasas.getGembesDiametras() > 0) {
-                    setLargerPartOfGuiTextElements("Gembės diametras: ", String.valueOf(irasas.getGembesDiametras()));
+                    guiFillerTypePicker("Gembės diametras: ", String.valueOf(irasas.getGembesDiametras()));
+                }
+                if (irasas.getApsaugos_laipsnis() != null && !irasas.getApsaugos_laipsnis().isEmpty()) {
+                    guiFillerTypePicker("Apsaugos laipsnis: ", String.valueOf(irasas.getApsaugos_laipsnis()));
+                }
+                if (irasas.getMechaninis_atsparumas_IK() != null && !irasas.getMechaninis_atsparumas_IK().isEmpty()) {
+                    guiFillerTypePicker("Mechaninis atsparumas IK: ", String.valueOf(irasas.getMechaninis_atsparumas_IK()));
+                }
+                if (irasas.getKorpuso_medziaga() != null && !irasas.getKorpuso_medziaga().isEmpty()) {
+                    guiFillerTypePicker("Korpuso medžiaga: ", String.valueOf(irasas.getKorpuso_medziaga()));
+                }
+                if (irasas.getIzoliacija() != null && !irasas.getIzoliacija().isEmpty()) {
+                    guiFillerTypePicker("Izoliacija: ", String.valueOf(irasas.getIzoliacija()));
+                }
+                if (irasas.getSviesos_srautas() > 0) {
+                    guiFillerTypePicker("Šviesos srautas: ", String.valueOf(irasas.getSviesos_srautas()));
+                }
+                if (irasas.getSviesos_spalvos_temperatura() != null && !irasas.getSviesos_spalvos_temperatura().isEmpty()) {
+                    guiFillerTypePicker("Spalvos temperatūra: ", String.valueOf(irasas.getSviesos_spalvos_temperatura()));
+                }
+                if (irasas.getLaidininkas() != null && !irasas.getLaidininkas().isEmpty()) {
+                    guiFillerTypePicker("Laidininkas: ", String.valueOf(irasas.getLaidininkas()));
+                }
+                if (irasas.getLaidininkoIzoliacija() != null && !irasas.getLaidininkoIzoliacija().isEmpty()) {
+                    guiFillerTypePicker("Laidininko izoliacija: ", String.valueOf(irasas.getLaidininkoIzoliacija()));
+                }
+                if (irasas.getMax_darbine_temperatura() != null) {
+                    guiFillerTypePicker("Maks. darbinė temperatūra: ", String.valueOf(irasas.getMax_darbine_temperatura()));
+                }
+                if (irasas.getApsvieta() != null) {
+                    guiFillerTypePicker("Apšvieta: ", String.valueOf(irasas.getApsvieta()));
+                }
+                if (irasas.getApvalkalas() != null && !irasas.getApvalkalas().isEmpty()) {
+                    guiFillerTypePicker("Apvalkalas: ", String.valueOf(irasas.getCuAmount()));
+                }
+                if (irasas.getCpr_klase() != null && !irasas.getCpr_klase().isEmpty()) {
+                    guiFillerTypePicker("CPR klasė: ", String.valueOf(irasas.getCpr_klase()));
+                }
+                if (irasas.getSpalva() != null && !irasas.getSpalva().isEmpty()) {
+                    guiFillerTypePicker("Spalva: ", String.valueOf(irasas.getSpalva()));
+                }
+                if (irasas.getIsjungimo_charakteristika() != null && !irasas.getIsjungimo_charakteristika().isEmpty()) {
+                    guiFillerTypePicker("Išjungimo charakteristika: ", String.valueOf(irasas.getIsjungimo_charakteristika()));
+                }
+                if (irasas.getMechaninis_atsparumas() != null && !irasas.getMechaninis_atsparumas().isEmpty()) {
+                    guiFillerTypePicker("Mechaninis atsparumas: ", String.valueOf(irasas.getMechaninis_atsparumas()));
+                }
+                if (irasas.getSkerspjuvis_Al() != null && !irasas.getSkerspjuvis_Al().isEmpty()) {
+                    guiFillerTypePicker("Skerspjūvis AL: ", String.valueOf(irasas.getSkerspjuvis_Al()));
+                }
+                if (irasas.getSkerspjuvis_Cu() != null && !irasas.getSkerspjuvis_Cu().isEmpty()) {
+                    guiFillerTypePicker("Skerspjūvis CU: ", String.valueOf(irasas.getSkerspjuvis_Cu()));
+                }
+                if (irasas.getAptikimoZona() != null && !irasas.getAptikimoZona().isEmpty()) {
+                    guiFillerTypePicker("Aptikimo zona: ", String.valueOf(irasas.getAptikimoZona()));
+                }
+                if (irasas.getMaksimaliDarbineItampa() != null && !irasas.getMaksimaliDarbineItampa().isEmpty()) {
+                    guiFillerTypePicker("Maksimali darbinė temp.: ", String.valueOf(irasas.getDarbine_temperatura()));
+                }
+                if (irasas.getIskrovimoSrove820() != null && !irasas.getIskrovimoSrove820().isEmpty()) {
+                    guiFillerTypePicker("Iškrovimo srovė 8.20: ", String.valueOf(irasas.getIskrovimoSrove820()));
+                }
+                if (irasas.getIskrovimoSrove10350() != null && !irasas.getIskrovimoSrove10350().isEmpty()) {
+                    guiFillerTypePicker("Iškrovimo srovė 10.350: ", String.valueOf(irasas.getIskrovimoSrove10350()));
+                }
+                if (irasas.getItamposApsaugosLygis() != null && !irasas.getItamposApsaugosLygis().isEmpty()) {
+                    guiFillerTypePicker("Įtampos apsaugos lygis: ", String.valueOf(irasas.getItamposApsaugosLygis()));
+                }
+                if (irasas.getKategorija() != null && !irasas.getKategorija().isEmpty()) {
+                    guiFillerTypePicker("Kategorija: ", String.valueOf(irasas.getKategorija()));
+                }
+                if (irasas.getSertifikatai() != null && !irasas.getSertifikatai().isEmpty()) {
+                    guiFillerTypePicker("Sertifikatas: ", String.valueOf(irasas.getSertifikatai()));
+                }
+                if (irasas.getNemaJungtis() != null && !irasas.getNemaJungtis().isEmpty()) {
+                    guiFillerTypePicker("Nema jungtis: ", String.valueOf(irasas.getNemaJungtis()));
+                }
+                if (irasas.getVirsitampiuApsauga() != null && !irasas.getVirsitampiuApsauga().isEmpty()) {
+                    guiFillerTypePicker("Viršįtampių apsauga: ", String.valueOf(irasas.getVirsitampiuApsauga()));
+                }
+                if (irasas.getIlgaamziskumas() != null && !irasas.getIlgaamziskumas().isEmpty()) {
+                    guiFillerTypePicker("Ilgaamžiškumas: ", String.valueOf(irasas.getIlgaamziskumas()));
+                }
+                if (irasas.getKorpusoAtidarymas() != null && !irasas.getKorpusoAtidarymas().isEmpty()) {
+                    guiFillerTypePicker("Korpuso atidarymas: ", String.valueOf(irasas.getKorpusoAtidarymas()));
+                }
+                if (irasas.getOptinesIrElektrinesDaliesPertvara() != null && !irasas.getOptinesIrElektrinesDaliesPertvara().isEmpty()) {
+                    guiFillerTypePicker("Optinės ir elektrinės dalies pertvara: ", String.valueOf(irasas.getOptinesIrElektrinesDaliesPertvara()));
+                }
+                if (irasas.getValdymas() != null && !irasas.getValdymas().isEmpty()) {
+                    guiFillerTypePicker("Valdymas: ", String.valueOf(irasas.getValdymas()));
                 }
 
                 if (irasas.getImage_url() != null && !irasas.getImage_url().isEmpty()) {
@@ -1120,32 +1102,29 @@ public class DashboardController extends Main implements Initializable {
                     if (imageFromUrl.getProgress() == 1 && !imageFromUrl.isError()) {
                         ImageView imageView = new ImageView();
                         imageView.setImage(imageFromUrl);
-//                    imageView.setFitWidth(125);
-                        imageView.setFitHeight(70);
-                        imageView.setFitWidth(90);
+                        imageView.setFitWidth(110);
+                        imageView.setFitHeight(110);
                         imageView.setPreserveRatio(true);
-//                    imageView.setLayoutX(20);
-//                    imageView.setLayoutY(40);
                         VBox boundryImageVBox = new VBox();
-                        boundryImageVBox.setPrefWidth(95);
-                        boundryImageVBox.setPrefHeight(75);
-                        boundryImageVBox.setAlignment(Pos.CENTER);
                         boundryImageVBox.getChildren().add(imageView);
-                        boundryImageVBox.setStyle("-fx-border-width: 2; -fx-border-color: #B7B7B7;");
+                        boundryImageVBox.setAlignment(Pos.TOP_CENTER);
+                        boundryImageVBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7; -fx-background-color: #FFFFFF;");
                         imageVBox.getChildren().add(boundryImageVBox);
+                        imageVBox.setPrefWidth(110);
                         System.out.println("Image has been downloaded and loaded.");
                     } else {
                         imageFromUrl = new Image("/pictures/unavailable_product_picture.png");
                         ImageView imageView = new ImageView();
                         imageView.setImage(imageFromUrl);
-                        imageView.setFitWidth(90);
+                        imageView.setFitWidth(110);
+                        imageView.setFitHeight(110);
                         imageView.setPreserveRatio(true);
-//                    imageView.setLayoutX(20);
-//                    imageView.setLayoutY(40);
                         VBox boundryImageVBox = new VBox();
                         boundryImageVBox.getChildren().add(imageView);
-                        boundryImageVBox.setStyle("-fx-border-width: 2; -fx-border-color: #B7B7B7;");
+                        boundryImageVBox.setAlignment(Pos.TOP_CENTER);
+                        boundryImageVBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7; -fx-background-color: #FFFFFF;");
                         imageVBox.getChildren().add(boundryImageVBox);
+                        imageVBox.setPrefWidth(110);
                         System.out.println("Default image has been loaded.");
                     }
 
@@ -1153,107 +1132,92 @@ public class DashboardController extends Main implements Initializable {
                     Image imageFromUrl = new Image("/pictures/unavailable_product_picture.png");
                     ImageView imageView = new ImageView();
                     imageView.setImage(imageFromUrl);
-                    imageView.setFitWidth(90);
+                    imageView.setFitWidth(110);
+                    imageView.setFitHeight(110);
                     imageView.setPreserveRatio(true);
-//                    imageView.setLayoutX(20);
-//                    imageView.setLayoutY(40);
                     VBox boundryImageVBox = new VBox();
                     boundryImageVBox.getChildren().add(imageView);
-                    boundryImageVBox.setStyle("-fx-border-width: 2; -fx-border-color: #B7B7B7;");
+                    boundryImageVBox.setAlignment(Pos.TOP_CENTER);
+                    boundryImageVBox.setStyle("-fx-border-width: 3; -fx-border-color: #B7B7B7; -fx-background-color: #FFFFFF;");
                     imageVBox.getChildren().add(boundryImageVBox);
+                    imageVBox.setPrefWidth(110);
                     System.out.println("Default image has been loaded.");
                 }
             }
         });
 
-        joinedInformationPanelWithImageHBox.getChildren().add(imageVBox);
         joinedInformationPanelWithImageHBox.getChildren().add(smallerPropertyLabelVBox);
+        joinedInformationPanelWithImageHBox.getChildren().add(imageVBox);
         seperateLargerInformationHBox.getChildren().add(largerPropertyLabelVBox);
         informationPanelVBox.getChildren().addAll(joinedInformationPanelWithImageHBox, seperateLargerInformationHBox);
+//        informationPanelVBox.setStyle("-fx-border-width: 3, 3, 3, 3; -fx-border-color: #B7B7B7;");
 
-        informationPanelVBox.setStyle("-fx-border-width: 2, 0, 2, 2; -fx-border-insets: 3, 3, 3, 3; -fx-border-color: #B7B7B7;");
-        sc.setContent(informationPanelVBox);
+        right_panel_main_vbox.getChildren().add(informationPanelVBox);
+    }
 
-//        right_panel_main_vbox.setPrefHeight(445);
-        right_panel_main_vbox.getChildren().add(sc);
+    public void setItemDescriptionTab(String symbol) {
+        Label symbolProperty = new Label();
+        symbolProperty.setWrapText(true);
+        symbolProperty.setMinWidth(390);
+        symbolProperty.prefWidth(390);
+        symbolProperty.setMinHeight(24);
+        symbolProperty.setMaxHeight(50);
+        symbolProperty.setMaxWidth(390);
+        symbolProperty.setAlignment(Pos.CENTER_LEFT);
+        symbolProperty.setPadding(new Insets(5, 5, 5, 5));
+        symbolProperty.setStyle("-fx-font-size: 12; -fx-font-weight: bold; -fx-background-color: linear-gradient(to top, #D9D9D9, #EDEDED); -fx-border-width: 2; -fx-border-color: #c8c8c8; -fx-border-radius: 1;");
+        symbolProperty.setText(symbol);
+        right_panel_main_vbox.getChildren().add(symbolProperty);
     }
 
 
-    // Info panelė yra padalinti į dvi dalis. Viršutinę - kuri eina su iš dešinės paveikslėliu
-    // Ir apatine kuri išnaudoja visą plotį. Metodas skaičiuoja eilutes ir pagal skaičių
-    // Mato į kurią dalį kelti label'ius
-//    public void guiFillerTypePicker(String descriptionText, String propertyText) {
-//        if (guiLineCounter < 3) {
-//            setSmallerPartOfGuiTextElements(descriptionText, propertyText);
-//        } else {
-//            setLargerPartOfGuiTextElements(descriptionText, propertyText);
-//        }
-//    }
-
-
-    public void setLargerPartOfGuiTextElements(String descriptionText, String propertyText) {
-//        guiLineCounter++;
-
+    public HBox storeStandartLabelWidthDescriptionProperty(String descriptionText, String propertyText) {
         Label descriptionLabel = new Label();
         Label propertyLabel = new Label();
+
+        HBox descriptionAndProperty = new HBox();
 
         descriptionLabel.setWrapText(true);
         propertyLabel.setWrapText(true);
 
-        VBox description = new VBox();
-        VBox property = new VBox();
-        HBox descriptionAntProperty = new HBox();
-
-
-        descriptionAntProperty.setPadding(new Insets(1, 1, 1, 1));
+        descriptionAndProperty.setPadding(new Insets(2, 2, 2, 2));
         descriptionLabel.setStyle("-fx-font-size: 12;");
         propertyLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 12;");
 
         descriptionLabel.setText(descriptionText);
         propertyLabel.setText(propertyText);
 
-        description.getChildren().add(descriptionLabel);
-        property.getChildren().add(propertyLabel);
-        descriptionAntProperty.getChildren().add(description);
-        descriptionAntProperty.getChildren().add(property);
 
-        largerPropertyLabelVBox.getChildren().add(descriptionAntProperty);
+        descriptionAndProperty.getChildren().add(descriptionLabel);
+        descriptionAndProperty.getChildren().add(propertyLabel);
+
+        return descriptionAndProperty;
     }
-
-    public void setSmallerPartOfGuiTextElements(String descriptionText, String propertyText) {
+    // Info panelė yra padalinti į dvi dalis. Viršutinę - kuri eina su iš dešinės paveikslėliu
+    // Ir apatine kuri išnaudoja visą plotį. Metodas skaičiuoja eilutes ir pagal skaičių
+    // Mato į kurią dalį kelti label'ius
+    public void guiFillerTypePicker(String descriptionText, String propertyText) {
         guiLineCounter++;
-
-        if (guiLineCounter < 3) {
-            Label descriptionLabel = new Label();
-            Label propertyLabel = new Label();
-
-            descriptionLabel.setWrapText(true);
-            propertyLabel.setWrapText(true);
-
-            VBox description = new VBox();
-            VBox property = new VBox();
-            HBox descriptionAntProperty = new HBox();
-
-            descriptionLabel.setStyle("-fx-font-size: 14;");
-            propertyLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14;");
-            descriptionAntProperty.setPadding(new Insets(1, 1, 1, 1));
-
-
-            descriptionLabel.setText(descriptionText);
-            propertyLabel.setText(propertyText);
-
-            description.getChildren().add(descriptionLabel);
-            property.getChildren().add(propertyLabel);
-            descriptionAntProperty.getChildren().add(description);
-            descriptionAntProperty.getChildren().add(property);
-
-            smallerPropertyLabelVBox.getChildren().add(descriptionAntProperty);
+        if (guiLineCounter < 6) {
+            setSmallerPartOfGuiTextElements(descriptionText, propertyText);
         } else {
             setLargerPartOfGuiTextElements(descriptionText, propertyText);
         }
     }
 
-    public HBox setCatalogDescriptionAndProperty(String propertyText) {
+
+    public void setLargerPartOfGuiTextElements(String descriptionText, String propertyText) {
+        HBox descriptionAntProperty = storeStandartLabelWidthDescriptionProperty(descriptionText, propertyText);
+        largerPropertyLabelVBox.getChildren().add(descriptionAntProperty);
+    }
+
+    public void setSmallerPartOfGuiTextElements(String descriptionText, String propertyText) {
+        HBox descriptionAntProperty = storeStandartLabelWidthDescriptionProperty(descriptionText, propertyText);
+        smallerPropertyLabelVBox.getChildren().add(descriptionAntProperty);
+    }
+
+    public void setCatalogDescriptionAndProperty(String propertyText) {
+
         Label descriptionLabel = new Label();
         Label propertyLabel = new Label();
 
@@ -1264,23 +1228,23 @@ public class DashboardController extends Main implements Initializable {
         VBox property = new VBox();
         HBox descriptionAndProperty = new HBox();
 
-        propertyLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14;");
+        propertyLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 12;");
 
         descriptionLabel.setText("Katalogo kodas:");
-        descriptionLabel.setStyle("-fx-underline: true; -fx-font-size: 14;");
+        descriptionLabel.setStyle("-fx-underline: true; -fx-font-size: 12;");
         propertyLabel.setText(" " + propertyText);
 
         description.getChildren().add(descriptionLabel);
         property.getChildren().add(propertyLabel);
         descriptionAndProperty.getChildren().add(description);
         descriptionAndProperty.getChildren().add(property);
-        descriptionAndProperty.setPadding(new Insets(1, 1, 1, 1));
+        descriptionAndProperty.setPadding(new Insets(2, 2, 2, 2));
 
+        smallerPropertyLabelVBox.getChildren().add(descriptionAndProperty);
 
-        return descriptionAndProperty;
     }
 
-    public HBox setPriceDescriptionAndProperty(String propertyText) {
+    public void setPriceDescriptionAndProperty(String propertyText) {
 
         Label descriptionLabel = new Label();
         Label propertyLabel = new Label();
@@ -1292,8 +1256,8 @@ public class DashboardController extends Main implements Initializable {
         VBox property = new VBox();
         HBox descriptionAndProperty = new HBox();
 
-        propertyLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 14;");
-        descriptionLabel.setStyle("-fx-font-size: 14;");
+        propertyLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 12;");
+        descriptionLabel.setStyle("-fx-font-size: 12;");
 
         descriptionLabel.setText("Kaina: ");
         propertyLabel.setText(propertyText + " EUR");
@@ -1302,10 +1266,10 @@ public class DashboardController extends Main implements Initializable {
         property.getChildren().add(propertyLabel);
         descriptionAndProperty.getChildren().add(description);
         descriptionAndProperty.getChildren().add(property);
-        descriptionAndProperty.setPadding(new Insets(1, 1, 1, 1));
+        descriptionAndProperty.setPadding(new Insets(2, 2, 2, 2));
 
 
-        return descriptionAndProperty;
+        smallerPropertyLabelVBox.getChildren().add(descriptionAndProperty);
     }
 
     private void currentSessionUserData() {

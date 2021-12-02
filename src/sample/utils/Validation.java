@@ -103,7 +103,7 @@ public class Validation {
 
     /* Naujo produkto kūrimo lango Validacija : Start */
 
-    public static final String PRODUCT_FORM_CU_AMOUNT_PATTERN = "^[0-9]{1,253}(\\.?[0-9]{1,2})$";
+    public static final String PRODUCT_FORM_CU_AMOUNT_PATTERN = "^[0-9]+(.|,)?[0-9]?$";
 
     public static boolean isValidCuAmount(String cuAmount) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_CU_AMOUNT_PATTERN);
@@ -111,7 +111,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_CU_PRICE_PATTERN = "^[0-9]{1,253}(\\.?[0-9]{1,2})$";
+    public static final String PRODUCT_FORM_CU_PRICE_PATTERN = "^[0-9]+(.|,)?[0-9]?$";
 
     public static boolean isValidCuPrice(String cuPrice) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_CU_PRICE_PATTERN);
@@ -127,7 +127,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_AUKSTIS_PATTERN = "^[0-9]{1,253}(\\.?[0-9]{1,2})$";
+    public static final String PRODUCT_FORM_AUKSTIS_PATTERN = "^[0-9]+(.|,)?[0-9]?$";
 
     public static boolean isValidAukstis(String aukstis) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_AUKSTIS_PATTERN);
@@ -135,7 +135,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_PLOTIS_PATTERN = "^[0-9]{1,253}(\\.?[0-9]{1,2})$";
+    public static final String PRODUCT_FORM_PLOTIS_PATTERN = "^[0-9]+(.|,)?[0-9]?$";
 
     public static boolean isValidPlotis(String plotis) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_PLOTIS_PATTERN);
@@ -143,7 +143,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_GYLIS_PATTERN = "^[0-9]{1,253}(\\.?[0-9]{1,2})$";
+    public static final String PRODUCT_FORM_GYLIS_PATTERN = "^[0-9]+(.|,)?[0-9]?$";
 
     public static boolean isValidGylis(String gylis) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_GYLIS_PATTERN);
@@ -151,7 +151,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_SKERSMUO_PATTERN = "^[0-9]{1,253}(\\.?[0-9]{1,2})$";
+    public static final String PRODUCT_FORM_SKERSMUO_PATTERN = "^[0-9]+(.|,)?[0-9]?$";
 
     public static boolean isValidSkersmuo(String skersmuo) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_SKERSMUO_PATTERN);
@@ -159,7 +159,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_ILGIS_PATTERN = "^[0-9]{1,253}(\\.?[0-9]{1,2})$";
+    public static final String PRODUCT_FORM_ILGIS_PATTERN = "^[0-9]+(.|,)?[0-9]?$";
 
     public static boolean isValidIlgis(String ilgis) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_ILGIS_PATTERN);
@@ -175,7 +175,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_MODULIU_SKAICIUS_PATTERN = "^[0-9]{1,253}(\\.?[0-9]{1,2})$";
+    public static final String PRODUCT_FORM_MODULIU_SKAICIUS_PATTERN = "^[0-9]+(.|,)?[0-9]?$";
 
     public static boolean isValidModuliuSkaicius(String moduliuSkaicius) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_MODULIU_SKAICIUS_PATTERN);
@@ -191,7 +191,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_VARDINE_ITAMPA_PATTERN = "^[0-9 ]{1,13}(?=.*V AC).*$";
+    public static final String PRODUCT_FORM_VARDINE_ITAMPA_PATTERN = "^[0-9 ]{1,13}(?=.*V).*$";
 
     public static boolean isValidVardineItampa(String vardineItampa) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_VARDINE_ITAMPA_PATTERN);
@@ -207,7 +207,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_STORIS_PATTERN = "^[0-9]{1,253}(\\.?[0-9]{1,2})$";
+    public static final String PRODUCT_FORM_STORIS_PATTERN = "^[0-9]+(.|,)?[0-9]?$";
 
     public static boolean isValidStoris(String storis) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_STORIS_PATTERN);
@@ -239,7 +239,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_SVORIS_PATTERN = "^[0-9]{1,253}(\\.?[0-9]{1,2})$";
+    public static final String PRODUCT_FORM_SVORIS_PATTERN = "^[0-9]+(.|,)?[0-9]?$";
 
     public static boolean isValidSvoris(String svoris) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_SVORIS_PATTERN);
@@ -247,7 +247,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_GALIA_PATTERN = "^[0-9 /]{1,11}(?=.*W).*$";
+    public static final String PRODUCT_FORM_GALIA_PATTERN = "^[0-9 ]{1,11}(?=.*W).*$";
 
     public static boolean isValidGalia(String galia) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_GALIA_PATTERN);
@@ -255,7 +255,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_SVIESOS_SRAUTAS_PATTERN = "^[0-9]{1,253}(\\.?[0-9]{1,2})$";
+    public static final String PRODUCT_FORM_SVIESOS_SRAUTAS_PATTERN = "^[0-9]+(.|,)?[0-9]?$";
 
     public static boolean isValidSviesosSrautas(String sviesosSrautas) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_SVIESOS_SRAUTAS_PATTERN);
@@ -343,7 +343,7 @@ public class Validation {
         return matcher.find();
     }
 
-    public static final String PRODUCT_FORM_MECHANINIS_ATSPARUMAS_PATTERN = "^[0-9 /]{1,255}(?=.*N).*$";
+    public static final String PRODUCT_FORM_MECHANINIS_ATSPARUMAS_PATTERN = "^[0-9 ]{1,255}(?=.*N).*$";
 
     public static boolean isValidMechaninisAtsparumas(String mechaninisAtsparumas) {
         Pattern pattern = Pattern.compile(PRODUCT_FORM_MECHANINIS_ATSPARUMAS_PATTERN);
